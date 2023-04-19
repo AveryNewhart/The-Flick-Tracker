@@ -9,7 +9,7 @@
 }
 
 
-divvy  {
+/* divvy  {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@ divvy  {
     margin-right: 0;
     flex-direction: column;
     background-color: rgba(33, 32, 32, 0.992);
-}
+} */
 
 .loginForm {
   display: flex;
