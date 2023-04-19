@@ -1,5 +1,5 @@
 const { model, Schema } = require("mongoose");
-
+//TODO COMPLETE
 const commentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
