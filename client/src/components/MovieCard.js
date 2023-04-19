@@ -6,16 +6,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 
 export default function MovieDesc(movie) {
-  const [state, dispatch] = useStoreContext();
-
-  const {
-    image,
-    name,
-    _id,
-    price,
-    quantity
-  } = item;
-
   return (
     <div>
         Movie Description Page
