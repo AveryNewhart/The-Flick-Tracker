@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+mongoose = require('mongoose');
 
 const watchlistSchema = new mongoose.Schema({
     title: {
@@ -10,5 +10,7 @@ const watchlistSchema = new mongoose.Schema({
     ref: 'User'
   },
 });
+
+const Watchlist = model("Watchlist", watchlistSchema)
 
 module.exports = Watchlist
