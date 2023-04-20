@@ -7,16 +7,45 @@ id: ID!
 username: String!
 email: String!
 
-watchedMovies[Movie]
-watchlist: [Movie]
+watchedMovies: [Watched]
+watchlist: [Watchlist]
 reviews: [Review]
 following: [User] 
 follower: [User]     
 }
 
 type Movie {
-id: ID!
-title: String!
+    id: ID!
+    title: String!
+    releaseYear: Int!
+    director: String!
+    actors: [String!]!
+    runtime: Int!
+    category: String!
+    trailer: String!
+    titleCard: String!
+    synopsis: String!
+  }
+
+    type Watchlist {
+        id: ID!
+        user: User!
+        movieId: ID!
+      }
+
+
+  type Watched {
+    id: ID!
+    user: User!
+    movieId: ID!
+  }
+
+type Recommendation {
+ id: ID!
+ user: User!
+ movie: Movie!
+ watched: Watched!
+ score: Int!
 }
 
 type Review {
@@ -24,6 +53,7 @@ type Review {
     text: String!
     rating: Int!
     user: User!
+    watched: Watched!
     reactions: [Reaction]
     comments: [Comment]
   }
@@ -38,130 +68,114 @@ type Review {
     id: ID!
     text: String!
     user: User!
-    replies: [Comment]
+    replies: [Reply]
   }
 
-`;
+  type Reply {
+    id: ID!
+    text: String!
+    user: User!
+    comment: Comment!
+    reaction: [Reaction]
+  }
 
-// Get a specific user by ID
-query GetUser {
-  user(id: "1") {
-    id
-    username
-    email
-    watchedMovies {
+  type Query {
+    movie(id: ID!): Movie
+    user(id: ID!): User
+    review(id: ID!): Review
+    topRatedMovies(limit: Int! = 20): [Movie!]!
+    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
+    watched(id: ID!): Watched
+    watchlist(id: ID!): Watchlist
+    recommendation(id: ID!): Recommendation
+    comment(id: ID!): Comment
+    reaction(id: ID!): Reaction
+    reply(id: ID!): Reply
+  }
+
+  query GetUserInfo($userId: ID!) {
+    user(id: $userId) {
       id
-      title
-    }
-    watchlist {
-      id
-      title
-    }
-    reviews {
-      id
-      text
-      rating
-      user {
+      username
+      email
+      watchedMovies {
         id
-        username
-        email
-      }
-      reactions {
-        id
-        emoji
-        user {
+        movie {
           id
-          username
-          email
+          title
+          releaseYear
+          director
+          actors
+          runtime
+          category
+          trailer
+          titleCard
+          synopsis
         }
       }
-      comments {
+      watchlist {
+        id
+        movie {
+          id
+          title
+          releaseYear
+          director
+          actors
+          runtime
+          category
+          trailer
+          titleCard
+          synopsis
+        }
+      }
+      reviews {
         id
         text
-        user {
+        rating
+        watched {
           id
-          username
-          email
+          movie {
+            id
+            title
+          }
         }
-        replies {
+        reactions {
+          id
+          emoji
+        }
+        comments {
           id
           text
           user {
             id
             username
-            email
+          }
+          replies {
+            id
+            text
+            user {
+              id
+              username
+            }
+            reaction {
+              id
+              emoji
+            }
           }
         }
       }
-    }
-    following {
-      id
-      username
-      email
-    }
-    followers {
-      id
-      username
-      email
-    }
-  }
-}
-
-// Get all movies
-query GetAllMovies {
-  movies {
-    id
-    title
-  }
-}
-
-// Get a specific movie by ID
-query GetMovie {
-  movie(id: "1") {
-    id
-    title
-  }
-}
-
-// Get all reviews
-query GetAllReviews {
-  reviews {
-    id
-    text
-    rating
-    user {
-      id
-      username
-      email
-    }
-    reactions {
-      id
-      emoji
-      user {
+      following {
         id
         username
-        email
       }
-    }
-    comments {
-      id
-      text
-      user {
+      follower {
         id
         username
-        email
-      }
-      replies {
-        id
-        text
-        user {
-          id
-          username
-          email
-        }
       }
     }
   }
-}
+  
+`;
+
 
 module.exports = typeDefs;

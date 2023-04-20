@@ -42,7 +42,7 @@ const reviewSchema = new Schema({
 
 reviewSchema.pre("save", async function (next) {
   const user = await User.findById(this.user);
-  if (!user.watchedMovies.includes(this.movie)) {
+  if (!user.watched.includes(this.title)) {
     throw new Error(
       "You cannot review a movie that is not in your watched movies list."
     );
