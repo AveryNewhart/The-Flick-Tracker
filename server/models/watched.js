@@ -21,4 +21,6 @@ const watchedMovieSchema = new mongoose.Schema({
   },
 });
 
+const Watched = model("Watched", watchedMovieSchema)
+
 module.exports = Watched;
