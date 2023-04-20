@@ -17,6 +17,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "apollo-server-express": "^3.12.0",
     "react-font": "^1.2.1"
   }
 }
