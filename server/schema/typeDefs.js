@@ -1,20 +1,19 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
+  type User {
+    id: ID!
+    username: String!
+    email: String!
 
-type User {
-id: ID!
-username: String!
-email: String!
+    watchedMovies: [Watched]
+    watchlist: [Watchlist]
+    reviews: [Review]
+    following: [User]
+    follower: [User]
+  }
 
-watchedMovies: [Watched]
-watchlist: [Watchlist]
-reviews: [Review]
-following: [User] 
-follower: [User]     
-}
-
-type Movie {
+  type Movie {
     id: ID!
     title: String!
     releaseYear: Int!
@@ -27,12 +26,11 @@ type Movie {
     synopsis: String!
   }
 
-    type Watchlist {
-        id: ID!
-        user: User!
-        movieId: ID!
-      }
-
+  type Watchlist {
+    id: ID!
+    user: User!
+    movieId: ID!
+  }
 
   type Watched {
     id: ID!
@@ -40,15 +38,15 @@ type Movie {
     movieId: ID!
   }
 
-type Recommendation {
- id: ID!
- user: User!
- movie: Movie!
- watched: Watched!
- score: Int!
-}
+  type Recommendation {
+    id: ID!
+    user: User!
+    movie: Movie!
+    watched: Watched!
+    score: Int!
+  }
 
-type Review {
+  type Review {
     id: ID!
     text: String!
     rating: Int!
@@ -60,10 +58,20 @@ type Review {
 
   type Reaction {
     id: ID!
-    emoji: String!
+    type: ReactionType!
     user: User!
   }
-  
+
+  enum ReactionType {
+    THUMBS_UP
+    THUMBS_DOWN
+    LIKE
+    LOVE
+    LAUGH
+    SAD
+    ANGRY
+  }
+
   type Comment {
     id: ID!
     text: String!
@@ -80,17 +88,26 @@ type Review {
   }
 
   type Query {
-    movie(id: ID!): Movie
     user(id: ID!): User
+    users: [User!]!
     review(id: ID!): Review
-    topRatedMovies(limit: Int! = 20): [Movie!]!
-    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
+    reviews: [Review!]!
     watched(id: ID!): Watched
     watchlist(id: ID!): Watchlist
-    recommendation(id: ID!): Recommendation
+    watchedMovies: [watched!]!
+    watchlistMovies: [watchlist!]!
     comment(id: ID!): Comment
+    comments: [Comment!]!
     reaction(id: ID!): Reaction
+    reactions: [Reaction!]!
     reply(id: ID!): Reply
+    replies: [Reply!]!
+
+    movie(id: ID!): Movie
+    topRatedMovies(limit: Int! = 20): [Movie!]!
+    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
+
+    recommendation(id: ID!): Recommendation
   }
 
   query GetUserInfo($userId: ID!) {
@@ -174,9 +191,35 @@ type Review {
       }
     }
   }
-  
+
+  type Mutation {
+    createUser(input: CreateUserInput!): User!
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    deleteUser(id: ID!): Boolean!
+
+    addWatchedMovie(userId: ID!, movieId: ID!): Watched!
+    removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
+
+    addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
+    removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
+
+    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
+    updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
+    deleteReview(reviewId: ID!): Review!
+
+    addReaction(reviewId: ID!, type: ReactionType!): Reaction!
+    deleteReaction(reactionId: ID!): Reaction!
+
+    addComment(reviewId: ID!, text: String!): Comment!
+    updateComment(commentId: ID!, text: String!): Comment!
+    deleteComment(commentId: ID!): Comment!
+
+    addReply(commentId: ID!, text: String!): Reply!
+    updateReply(replyId: ID!, text: String!): Reply!
+    deleteReply(replyId: ID!): Reply!
+  }
 `;
 
-
 module.exports = typeDefs;
-//* line 42 for when we implement chatGPT
+//!Type Recommendation is for ChatGPT resolvers
+//!Type Movie is for the IMDB API

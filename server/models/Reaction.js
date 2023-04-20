@@ -8,7 +8,7 @@ const reactionSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["thumbsUp", "thumbsDown"],
+    enum: ["thumbsUp", "thumbsDown", "LOVE", "LAUGH", "SAD", "ANGRY"],
     required: true,
   },
 });
