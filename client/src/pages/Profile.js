@@ -12,9 +12,9 @@ import "../styles/App.css";
 const styles = {
   containerStyles: {
     background: 'orange',
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    display: 'flex',
   },
 };
 
