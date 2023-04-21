@@ -1,18 +1,20 @@
 //?Will we need to associate IMDB_Movie ID as the _id generated for the watched and watchlist movies, or just match movie title in link?
 
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose")
 
-const watchedMovieSchema = new mongoose.Schema({
+// const mongoose = require("mongoose");
+
+const watchedMovieSchema = new Schema({
   title: {
     type: String,
     required: true,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
   review: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Review",
   },
   createdAt: {
@@ -20,6 +22,7 @@ const watchedMovieSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
 
 const Watched = model("Watched", watchedMovieSchema)
 

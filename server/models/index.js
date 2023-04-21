@@ -4,6 +4,6 @@ const Comment = require("./Comment");
 const Reaction = require("./Reaction");
 const Reply = require("./Reply");
 const Watched = require("./Watched");
-const Watchlist = require("./Watchlist");
+const Watchlist = require("./watchlist");
 
 module.exports = { User, Review, Comment, Reaction, Reply, Watched, Watchlist };
