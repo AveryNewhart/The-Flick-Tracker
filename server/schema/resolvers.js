@@ -17,18 +17,6 @@ const resolvers = {
     reviews: (parent, args, { dataSources }, info) => {
       return dataSources.reviewAPI.getReviews();
     },
-    watched: (parent, { id }, { dataSources }, info) => {
-      return dataSources.watchedAPI.getWatchedById(id);
-    },
-    watchlist: (parent, { id }, { dataSources }, info) => {
-      return dataSources.watchlistAPI.getWatchlistById(id);
-    },
-    watchedMovies: (parent, args, { dataSources }, info) => {
-      return dataSources.watchedAPI.getWatchedMovies();
-    },
-    watchlistMovies: (parent, args, { dataSources }, info) => {
-      return dataSources.watchlistAPI.getWatchlistMovies();
-    },
     comment: (parent, { id }, { dataSources }, info) => {
       return dataSources.commentAPI.getCommentById(id);
     },

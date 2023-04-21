@@ -15,8 +15,8 @@ const typeDefs = gql`
     username: String!
     email: String!
 
-    watchedMovies: [Watched]
-    watchlist: [Watchlist]
+    watchedMovies: [Movie]
+    watchlist: [Movie]
     reviews: [Review]
     following: [User]
     follower: [User]
@@ -40,23 +40,11 @@ const typeDefs = gql`
     synopsis: String!
   }
 
-  type Watchlist {
-    id: ID!
-    user: User!
-    movieId: ID!
-  }
-
-  type Watched {
-    id: ID!
-    user: User!
-    movieId: ID!
-  }
 
   type Recommendation {
     id: ID!
     user: User!
     movie: Movie!
-    watched: Watched!
     score: Int!
   }
 
@@ -65,7 +53,6 @@ const typeDefs = gql`
     text: String!
     rating: Int!
     user: User!
-    watched: Watched!
     reactions: [Reaction]
     comments: [Comment]
   }
@@ -106,10 +93,6 @@ const typeDefs = gql`
     users: [User!]!
     review(id: ID!): Review
     reviews: [Review!]!
-    watched(id: ID!): Watched
-    watchlist(id: ID!): Watchlist
-    watchedMovies: [Watched!]!
-    watchlistMovies: [Watchlist!]!
     comment(id: ID!): Comment
     comments: [Comment!]!
     reaction(id: ID!): Reaction
@@ -119,7 +102,6 @@ const typeDefs = gql`
 
     movie(id: ID!): Movie
     topRatedMovies(limit: Int! = 20): [Movie!]!
-    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 
     recommendation(id: ID!): Recommendation
   }
@@ -211,11 +193,7 @@ const typeDefs = gql`
 
     createUser(input: CreateUserInput!): User!
 
-    addWatchedMovie(userId: ID!, movieId: ID!): Watched!
-    removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
 
-    addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
-    removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
     addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
     updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
@@ -239,6 +217,13 @@ module.exports = typeDefs;
 //!Type Movie is for the IMDB API
 
 
-// createUser(input: CreateUserInput!): User!
 // updateUser(id: ID!, input: UpdateUserInput!): User!
 // deleteUser(id: ID!): Boolean!
+
+// recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
+
+// addWatchedMovie(userId: ID!, movieId: ID!): Watched!
+// removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
+
+// addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
+// removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
