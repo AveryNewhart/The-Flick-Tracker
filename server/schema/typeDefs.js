@@ -1,4 +1,13 @@
-const { gql } = require("apollo-server");
+//! Line 122: Moved "GetUserInfo" into the Query type definition. Was written like this "query GetUserInfo($userId: ID!)"
+//! Line 122: Added :User and took away the $ because it was throwing an error.
+//! Line 117: Removed the extra ")" because it was throwing an error. Line looked like this "[ID!]!): [Recommendation!]!"
+//! Line 117: Removed an extra colon and replaced it with a closing soft bracket. Line looked like this "recommendedMovies(watchedMovies: [ID!]!: [Recommendation!]!"
+//! Line 104: Capitalized "Watched". Line looked like this "watched(id: ID!): watched"
+//! Line 105: Capitalized "WatchedList". Line looked like this "watchlist(id: ID!): watchlist"
+
+//! FIRST 4 COMMENTS ARE NOT IMPLEMENTED BECAUSE I DID NOT WANT TO CHANGE THEM WITHOUT WORKING WITH YOU NICK. BUT TYPEDEFS NEED A LOT OF WORK
+
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -94,8 +103,8 @@ const typeDefs = gql`
     reviews: [Review!]!
     watched(id: ID!): Watched
     watchlist(id: ID!): Watchlist
-    watchedMovies: [watched!]!
-    watchlistMovies: [watchlist!]!
+    watchedMovies: [Watched!]!
+    watchlistMovies: [Watchlist!]!
     comment(id: ID!): Comment
     comments: [Comment!]!
     reaction(id: ID!): Reaction
