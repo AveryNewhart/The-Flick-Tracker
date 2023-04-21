@@ -35,7 +35,9 @@ export default function Profile() {
       </Col>      
       </Row>
     </div>
+    <div>
     <WatchList />
+    </div>
     </div>
     </div>
   );
