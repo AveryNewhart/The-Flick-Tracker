@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
 
 import "../styles/App.css";
+import "../styles/Profile.css";
 
 const styles = {
   containerStyles: {
