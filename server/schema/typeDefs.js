@@ -22,6 +22,11 @@ const typeDefs = gql`
     follower: [User]
   }
 
+  input CreateUserInput {
+    email: String!
+    username: String!
+  }
+
   type Movie {
     id: ID!
     title: String!
@@ -201,10 +206,10 @@ const typeDefs = gql`
     }
   }
 
+
   type Mutation {
+
     createUser(input: CreateUserInput!): User!
-    updateUser(id: ID!, input: UpdateUserInput!): User!
-    deleteUser(id: ID!): Boolean!
 
     addWatchedMovie(userId: ID!, movieId: ID!): Watched!
     removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
@@ -232,3 +237,8 @@ const typeDefs = gql`
 module.exports = typeDefs;
 //!Type Recommendation is for ChatGPT resolvers
 //!Type Movie is for the IMDB API
+
+
+// createUser(input: CreateUserInput!): User!
+// updateUser(id: ID!, input: UpdateUserInput!): User!
+// deleteUser(id: ID!): Boolean!
