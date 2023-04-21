@@ -1,7 +1,8 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-// const routes = require("./routes"); //? Do we need this?
+
+// const routes = require("./routes"); //! We do not need this
 const { authMiddleware } = require("./utils/auth");
 
 const { typeDefs, resolvers } = require("./schema");
@@ -22,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-// app.use(routes); //? Do we need this?
+// app.use(routes); //! We do not need this
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
