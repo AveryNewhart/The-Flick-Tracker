@@ -1,16 +1,18 @@
-mongoose = require('mongoose');
+const { Schema, Types } = require("mongoose")
 
-const watchlistSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-      },
+const watchlistSchema = new Schema({
+  watchListId: {
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId()
+  },
+  title: {
+    type: String,
+    required: true,
+  },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
 });
 
-const Watchlist = model("Watchlist", watchlistSchema)
-
-module.exports = Watchlist
+module.exports = watchlistSchema
