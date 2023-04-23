@@ -52,44 +52,48 @@ class LoginForm extends React.Component {
  
   render() {
     return (
-      <div className='divvy'>
-        <div>
-          <Navigation />
-        </div>
-        <Alert message={this.state.alertMessage} />
-        <form onSubmit={this.handleSubmit} className="loginForm">
-          <label className='loginLabel'>
-            Email or username
-            <input
-              name="emailOrUsername"
-              type="text"
-              value={this.state.emailOrUsername}
-              onChange={this.handleInputChange}
-              className="loginI"
-            />
+      <div>
+      <Navigation />
+    <Alert message={this.state.alertMessage} />
+    <div className='divvy'>
+    <form onSubmit={this.handleSubmit} className="loginForm">
+      <label className='loginLabel'>
+        Email or username
+        <input
+          name="emailOrUsername"
+          type="text"
+          value={this.state.emailOrUsername}
+          onChange={this.handleInputChange}
+          className="loginI"
+        />
+      </label>
+      <label className='loginLabel'>
+        Password
+        <input
+          name="password"
+          type="password"
+          value={this.state.password}
+          onChange={this.handleInputChange}
+          className="loginI"
+        />
+      </label>
+      <button type="submit" className='loginBtns'>Log in</button>
+      <SSOButton provider="google" />
+      <p className='margin-p'>or</p>
+      <label className="labelC">
+            <a href="/signup" className="createA">
+              Create an Account
+            </a>
           </label>
-          <label className='loginLabel'>
-            Password
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleInputChange}
-              className="loginI"
-            />
-          </label>
-          <button type="submit" className='loginBtns'>Log in</button>
-          <label className="labelC">
-                <a href="/signup" className="createA">
-                  Create an Account
-                </a>
-              </label>
-        </form>
+          
+    </form>
+    
 
-        <p>or</p>
+    {/* <p>or</p> */}
 
-        <SSOButton provider="google" />
-      </div>
+    {/* <SSOButton provider="google" /> */}
+    </div>
+  </div>
     );
   }
 }

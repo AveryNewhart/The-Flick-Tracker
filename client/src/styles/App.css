@@ -7,40 +7,10 @@ body {
   padding: 0;
 } 
 
-.welcome-head {
-  color: red;
-}
-
 .margin-from-top {
   margin-top: 8%;
 }
 
-.thePic {
-  max-height: 100vh;
-  min-width: 100vw;
-  /* position: relative; */
-}
-
-.welcome-head {
-  /* width: 100vw; */
-  position: absolute;
-  left: 47%;
-  top: 50%;
-}
-
-.loginA {
-  color: #c10206;
-  font-family: 'Zen Dots';
-  background: none;
-  border: none;
-  text-decoration: none;
-  max-width: 100vw;
-}
-
-.loginA:hover {
-  background: #c10206;
-  color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px #c10206, 0 0 25px #c10206, 0 0 50px #c10206,
-    0 0 100px #c10206;
+.searchBar {
+  width: 100vw;
 }
