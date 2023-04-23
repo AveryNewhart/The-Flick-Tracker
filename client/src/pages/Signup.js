@@ -1,89 +1,102 @@
-import React from 'react'
-import Userfront from "@userfront/core";
+import React, { useState } from 'react'
+// import Userfront from "@userfront/core";
 import Navigation from '../components/Nav';
-
+import { useMutation } from '@apollo/client'
+import { ADD_USER } from '../utils/mutations'
+import {  Alert } from "react-bootstrap";
+import Auth from '../utils/auth';
 import "../styles/Signup.css";
 
 // Initialize Userfront Core JS
-Userfront.init("demo1234");
+// Userfront.init("demo1234");
 
 // Define the Signup form component
-class SignupForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      accountName: "",
-      password: "",
-      passwordVerify: "",
-      alertMessage: ""
-    };
+const SignupForm = () =>
+{
+  const [userFormData, setUserFormData] = useState({
+    email: "",
+    username: "",
+    password: ""
+  });
+  // set state for form validation
+  // const [validated] = useState(false);
+  // set state for alert
+  const [showAlert, setShowAlert] = useState(false);
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setAlertMessage = this.setAlertMessage.bind(this);
-  }
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
-  // Whenever an input changes value, change the corresponding state variable
-  handleInputChange(event) {
+  const handleInputChange = (event) =>
+  {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
+
+  const handleFormSubmit = async (event) =>
+  {
     event.preventDefault();
-    const target = event.target;
-    this.setState({
-      [target.name]: target.value
-    });
-  }
 
-  // Handle the form submission by calling Userfront.signup()
-  handleSubmit(event) {
-    event.preventDefault();
-    // Reset the alert to empty
-    this.setAlertMessage();
-    // Verify that the passwords match
-    if (this.state.password !== this.state.passwordVerify) {
-      return this.setAlertMessage('Passwords must match');
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false)
+    {
+      event.preventDefault();
+      event.stopPropagation();
     }
-    // Call Userfront.signup()
-    Userfront.signup({
-      method: "password",
-      email: this.state.email,
-      password: this.state.password,
-      data: {
-        accountName: this.state.accountName
-      }
-    }).catch((error) => {
-      this.setAlertMessage(error.message);
-    });
-  }
 
-  setAlertMessage(message) {
-    this.setState({ alertMessage: message });
-  }
+    try
+    {
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
+
+      Auth.login(data.addUser.token);
+    } catch (err)
+    {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      username: "",
+      email: "",
+      password: ""
+    });
+  };
  
-  render() {
+  
     return (
       <div>
       <Navigation />
       <div className='divvy'>
-      <Alert message={this.state.alertMessage} />
-      <form onSubmit={this.handleSubmit} className="signupForm">
+      {/* <Alert
+      show={showAlert} /> */}
+          <Alert
+          dismissible
+          onClose={() => setShowAlert(false)}
+          show={showAlert}
+          variant="danger"
+        >
+          Something went wrong with your login credentials!
+        </Alert>
+      <form  onSubmit={handleFormSubmit} className="signupForm">
         <label className='signupLabel'>
           Email address
           <input
             name="email"
             type="email"
-            value={this.state.email}
-            onChange={this.handleInputChange}
-            className="signupI"
+            value={userFormData.email}
+            onChange={handleInputChange}
+            className="signupP"
           />
         </label>
         <label className='signupLabel'>
-          Account name (custom field)
+          Username
           <input
-            name="accountName"
+            name="username"
             type="text"
-            value={this.state.accountName}
-            onChange={this.handleInputChange}
-            className="signupI"
+            value={userFormData.username}
+            onChange={handleInputChange}
+            className="signupP"
           />
         </label>
         <label className='signupLabel'>
@@ -91,23 +104,14 @@ class SignupForm extends React.Component {
           <input
             name="password"
             type="password"
-            value={this.state.password}
-            onChange={this.handleInputChange}
-            className="signupI"
+            value={userFormData.password}
+            onChange={handleInputChange}
+            className="signupP"
           />
         </label>
-        <label className='signupLabel'>
-          Verify password
-          <input
-            name="passwordVerify"
-            type="password"
-            value={this.state.passwordVerify}
-            onChange={this.handleInputChange}
-            className='signupI'
-          />
-        </label>
+  
         <button type="submit" className='signupBtns'>Sign up</button>
-        <SSOButton provider="google" />
+        {/* <SSOButton provider="google" /> */}
       </form>
       </div>
 
@@ -116,41 +120,41 @@ class SignupForm extends React.Component {
       <SSOButton provider="google" /> */}
     </div>
     );
-  }
-}
+  };
+
 
 // Define the alert component
-class Alert extends React.Component {
-    // eslint-disable-next-line
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    if (!this.props.message) return "";
-    return <div id="alert">{this.props.message}</div>;
-  }
-}
+// class Alert extends React.Component {
+//     // eslint-disable-next-line
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     if (!this.props.message) return "";
+//     return <div id="alert">{this.props.message}</div>;
+//   }
+// }
 
-// Define the Single Sign-on (SSO) button
-class SSOButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+// // Define the Single Sign-on (SSO) button
+// class SSOButton extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.handleClick = this.handleClick.bind(this);
+//   }
 
-  handleClick(event) {
-    Userfront.login({ method: this.props.provider });
-    event.preventDefault();
-  }
+//   handleClick(event) {
+//     Userfront.login({ method: this.props.provider });
+//     event.preventDefault();
+//   }
 
-  render() {
-    return (
-      <button onClick={this.handleClick} className="signupBtns">
-        Sign up with {this.props.provider}
-      </button>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <button onClick={this.handleClick} className="signupBtns">
+//         Sign up with {this.props.provider}
+//       </button>
+//     );
+//   }
+// }
 
 // Render the signup form
 export default SignupForm;
