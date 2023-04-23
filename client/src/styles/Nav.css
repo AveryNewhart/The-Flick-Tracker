@@ -3,6 +3,7 @@
 .back-nav {
     background-color: rgba(33, 32, 32, 0.992);
     border-bottom: 5px solid #c10206;
+    width: 100vw;
 }
 
 .header-head {
@@ -30,6 +31,13 @@ a.nav-link:hover {
     border-radius: 5px;
     box-shadow: 0 0 5px #c10206, 0 0 25px #c10206, 0 0 50px #c10206,
       0 0 100px #c10206;
+  }
+
+  nav.back-nav.navbar.navbar-expand-sm.navbar-light.fixed-top {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 
 @media (max-width: 576px) {

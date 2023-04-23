@@ -61,56 +61,60 @@ class SignupForm extends React.Component {
  
   render() {
     return (
+      <div>
+      <Navigation />
       <div className='divvy'>
-        <Navigation />
-        <Alert message={this.state.alertMessage} />
-        <form onSubmit={this.handleSubmit} className="signupForm">
-          <label className='signupLabel'>
-            Email address
-            <input
-              name="email"
-              type="email"
-              value={this.state.email}
-              onChange={this.handleInputChange}
-              className="signupI"
-            />
-          </label>
-          <label className='signupLabel'>
-            Account name (custom field)
-            <input
-              name="accountName"
-              type="text"
-              value={this.state.accountName}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <label className='signupLabel'>
-            Password
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleInputChange}
-              className="signupI"
-            />
-          </label>
-          <label className='signupLabel'>
-            Verify password
-            <input
-              name="passwordVerify"
-              type="password"
-              value={this.state.passwordVerify}
-              onChange={this.handleInputChange}
-              className='signupI'
-            />
-          </label>
-          <button type="submit" className='signupBtns'>Sign up</button>
-        </form>
-
-        <p>or</p>
-
+      <Alert message={this.state.alertMessage} />
+      <form onSubmit={this.handleSubmit} className="signupForm">
+        <label className='signupLabel'>
+          Email address
+          <input
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleInputChange}
+            className="signupI"
+          />
+        </label>
+        <label className='signupLabel'>
+          Account name (custom field)
+          <input
+            name="accountName"
+            type="text"
+            value={this.state.accountName}
+            onChange={this.handleInputChange}
+            className="signupI"
+          />
+        </label>
+        <label className='signupLabel'>
+          Password
+          <input
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            className="signupI"
+          />
+        </label>
+        <label className='signupLabel'>
+          Verify password
+          <input
+            name="passwordVerify"
+            type="password"
+            value={this.state.passwordVerify}
+            onChange={this.handleInputChange}
+            className='signupI'
+          />
+        </label>
+        <button type="submit" className='signupBtns'>Sign up</button>
         <SSOButton provider="google" />
+      </form>
       </div>
+
+      {/* <p>or</p>
+
+      <SSOButton provider="google" /> */}
+    </div>
     );
   }
 }
