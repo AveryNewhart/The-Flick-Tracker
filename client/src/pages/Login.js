@@ -1,131 +1,149 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navigation from "../components/Nav.js";
-import Userfront from "@userfront/core";
+// import Userfront from "@userfront/core";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import {  Alert } from "react-bootstrap";
+import Auth from "../utils/auth";
 
 import "../styles/App.css";
 import "../styles/Login.css";
 
 // Initialize Userfront Core JS
-Userfront.init("demo1234");
+// Userfront.init("demo1234");
 
 // Define the Login form component
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      emailOrUsername: "",
+const LoginForm = () => {
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [validated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  
+  const [login, { error, data }] = useMutation(LOGIN_USER);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await login({ variables: { ...userFormData } });
+
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      email: "",
       password: "",
-      alertMessage: ""
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setAlertMessage = this.setAlertMessage.bind(this);
-  }
-
-  // Whenever an input changes value, change the corresponding state variable
-  handleInputChange(event) {
-    event.preventDefault();
-    const target = event.target;
-    this.setState({
-      [target.name]: target.value
     });
-  }
+  };
+  //   }).catch((error) => {
+  //     this.setAlertMessage(error.message);
+  //   });
+  // }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    // Reset the alert to empty
-    this.setAlertMessage();
-    // Call Userfront.login()
-    Userfront.login({
-      method: "password",
-      emailOrUsername: this.state.emailOrUsername,
-      password: this.state.password
-    }).catch((error) => {
-      this.setAlertMessage(error.message);
-    });
-  }
-
-  setAlertMessage(message) {
-    this.setState({ alertMessage: message });
-  }
+  // setAlertMessage(message) {
+  //   this.setState({ alertMessage: message });
+  // }
  
-  render() {
     return (
-      <div className='divvy'>
-        <div>
-          <Navigation />
-        </div>
-        <Alert message={this.state.alertMessage} />
-        <form onSubmit={this.handleSubmit} className="loginForm">
-          <label className='loginLabel'>
-            Email or username
-            <input
-              name="emailOrUsername"
-              type="text"
-              value={this.state.emailOrUsername}
-              onChange={this.handleInputChange}
-              className="loginI"
-            />
+      <div>
+      <Navigation />
+    {/* <Alert message={this.state.alertMessage} /> */}
+    <Alert
+          dismissible
+          onClose={() => setShowAlert(false)}
+          show={showAlert}
+          variant="danger"
+        >
+          Something went wrong with your login credentials!
+        </Alert>
+    <div className='divvy'>
+    <form noValidate validated={validated} onSubmit={handleFormSubmit} className="loginForm">
+      <label className='loginLabel'>
+        Email
+        <input
+          name="email"
+          type="text"
+          value={userFormData.email}
+          onChange={handleInputChange}
+          className="loginI"
+        />
+      </label>
+      <label className='loginLabel'>
+        Password
+        <input
+          name="password"
+          type="password"
+          value={userFormData.password}
+          onChange={handleInputChange}
+          className="signupP"
+        />
+      </label>
+      <button type="submit" className='loginBtns'>Log in</button>
+      {/* <SSOButton provider="google" /> */}
+      <p className='margin-p'>or</p>
+      <label className="labelC">
+            <a href="/signup" className="createA">
+              Create an Account
+            </a>
           </label>
-          <label className='loginLabel'>
-            Password
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleInputChange}
-              className="loginI"
-            />
-          </label>
-          <button type="submit" className='loginBtns'>Log in</button>
-          <label className="labelC">
-                <a href="/signup" className="createA">
-                  Create an Account
-                </a>
-              </label>
-        </form>
+          
+    </form>
+    
 
-        <p>or</p>
+    {/* <p>or</p> */}
 
-        <SSOButton provider="google" />
-      </div>
+    {/* <SSOButton provider="google" /> */}
+    </div>
+  </div>
     );
   }
-}
 
 // Define the alert component
-class Alert extends React.Component {
-  // eslint-disable-next-line
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    if (!this.props.message) return "";
-    return <div id="alert">{this.props.message}</div>;
-  }
-}
+// class Alert extends React.Component {
+//   // eslint-disable-next-line
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     if (!this.props.message) return "";
+//     return <div id="alert">{this.props.message}</div>;
+//   }
+// }
 
-// Define the Single Sign-on (SSO) button
-class SSOButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+// // Define the Single Sign-on (SSO) button
+// class SSOButton extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.handleClick = this.handleClick.bind(this);
+//   }
 
-  handleClick(event) {
-    Userfront.login({ method: this.props.provider });
-    event.preventDefault();
-  }
+//   handleClick(event) {
+//     Userfront.login({ method: this.props.provider });
+//     event.preventDefault();
+//   }
 
-  render() {
-    return (
-      <button onClick={this.handleClick} className="loginBtns">
-        Log in with {this.props.provider}
-      </button>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <button onClick={this.handleClick} className="loginBtns">
+//         Log in with {this.props.provider}
+//       </button>
+//     );
+//   }
+// }
 
 // Render the login form
 export default LoginForm;
