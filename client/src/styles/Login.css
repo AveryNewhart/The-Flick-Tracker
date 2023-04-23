@@ -42,7 +42,7 @@
 
  .loginLabel,
  .loginI {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: white;
     width: 350px;
 } 
@@ -59,6 +59,7 @@
   font-family: 'Zen Dots';
   background: none;
   border: none;
+  margin-bottom: 10px;
 }
 
 .loginBtns:hover {
@@ -89,4 +90,8 @@
 .labelC {
   text-align: center;
   margin-top: 20px;
+}
+
+.margin-p {
+  margin-top: 12px;
 }

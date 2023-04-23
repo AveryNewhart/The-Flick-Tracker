@@ -7,7 +7,7 @@ input {
 #alert {
   color: red;
 }
-
+ 
 /* div {
   /* width: 100vh; */
    /* height: 100vh; */
@@ -21,7 +21,7 @@ input {
     align-items: center;
     min-width: 100vw;
     height: 100vh;
-    padding-top: 18%;
+    /* padding-top: 18%; */
     padding-left: 0;
     padding-right: 0;
     margin-left: 0;
@@ -36,7 +36,7 @@ input {
     align-items: center;
     flex-direction: column;
     border: 3px solid #c10206;
-    /* padding: 50px; */
+    padding: 50px;
     border-radius: 10%;
     background: rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
@@ -63,6 +63,8 @@ p {
   font-family: 'Zen Dots';
   background: none;
   border: none;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .signupBtns:hover {

@@ -14,6 +14,7 @@ import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import SearchedContent from './pages/Searchedcontent';
 
 
 // Construct our main GraphQL API endpoint
@@ -64,6 +65,12 @@ function App() {
               <Route 
                 path="/profile" 
                 element={<Profile />}
+              />
+                  <Route 
+                path="/movie/:id" 
+                // render={(props) => <SearchedContent {...props} match={props.match} />}
+                //  component={SearchedContent}
+                element={<SearchedContent />}
               />
               {/* <Route 
                 path="/profiles/:username" 
