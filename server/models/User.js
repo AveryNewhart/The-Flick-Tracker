@@ -14,13 +14,13 @@ const UserSchema = new Schema({
     match: [
       /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
       "Must match an email address",
-    ],
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-      select: false, // hide the password field by default when querying for users
-    },
+    ]
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
+    select: false, // hide the password field by default when querying for users
   },
   watchedMovies: [
     {

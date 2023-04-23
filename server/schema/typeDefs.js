@@ -14,6 +14,7 @@ const typeDefs = gql`
     id: ID!
     username: String!
     email: String!
+    password: String!
 
     watchedMovies: [Movie]
     watchlist: [Movie]
@@ -25,20 +26,22 @@ const typeDefs = gql`
   input CreateUserInput {
     email: String!
     username: String!
+    password: String!
   }
 
   type Movie {
     id: ID!
     title: String!
-    releaseYear: Int!
-    director: String!
-    actors: [String!]!
-    runtime: Int!
-    category: String!
-    trailer: String!
-    titleCard: String!
-    synopsis: String!
+    releaseYear: Int
+    director: String
+    actors: [String]
+    runtime: Int
+    category: String
+    trailer: String
+    imageURL: String
+    synopsis: String
   }
+
 
 
   type Recommendation {
@@ -88,6 +91,11 @@ const typeDefs = gql`
     reaction: [Reaction]
   }
 
+  type Auth {
+    token: ID
+    user: User
+  }
+
   type Query {
     user(id: ID!): User
     users: [User!]!
@@ -100,8 +108,11 @@ const typeDefs = gql`
     reply(id: ID!): Reply
     replies: [Reply!]!
 
+    protected: String
+
     movie(id: ID!): Movie
     topRatedMovies(limit: Int! = 20): [Movie!]!
+    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 
     recommendation(id: ID!): Recommendation
   }
@@ -191,8 +202,8 @@ const typeDefs = gql`
 
   type Mutation {
 
-    createUser(input: CreateUserInput!): User!
-
+    createUser(input: CreateUserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
 
 
     addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
