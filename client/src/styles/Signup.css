@@ -52,6 +52,10 @@ input {
     width: 350px;
 } 
 
+.signupP {
+  width: 350px;
+}
+
 p {
   color: #c10206;
   font-family: 'Zen Dots';
