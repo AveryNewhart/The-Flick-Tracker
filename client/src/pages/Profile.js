@@ -22,11 +22,16 @@ const styles = {
   },
   // Profile Card and Top 5 Styles
   ProStyles: {
-    background: 'red',
+    // background: 'red',
+    width:'100vw',
+    justifyContent: 'center',
+    marginBottom: '25px',
   },
   // Watch List Styles
   WatchListStyles: {
-    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width:'100vw',
   },
 };
 
@@ -34,6 +39,7 @@ const Profile = () => {
   return (
     <div>
       <Navigation />
+      <div className='profile'>
       <Contianer fluid style={styles.containerStyles}>
           <Row xs={1} md={2} className="g-4" style={styles.ProStyles}>
           <Col md='auto'>
@@ -49,6 +55,7 @@ const Profile = () => {
           <WatchList />
         </Row>
       </Contianer>
+      </div>
     </div>
   );
 }
