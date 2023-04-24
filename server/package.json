@@ -1,21 +1,37 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Appollo Server & GraphQL application for a Social Media Movie App, with AI recommendations",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "seed": "node seeds/seed.js",
     "watch": "nodemon server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Lebron James",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^7.0.2",
-    "graphql": "^15.5.1"
+    "apollo-server-express": "^3.6.2",
+    "express": "^4.18.2",
+    "graphql": "^15.5.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AveryNewhart/The-Flick-Tracker.git"
+  },
+  "keywords": [
+    "graphQL",
+    "Apollo",
+    "React",
+    "MongoDB"
+  ],
+  "bugs": {
+    "url": "https://github.com/AveryNewhart/The-Flick-Tracker/issues"
+  },
+  "homepage": "https://github.com/AveryNewhart/The-Flick-Tracker#readme"
 }

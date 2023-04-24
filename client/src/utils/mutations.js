@@ -11,7 +11,7 @@ export const LOGIN_USER = gql`
     }
   }
 `;
-
+ 
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -19,17 +19,19 @@ export const ADD_USER = gql`
       user {
         _id
         username
+        email
+        password
       }
     }
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
+export const ADD_REVIEW = gql`
+  mutation addReview($reviewText: String!) {
+    addReview(reviewText: $reviewText) {
       _id
-      thoughtText
-      thoughtAuthor
+      reviewText
+      reviewAuthor
       createdAt
       comments {
         _id
@@ -40,11 +42,11 @@ export const ADD_THOUGHT = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+  mutation addComment($reviewId: ID!, $commentText: String!) {
+    addComment(reviewId: $thoughtId, commentText: $commentText) {
       _id
-      thoughtText
-      thoughtAuthor
+      reviewText
+      reviewAuthor
       createdAt
       comments {
         _id
