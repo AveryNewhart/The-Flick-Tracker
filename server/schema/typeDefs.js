@@ -92,9 +92,6 @@ const typeDefs = gql`
     replies: [Reply!]!
     protected: User
     movie(id: ID!): Movie
-    topRatedMovies(limit: Int! = 20): [Movie!]!
-    recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
-    recommendation(id: ID!): Recommendation
   }
   query GetUserInfo($userId: ID!) {
     user(id: $userId) {
@@ -181,7 +178,7 @@ const typeDefs = gql`
     createUser(input: CreateUserInput!): Auth
     loginUser(email: String!, password: String!): Auth
     updateUser(id: ID!, input: UpdateUserInput!): User!
-    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
+    addReview(movieId: ID!, text: String!, rating: Int!): Review!
     updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
     deleteReview(reviewId: ID!): Review!
     addReaction(reviewId: ID!, type: ReactionType!): Reaction!
