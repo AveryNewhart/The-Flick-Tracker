@@ -35,7 +35,6 @@ const Profile = () => {
     <div>
       <Navigation />
       <Contianer fluid style={styles.containerStyles}>
-        <div>
           <Row xs={1} md={2} className="g-4" style={styles.ProStyles}>
           <Col md='auto'>
           <ProfileCard />
@@ -46,10 +45,9 @@ const Profile = () => {
             <FavList />
           </Col>      
           </Row>
-        </div>
-        <div style={styles.WatchListStyles}>
+        <Row style={styles.WatchListStyles}>
           <WatchList />
-        </div>
+        </Row>
       </Contianer>
     </div>
   );
