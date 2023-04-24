@@ -6,39 +6,53 @@ import WatchList from '../components/WatchList';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
+import Contianer from 'react-bootstrap/Container'
 
-import "../styles/App.css";
 import "../styles/Profile.css";
 
 const styles = {
+  // Overall Container Styles
   containerStyles: {
-    background: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
+    flexDirection: 'column',
+    minWidth: '100vw',
+    marginX: '20px',
+  },
+  // Profile Card and Top 5 Styles
+  ProStyles: {
+    background: 'red',
+  },
+  // Watch List Styles
+  WatchListStyles: {
+    backgroundColor: 'blue',
   },
 };
 
-export default function Profile() {
+const Profile = () => {
   return (
     <div>
       <Navigation />
-      <div>
-    <div class="container" style={styles.containerStyles}>
-      <Row xs={1} md={2} className="g-4">
-      <Col>
-        <ProfileCard />
-      </Col>
-      {/* Grid for user top 5 */}
-      <Col>
-        <FavList />
-      </Col>      
-      </Row>
-    </div>
-    <div>
-    <WatchList />
-    </div>
-    </div>
+      <Contianer fluid style={styles.containerStyles}>
+        <div>
+          <Row xs={1} md={2} className="g-4" style={styles.ProStyles}>
+          <Col md='auto'>
+          <ProfileCard />
+          </Col>
+          {/* Grid for user top 5 */}
+          <Col>
+            <h2>My Top Five</h2>
+            <FavList />
+          </Col>      
+          </Row>
+        </div>
+        <div style={styles.WatchListStyles}>
+          <WatchList />
+        </div>
+      </Contianer>
     </div>
   );
 }
+
+export default Profile;

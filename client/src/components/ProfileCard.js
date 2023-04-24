@@ -1,10 +1,13 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const ProfileCard = () => {
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://via.placeholder.com/150" />
+      <Card.Img 
+      variant="top" 
+      src="https://via.placeholder.com/150"
+      style={{ borderRadius: '50%', width: '150px', height: '150px', margin: 'auto' }} />
       <Card.Body>
         <Card.Title>User Name</Card.Title>
         <Card.Subtitle>Followers:</Card.Subtitle>
