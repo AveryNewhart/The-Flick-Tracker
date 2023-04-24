@@ -40,19 +40,11 @@ const resolvers = {
     movie: (parent, { id }, { dataSources }, info) => {
       return dataSources.movieAPI.getMovieById(id)
     },
-    topRatedMovies: (parent, { limit }, { dataSources }, info) => {
-      return dataSources.movieAPI.getTopRatedMovies(limit)
-    },
-    recommendedMovies: (parent, { watchedMovies }, { dataSources }, info) => {
-      return dataSources.recommendationAPI.getRecommendations(watchedMovies)
-    },
-    recommendation: (parent, { id }, { dataSources }, info) => {
-      return dataSources.recommendationAPI.getRecommendationById(id)
-    },
-    protected: (parent, args, context) => {  //!Query defined in typeDef for authentication
-      console.log(context)
+    protected: async (parent, args, context) => {  //!Query defined in typeDef for authentication
       if (context.user) {
-        return User.findOne({ _id: context.user.id })
+        const user = await User.findOne({ _id: context.user._id })
+        console.log(context.user)
+        return user
       }
       throw new AuthenticationError('You need to be logged in!');
 
@@ -67,7 +59,6 @@ const resolvers = {
 
     },
     loginUser: async (parent, { email, password }, { dataSources }) => { 
-      console.log(dataSources)
       const user = await dataSources.User.findOne({ email })
       if (!user) {
         throw new AuthenticationError("No user found with this email address")
@@ -107,8 +98,13 @@ const resolvers = {
     //   // Remove the Watchlist object with the provided movieId from the User's watchlist array
     //   // Return the removed Watchlist object
     // },
-    addReview: async (_, { userId, movieId, text, rating }, { dataSources }) => {
-      const input = { userId, movieId, text, rating }
+    addReview: async (_, { movieId, text, rating }, { dataSources, auth }) => {     
+      console.log(auth)
+      const input = { 
+        movie: movieId, 
+        auth, //!Structuring data we're passing to Review.create
+        text, 
+        rating }
       const newReview = await dataSources.Review.create(input)
       return newReview
 
