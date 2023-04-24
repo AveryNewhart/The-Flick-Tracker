@@ -1,7 +1,7 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-const { User } = require("./models")
+const { User, Review, Movie } = require("./models")
 
 // const routes = require("./routes"); //! We do not need this
 const { authMiddleware } = require("./utils/auth");
@@ -14,10 +14,15 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
-  dataSources: () => {
-    return {
-      User
+  context: {
+    authMiddleware,
+    headers: {}
+  },
+  dataSources: () => { //!Data sources for queries and mutations in resolvers
+    return {           
+      User,            
+      Review,
+      Movie
     };
   },
 });

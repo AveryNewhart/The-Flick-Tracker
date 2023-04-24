@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Metal+Mania&family=Zen+Dots&display=swap');
+
+input {
+  display: block;
+}
+
+#alert {
+  color: red;
+}
+ 
+/* div {
+  /* width: 100vh; */
+   /* height: 100vh; */
+  
+  /* background-color: green; */
+/* }  */
+
+.divvy  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    height: 100vh;
+    /* padding-top: 18%; */
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    flex-direction: column;
+    background-color: rgba(33, 32, 32, 0.992);
+}
+
+.signupForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 3px solid #c10206;
+    padding: 50px;
+    border-radius: 10%;
+    background: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    width: 400px;
+    /* margin-bottom: 150px; */
+}
+
+.signupLabel,
+.signupI {
+    margin-bottom: 10px;
+    color: white;
+    width: 350px;
+} 
+
+.signupP {
+  width: 350px;
+}
+
+p {
+  color: #c10206;
+  font-family: 'Zen Dots';
+}
+
+.signupBtns {
+  color: #c10206;
+  font-weight: bolder;
+  font-family: 'Zen Dots';
+  background: none;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.signupBtns:hover {
+  background: #c10206;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #c10206, 0 0 25px #c10206, 0 0 50px #c10206,
+    0 0 100px #c10206;
+}  

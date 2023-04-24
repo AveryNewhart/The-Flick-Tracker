@@ -1,4 +1,5 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema } = require("mongoose")
+const bcrypt = require("bcrypt")
 
 const UserSchema = new Schema({
   username: {
@@ -14,13 +15,13 @@ const UserSchema = new Schema({
     match: [
       /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
       "Must match an email address",
-    ],
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-      select: false, // hide the password field by default when querying for users
-    },
+    ]
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
+    select: false, // hide the password field by default when querying for users
   },
   watchedMovies: [
     {
@@ -52,8 +53,21 @@ const UserSchema = new Schema({
       ref: "Review",
     },
   ],
-});
+})
+
+UserSchema.pre("save", async function (next) {          
+  if (this.isNew || this.isModified("password")) {
+    const saltRounds = 10
+    this.password = await bcrypt.hash(this.password, saltRounds)
+  }
+
+  next()
+})
+
+UserSchema.methods.isCorrectPassword = async function (password) {
+  return bcrypt.compare(password, this.password)
+}
 
 const User = model("User", UserSchema)
 
-module.exports = User;
+module.exports = User
