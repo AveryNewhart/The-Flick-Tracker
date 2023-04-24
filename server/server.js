@@ -18,9 +18,9 @@ const server = new ApolloServer({
     authMiddleware,
     headers: {}
   },
-  dataSources: () => {
-    return {
-      User,
+  dataSources: () => { //!Data sources for queries and mutations in resolvers
+    return {           
+      User,            
       Review,
       Movie
     };
