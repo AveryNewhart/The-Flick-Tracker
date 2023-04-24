@@ -19,8 +19,9 @@
   "dependencies": {
     "@userfront/core": "^0.5.6",
     "@userfront/react": "^0.3.3",
+    "bcrypt": "^5.1.0",
     "jwt-decode": "^3.1.2",
     "react-font": "^1.2.1",
-    "react-modal-login": "^2.0.7"
+    "react-modal-login": "^1.4.5"
   }
 }

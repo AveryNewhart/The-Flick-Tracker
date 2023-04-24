@@ -3,7 +3,8 @@ const Review = require("./Review");
 const Comment = require("./Comment");
 const Reaction = require("./Reaction");
 const Reply = require("./Reply");
-const Watched = require("./Watched");
-const Watchlist = require("./Watchlist");
+const Movie = require("./Movie")
+// const Watched = require("./Watched");
+// const Watchlist = require("./Watchlist");
 
-module.exports = { User, Review, Comment, Reaction, Reply, Watched, Watchlist };
+module.exports = { User, Review, Comment, Reaction, Reply, Movie };
