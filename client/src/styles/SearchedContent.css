@@ -4,6 +4,11 @@
     background-color: rgba(33, 32, 32, 0.992); 
 }
 
+.mainContent {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .movieTitle {
     text-align: center;
     color: #c10206;
@@ -122,16 +127,17 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 100%;
 }
 
-/* .inputWrapper {
-  width: 60vw;
-} */
+.inputWrapper {
+  max-width: 100%;
+}
 
 .reviewInput {
   font-size: 1.2em;
-  width: 60vw;
-  /* height: 500%; */
+  width: 45vw;
+  height: 300px;
   margin-top: 10px;
   padding: 5px;
   box-sizing: border-box;

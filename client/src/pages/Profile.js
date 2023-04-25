@@ -21,6 +21,7 @@ const styles = {
     flexDirection: 'column',
     minWidth: '100vw',
     marginX: '20px',
+    maxWidth: '1400px'
   },
   // Profile Card and Top 5 Styles
   ProStyles: {
