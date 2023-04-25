@@ -46,7 +46,14 @@ const styles = {
   // Individual Button Stytles
   ButtonStyles: {
     background: '#c10206',
-    borderStyle: 'none'
+    borderStyle: 'none',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+      background: '#ff4444',
+    },
+    '&:active': {
+      background: '#990000',
+    },
   },
   ReviewStyles: {
     backgroundColor: 'blue'
