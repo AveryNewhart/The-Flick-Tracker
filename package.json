@@ -22,6 +22,7 @@
     "bcrypt": "^5.1.0",
     "jwt-decode": "^3.1.2",
     "react-font": "^1.2.1",
-    "react-modal-login": "^1.4.5"
+    "react-modal-login": "^1.4.5",
+    "use-history": "^1.4.1"
   }
 }

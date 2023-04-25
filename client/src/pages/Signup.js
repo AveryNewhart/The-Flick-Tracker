@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 // import Userfront from "@userfront/core";
 import Navigation from '../components/Nav';
 import { useMutation } from '@apollo/client'
-import { ADD_USER } from '../utils/mutations'
+import { CREATE_USER } from '../utils/mutations'
 import {  Alert } from "react-bootstrap";
 import Auth from '../utils/auth';
 import "../styles/Signup.css";
+// import { useHistory } from "react-router-dom";
 
 // Initialize Userfront Core JS
 // Userfront.init("demo1234");
@@ -23,7 +24,9 @@ const SignupForm = () =>
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  // const history = useHistory();
+
+  const [createUser, { error, data }] = useMutation(CREATE_USER);
 
   const handleInputChange = (event) =>
   {
@@ -41,15 +44,17 @@ const SignupForm = () =>
     {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     try
     {
-      const { data } = await addUser({
-        variables: { ...userFormData },
+      const { data } = await createUser({
+        variables: { input: { ...userFormData } },
       });
 
-      Auth.login(data.addUser.token);
+      Auth.login(data.createUser.token);
+      // history.push("/profile");
     } catch (err)
     {
       console.error(err);
@@ -87,6 +92,7 @@ const SignupForm = () =>
             value={userFormData.email}
             onChange={handleInputChange}
             className="signupP"
+            required
           />
         </label>
         <label className='signupLabel'>
@@ -97,6 +103,7 @@ const SignupForm = () =>
             value={userFormData.username}
             onChange={handleInputChange}
             className="signupP"
+            required
           />
         </label>
         <label className='signupLabel'>
@@ -107,6 +114,7 @@ const SignupForm = () =>
             value={userFormData.password}
             onChange={handleInputChange}
             className="signupP"
+            required
           />
         </label>
   
