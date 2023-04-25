@@ -14,7 +14,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  context: {
+    authMiddleware,
+    headers: {}
+  },
   dataSources: () => { //!Data sources for queries and mutations in resolvers
     return {           
       User,            
