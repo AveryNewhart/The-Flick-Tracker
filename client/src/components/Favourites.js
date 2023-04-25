@@ -6,10 +6,10 @@ import Row from 'react-bootstrap/Row';
 const FavList = () => {
     return (
     <container fluid>
-      <Row xs={1} md={5} className="g-4">
+      <Row xs={5} md={5} className="g-4">
         {Array.from({ length: 5 }).map((_, idx) => (
-          <Col>
-            <Card style={{ width: '12rem', height: '18rem', }}>
+          <Col style={{ display: 'flex', justifyContent: 'center' }}>
+            <Card style={{ width: '12rem', height: '18rem', margin: '20px' }}>
               <Card.Img variant="top" src="https://via.placeholder.com/150" />
               <Card.ImgOverlay>
               <Card.Body>
