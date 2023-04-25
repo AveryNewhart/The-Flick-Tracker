@@ -40,7 +40,7 @@ const UserSchema = new Schema({
       ref: "User",
     },
   ],
-  following: [
+  followings: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",
