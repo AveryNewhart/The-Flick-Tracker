@@ -5,6 +5,10 @@ body {
   max-width: 100vw;
   margin: 0;
   padding: 0;
+
+  max-height: 100%;
+  max-width: 100%;
+
 } 
 
 .margin-from-top {
