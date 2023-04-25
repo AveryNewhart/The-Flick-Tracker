@@ -9,7 +9,7 @@ const resolvers = {
     user: async (parent, { username }, context) => {
       return await User.findOne({ username });
     },
-    //git pu users: async (_, __, context) => {
+    //users: async (_, __, context) => {
     //   return await User.find();
     // },
     //   review: async (parent, { id }, context) => {
@@ -52,12 +52,13 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async (parent, args, context) => {
-      if (context.user) {
-        const newUser = await User.create(args);
-        const token = signToken(newUser);
-        return { token, user: newUser };
-      }
+    createUser: async (parent, { input }) => {
+      console.log(input);
+      const user = await User.create(input);
+      const token = signToken(user);
+
+      return { token, user };
+
       // throw new AuthenticationError("You need to be logged in!");
     },
 
