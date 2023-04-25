@@ -1,12 +1,10 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-const { User, Review, Movie } = require("./models")
 
-// const routes = require("./routes"); //! We do not need this
 const { authMiddleware } = require("./utils/auth");
 
-const { typeDefs, resolvers } = require("./schema");
+const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
 const PORT = process.env.PORT || 3001;
@@ -14,6 +12,9 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+<<<<<<< HEAD
+  context: authMiddleware,
+=======
   context: {
     authMiddleware,
     headers: {}
@@ -25,6 +26,7 @@ const server = new ApolloServer({
       Movie
     };
   },
+>>>>>>> develop
 });
 
 app.use(express.urlencoded({ extended: false }));
