@@ -58,8 +58,8 @@ const resolvers = {
       return { user: newUser, token }
 
     },
-    loginUser: async (parent, { email, password }, { dataSources }) => { 
-      const user = await dataSources.User.findOne({ email })
+    loginUser: async (parent, { email, password }) => { 
+      const user = await User.findOne({ email })
       if (!user) {
         throw new AuthenticationError("No user found with this email address")
       }

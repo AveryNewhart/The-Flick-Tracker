@@ -3,7 +3,7 @@ import Navigation from "../components/Nav.js";
 // import Userfront from "@userfront/core";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
-import {  Alert } from "react-bootstrap";
+// import {  Alert } from "react-bootstrap";
 import Auth from "../utils/auth";
 
 import "../styles/App.css";
@@ -16,9 +16,9 @@ import "../styles/Login.css";
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   // const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
   
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [loginUser, { error, data }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -36,12 +36,12 @@ const LoginForm = () => {
     }
 
     try {
-      const { data } = await login({ variables: { ...userFormData } });
+      const { data } = await loginUser({ variables: { ...userFormData } });
 
-      Auth.login(data.login.token);
+      Auth.login(data.loginUser.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
+      // setShowAlert(true);
     }
 
     setUserFormData({
@@ -62,14 +62,14 @@ const LoginForm = () => {
       <div>
       <Navigation />
     {/* <Alert message={this.state.alertMessage} /> */}
-    <Alert
+    {/* <Alert
           dismissible
           onClose={() => setShowAlert(false)}
           show={showAlert}
           variant="danger"
         >
           Something went wrong with your login credentials!
-        </Alert>
+        </Alert> */}
     <div className='divvy'>
     <form onSubmit={handleFormSubmit} className="loginForm">
       <label className='loginLabel'>
