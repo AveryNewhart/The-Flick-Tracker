@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../styles/App.css"
 import ProfileCard from '../components/ProfileCard';
 import FavList from '../components/Favourites';
 import WatchList from '../components/WatchList';
+import MyReviews from '../components/MyReviews';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
 import Contianer from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button';
 
 import "../styles/Profile.css";
 
@@ -33,9 +35,32 @@ const styles = {
     alignItems: 'center',
     width:'100vw',
   },
+  // Button Row Styles
+  ButtonRowStyles: {
+    marginTop: '35px',
+    marginBottom: '35px',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  // Individual Button Stytles
+  ButtonStyles: {
+    background: '#c10206',
+    borderStyle: 'none'
+  },
+  ReviewStyles: {
+    backgroundColor: 'blue'
+  }
+
 };
 
 const Profile = () => {
+
+  const [displayWatchList, setDisplayWatchList] = useState(true);
+
+  const handleButtonClick = () => {
+    setDisplayWatchList(!displayWatchList);
+  };
+
   return (
     <div>
       <Navigation />
@@ -51,9 +76,30 @@ const Profile = () => {
             <FavList />
           </Col>      
           </Row>
-        <Row style={styles.WatchListStyles}>
-          <WatchList />
-        </Row>
+          <Row style={styles.ButtonRowStyles}>
+            <Col>
+              <Button 
+               style={styles.ButtonStyles} 
+               onClick={handleButtonClick}
+               active={displayWatchList}>
+               Watch List
+              </Button>{' '}
+            </Col>
+            <Col>
+              <Button
+               style={styles.ButtonStyles}
+               onClick={handleButtonClick}
+               active={!displayWatchList}>
+               Reviews
+               </Button>{' '}
+            </Col>
+          </Row>
+        {/* <Row style={styles.WatchListStyles}>
+          <WatchList style={styles.WatchStyles}/>
+          <MyReviews style={styles.ReviewStyles}/>
+        </Row> */}
+        {/* WatchList or MyReviews component */}
+      {displayWatchList ? <WatchList /> : <MyReviews />}
       </Contianer>
       </div>
     </div>
