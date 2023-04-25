@@ -40,6 +40,7 @@ const SearchedContent = () => {
         <Navigation />
       {movie ? (
         <div className="movie-details">
+          <section className='mainContent'>
           <h1 className='movieTitle'>{movie.title}</h1>
           <img className='movie__poster' src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} 
             style={{
@@ -56,8 +57,8 @@ const SearchedContent = () => {
             <p className="details__synopsis">{movie.overview}</p>
           </div>
           <div className='watchButtons'>
-          <button>add to watchlist</button>
-          <button>add to watched</button>
+          <button>Add to Watchlist</button>
+          <button>Add to Watched</button>
           </div>
           <div className="reviewDiv">
             <label htmlFor="review" className="reviewText">Add Review:</label>
@@ -66,7 +67,7 @@ const SearchedContent = () => {
                 </div>
                 <button onClick={handleAddReview}>Add Review</button>
             </div>
-
+          </section>
         </div>
       ) : (
         <div>Loading...</div>
