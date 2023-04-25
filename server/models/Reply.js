@@ -22,6 +22,6 @@ const replySchema = new Schema({
   ],
 });
 
-const Reply = model("reply", replySchema)
+const Reply = model("Reply", replySchema);
 
 module.exports = Reply;
