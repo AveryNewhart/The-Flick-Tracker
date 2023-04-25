@@ -36,46 +36,47 @@ const resolvers = {
     //   replies: (parent, args, context) => {
     //     return replyAPI.getReplies();
     //   },
-    //   protected: async (parent, args, context) => {
-    //     //!Query defined in typeDef for authentication
-    //     if (context.user) {
-    //       const user = await User.findOne({ _id: context.user._id });
-    //       console.log(context.user);
-    //       return user;
-    //     }
+    protected: async (parent, args, context) => {
+      //!Query defined in typeDef for authentication
+      if (context.user) {
+        const user = await User.findOne({ _id: context.user._id });
+        console.log(context.user);
+        return user;
+      }
 
-    //     throw new AuthenticationError("You need to be logged in!");
-    //   },
-    //   movie: (parent, { id }, context) => {
-    //     return movieAPI.getMovieById(id);
-    //   },
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    // movie: (parent, { id }, context) => {
+    //   return movieAPI.getMovieById(id);
+    // },
   },
 
   Mutation: {
-    createUser: async (_, { input }, context) => {
+    createUser: async (parent, args, context) => {
       if (context.user) {
-        const newUser = await User.create(input);
+        const newUser = await User.create(args);
         const token = signToken(newUser);
-        return { user: newUser, token };
+        return { token, user: newUser };
       }
-      throw new AuthenticationError("You need to be logged in!");
+      // throw new AuthenticationError("You need to be logged in!");
     },
-    // loginUser: async (parent, { email, password }, context) => {
-    //   console.log(dataSources);
-    //   const user = await User.findOne({ email });
-    //   if (!user) {
-    //     throw new AuthenticationError("No user found with this email address");
-    //   }
-    //   const correctPw = await user.isCorrectPassword(password);
-    //   if (!correctPw) {
-    //     throw new AuthenticationError("Incorrect credentials");
-    //   }
-    //   console.log(user);
-    //   if (user.id) {
-    //     const token = signToken(user);
-    //     return { token, user };
-    //   }
-    // },
+
+    loginUser: async (parent, { email, password }, context) => {
+      console.log(context);
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError("No user found with this email address");
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+      console.log(user);
+      if (user.id) {
+        const token = signToken(user);
+        return { token, user };
+      }
+    },
 
     // // updateUser: (parent, args, context) => {
     // //   // Update the User object with the provided ID with the provided input

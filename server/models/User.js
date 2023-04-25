@@ -67,6 +67,8 @@ UserSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password)
 }
 
+//TODO We can add userSchema virtuals for anything we can count like watched, watchlist, follower, following, or how many reviews a user has made
+
 const User = model("User", UserSchema)
 
 module.exports = User

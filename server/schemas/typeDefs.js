@@ -85,18 +85,17 @@ const typeDefs = gql`
     ## reactions: [Reaction!]!
     ## reply(id: ID!): Reply
     ## replies: [Reply!]!
-    ## protected: User
+    protected: User
     ## movie(id: ID!): Movie
   }
 
   type Mutation {
     createUser(input: CreateUserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
   }
 `;
 
 module.exports = typeDefs;
-//!Type Recommendation is for ChatGPT resolvers
-//!Type Movie is for the IMDB API
 
 // deleteUser(id: ID!): Boolean!
 
@@ -107,7 +106,7 @@ module.exports = typeDefs;
 // addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
-// loginUser(email: String!, password: String!): Auth
+
 // ## updateUser(id: ID!, input: UpdateUserInput!): User!
 // ## deleteUser(id: ID!, input: DeleteUserInput!): User!
 // addWatchedMovie(username: String!, movieId: ID!): User!

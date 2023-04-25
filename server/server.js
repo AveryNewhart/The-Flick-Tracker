@@ -2,7 +2,6 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 
-// const routes = require("./routes"); //! We do not need this
 const { authMiddleware } = require("./utils/auth");
 
 const { typeDefs, resolvers } = require("./schemas");
