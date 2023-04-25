@@ -32,7 +32,7 @@ const MovieSchema = new Schema({
     synopsis: {
         type: String,
     },
-    reviews: [
+    review: [
         {
             type: Schema.Types.ObjectId,
             ref: "Review"

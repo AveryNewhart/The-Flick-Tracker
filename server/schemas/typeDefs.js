@@ -76,7 +76,7 @@ const typeDefs = gql`
   }
   type Query {
     user(username: String!): User ##Changed from ID to username to query user
-    ## users: [User]
+    users: [User]
     ## review(id: ID!): Review
     ## reviews: [Review!]!
     ## comment(id: ID!): Comment

@@ -9,9 +9,9 @@ const resolvers = {
     user: async (parent, { username }, context) => {
       return await User.findOne({ username });
     },
-    //users: async (_, __, context) => {
-    //   return await User.find();
-    // },
+    users: async (_, __, context) => {
+      return await User.find();
+    },
     //   review: async (parent, { id }, context) => {
     //     return await Review.create(id);
     //   },
