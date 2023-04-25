@@ -15,7 +15,7 @@ import "../styles/Login.css";
 // Define the Login form component
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
-  const [validated] = useState(false);
+  // const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   
   const [login, { error, data }] = useMutation(LOGIN_USER);
@@ -71,7 +71,7 @@ const LoginForm = () => {
           Something went wrong with your login credentials!
         </Alert>
     <div className='divvy'>
-    <form noValidate validated={validated} onSubmit={handleFormSubmit} className="loginForm">
+    <form onSubmit={handleFormSubmit} className="loginForm">
       <label className='loginLabel'>
         Email
         <input
@@ -79,7 +79,7 @@ const LoginForm = () => {
           type="text"
           value={userFormData.email}
           onChange={handleInputChange}
-          className="loginI"
+          className="signupP"
         />
       </label>
       <label className='loginLabel'>

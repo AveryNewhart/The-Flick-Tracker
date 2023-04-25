@@ -1,12 +1,3 @@
-//! Line 122: Moved "GetUserInfo" into the Query type definition. Was written like this "query GetUserInfo($userId: ID!)"
-//! Line 122: Added :User and took away the $ because it was throwing an error.
-//! Line 117: Removed the extra ")" because it was throwing an error. Line looked like this "[ID!]!): [Recommendation!]!"
-//! Line 117: Removed an extra colon and replaced it with a closing soft bracket. Line looked like this "recommendedMovies(watchedMovies: [ID!]!: [Recommendation!]!"
-//! Line 104: Capitalized "Watched". Line looked like this "watched(id: ID!): watched"
-//! Line 105: Capitalized "WatchedList". Line looked like this "watchlist(id: ID!): watchlist"
-
-//! FIRST 4 COMMENTS ARE NOT IMPLEMENTED BECAUSE I DID NOT WANT TO CHANGE THEM WITHOUT WORKING WITH YOU NICK. BUT TYPEDEFS NEED A LOT OF WORK
-
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
@@ -14,40 +5,41 @@ const typeDefs = gql`
     id: ID!
     username: String!
     email: String!
-
+    password: String!
     watchedMovies: [Movie]
     watchlist: [Movie]
     reviews: [Review]
     following: [User]
     follower: [User]
   }
-
   input CreateUserInput {
     email: String!
     username: String!
+    password: String!
   }
-
+  input UpdateUserInput {  ##This is how you comment in string interpolation
+    email: String!
+    username: String!
+    password: String!
+  }
   type Movie {
     id: ID!
     title: String!
-    releaseYear: Int!
-    director: String!
-    actors: [String!]!
-    runtime: Int!
-    category: String!
-    trailer: String!
-    titleCard: String!
-    synopsis: String!
+    releaseYear: Int
+    director: String
+    actors: [String]
+    runtime: Int
+    category: String
+    trailer: String
+    imageURL: String
+    synopsis: String
   }
-
-
   type Recommendation {
     id: ID!
     user: User!
     movie: Movie!
     score: Int!
   }
-
   type Review {
     id: ID!
     text: String!
@@ -56,13 +48,11 @@ const typeDefs = gql`
     reactions: [Reaction]
     comments: [Comment]
   }
-
   type Reaction {
     id: ID!
     type: ReactionType!
     user: User!
   }
-
   enum ReactionType {
     THUMBS_UP
     THUMBS_DOWN
@@ -72,14 +62,12 @@ const typeDefs = gql`
     SAD
     ANGRY
   }
-
   type Comment {
     id: ID!
     text: String!
     user: User!
     replies: [Reply]
   }
-
   type Reply {
     id: ID!
     text: String!
@@ -87,10 +75,13 @@ const typeDefs = gql`
     comment: Comment!
     reaction: [Reaction]
   }
-
+  type Auth {
+    token: ID!
+    user: User
+  }
   type Query {
-    user(id: ID!): User
-    users: [User!]!
+    user(username: String!): User ##Changed from ID to username to query user
+    users: [User]
     review(id: ID!): Review
     reviews: [Review!]!
     comment(id: ID!): Comment
@@ -99,13 +90,9 @@ const typeDefs = gql`
     reactions: [Reaction!]!
     reply(id: ID!): Reply
     replies: [Reply!]!
-
+    protected: User
     movie(id: ID!): Movie
-    topRatedMovies(limit: Int! = 20): [Movie!]!
-
-    recommendation(id: ID!): Recommendation
   }
-
   query GetUserInfo($userId: ID!) {
     user(id: $userId) {
       id
@@ -187,25 +174,18 @@ const typeDefs = gql`
       }
     }
   }
-
-
   type Mutation {
-
-    createUser(input: CreateUserInput!): User!
-
-
-
-    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
+    createUser(input: CreateUserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    addReview(movieId: ID!, text: String!, rating: Int!): Review!
     updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
     deleteReview(reviewId: ID!): Review!
-
     addReaction(reviewId: ID!, type: ReactionType!): Reaction!
     deleteReaction(reactionId: ID!): Reaction!
-
     addComment(reviewId: ID!, text: String!): Comment!
     updateComment(commentId: ID!, text: String!): Comment!
     deleteComment(commentId: ID!): Comment!
-
     addReply(commentId: ID!, text: String!): Reply!
     updateReply(replyId: ID!, text: String!): Reply!
     deleteReply(replyId: ID!): Reply!
@@ -217,7 +197,7 @@ module.exports = typeDefs;
 //!Type Movie is for the IMDB API
 
 
-// updateUser(id: ID!, input: UpdateUserInput!): User!
+
 // deleteUser(id: ID!): Boolean!
 
 // recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
