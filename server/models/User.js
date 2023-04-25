@@ -40,7 +40,7 @@ const UserSchema = new Schema({
       ref: "User",
     },
   ],
-  following: [
+  followings: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",
@@ -66,6 +66,8 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password)
 }
+
+//TODO We can add userSchema virtuals for anything we can count like watched, watchlist, follower, following, or how many reviews a user has made
 
 const User = model("User", UserSchema)
 
