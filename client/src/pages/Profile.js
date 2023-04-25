@@ -82,7 +82,7 @@ const Profile = () => {
                style={styles.ButtonStyles} 
                onClick={handleButtonClick}
                active={displayWatchList}>
-               My Watch List
+               Watch List
               </Button>{' '}
             </Col>
             <Col>
@@ -90,7 +90,7 @@ const Profile = () => {
                style={styles.ButtonStyles}
                onClick={handleButtonClick}
                active={!displayWatchList}>
-               My Reviews
+               Reviews
                </Button>{' '}
             </Col>
           </Row>
