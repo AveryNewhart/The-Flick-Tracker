@@ -87,7 +87,7 @@ const resolvers = {
     // //   // Return a boolean indicating whether the deletion was successful
     // // },
 
-    // addWatchedMovie: async (parent, { movieId, title }, context) => {
+    /// addWatchedMovie: async (parent, { movieId, title }, context) => {
     //   const input = { movieId, title };
 
     //   if (!context.user) {
