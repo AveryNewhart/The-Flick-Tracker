@@ -12,21 +12,7 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-<<<<<<< HEAD
   context: authMiddleware,
-=======
-  context: {
-    authMiddleware,
-    headers: {}
-  },
-  dataSources: () => { //!Data sources for queries and mutations in resolvers
-    return {           
-      User,            
-      Review,
-      Movie
-    };
-  },
->>>>>>> develop
 });
 
 app.use(express.urlencoded({ extended: false }));

@@ -17,7 +17,7 @@ const typeDefs = gql`
     username: String!
     password: String!
   }
-  input UpdateUserInput { ##This is how you comment in string interpolation
+  input DeleteUserInput { ##This is how you comment in string interpolation
     email: String!
     username: String!
     password: String!
@@ -77,6 +77,7 @@ const typeDefs = gql`
   type Query {
     user(username: String!): User ##Changed from ID to username to query user
     users: [User]
+
     ## review(id: ID!): Review
     ## reviews: [Review!]!
     ## comment(id: ID!): Comment
@@ -91,6 +92,8 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(input: CreateUserInput!): Auth
+    deleteUser(id: ID!, input: DeleteUserInput!): User!
+    ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
   }
 `;
@@ -106,9 +109,6 @@ module.exports = typeDefs;
 // addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
-
-// ## updateUser(id: ID!, input: UpdateUserInput!): User!
-// ## deleteUser(id: ID!, input: DeleteUserInput!): User!
 // addWatchedMovie(username: String!, movieId: ID!): User!
 // ##  addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 // ##  updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
