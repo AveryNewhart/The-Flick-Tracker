@@ -8,11 +8,11 @@ const reactionSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["thumbsUp", "thumbsDown", "LOVE", "LAUGH", "SAD", "ANGRY"],
+    enum: ["THUMBS_UP", "THUMBS_DOWN", "LOVE", "LAUGH", "SAD", "ANGRY"],
     required: true,
   },
 });
 
-const Reaction = model("reaction", reactionSchema)
+const Reaction = model("Reaction", reactionSchema);
 
 module.exports = Reaction;

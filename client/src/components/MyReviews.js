@@ -7,7 +7,7 @@ const WatchList = () => {
     return (
     <container fluid>
       <Row xs={2} md={5} className="g-4">
-        {Array.from({ length: 10 }).map((_, idx) => (
+        {Array.from({ length: 7 }).map((_, idx) => (
           <Col style={{justifyContent: 'center', display: 'flex'}}>
             <Card style={{ width: '12rem', height: '18rem', }}>
               <Card.Img variant="top" src="https://via.placeholder.com/150" />
