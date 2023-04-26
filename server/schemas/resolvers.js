@@ -60,8 +60,8 @@ const resolvers = {
       return { token, user };
     },
 
-    loginUser: async (parent, { email, password }, context) => {
-      console.log(context);
+    loginUser: async (parent, { email, password } ) => {
+      // console.log(context);
       const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
