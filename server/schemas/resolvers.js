@@ -58,8 +58,6 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-
-      // throw new AuthenticationError("You need to be logged in!");
     },
 
     loginUser: async (parent, { email, password }, context) => {
@@ -83,10 +81,25 @@ const resolvers = {
     // //   // Update the User object with the provided ID with the provided input
     // //   // Return the updated User object
     // // },
-    // // deleteUser: (parent, args, context) => {
-    // //   // Delete the User object with the provided ID
-    // //   // Return a boolean indicating whether the deletion was successful
-    // // },
+    deleteUser: async (parent, { input }) => {
+      // Check if user is logged in
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+
+      // Find user by ID and delete
+      const deletedUser = await User.findByIdAndDelete(context.user._id);
+
+      // If user is not found, throw an error
+      if (!deletedUser) {
+        throw new UserInputError("User not found.");
+      }
+
+      return {
+        message: "User deleted successfully.",
+        user: deletedUser,
+      };
+    },
 
     /// addWatchedMovie: async (parent, { movieId, title }, context) => {
     //   const input = { movieId, title };

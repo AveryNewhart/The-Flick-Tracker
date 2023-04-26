@@ -21,7 +21,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     minlength: 6,
-    select: false, // hide the password field by default when querying for users
   },
   watchedMovies: [
     {
