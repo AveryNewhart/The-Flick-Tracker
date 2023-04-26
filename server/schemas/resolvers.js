@@ -81,24 +81,21 @@ const resolvers = {
     // //   // Update the User object with the provided ID with the provided input
     // //   // Return the updated User object
     // // },
-    deleteUser: async (parent, { input }) => {
+    deleteUser: async (parent, { id }, { user }) => {
       // Check if user is logged in
-      if (!context.user) {
+      if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
       // Find user by ID and delete
-      const deletedUser = await User.findByIdAndDelete(context.user._id);
+      const deletedUser = await User.findByIdAndDelete(id);
 
       // If user is not found, throw an error
       if (!deletedUser) {
-        throw new UserInputError("User not found.");
+        throw new AuthenticationError("User not found.");
       }
-
-      return {
-        message: "User deleted successfully.",
-        user: deletedUser,
-      };
+      console.log(deletedUser.username);
+      return deletedUser;
     },
 
     /// addWatchedMovie: async (parent, { movieId, title }, context) => {
