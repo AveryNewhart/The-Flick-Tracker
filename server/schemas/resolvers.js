@@ -98,6 +98,46 @@ const resolvers = {
       return deletedUser;
     },
 
+    addFollower: async (parent, { input }, { user }) => {
+      //authentication check to make sure we have a valid user.
+      console.log(user); // user is going to be just the credentials of the username email and Id
+      if (!user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      //having our destructured userId equal our input args for the addFollower resolver mutation function
+      const { userId } = input;
+
+      // Find the user who is being followed
+      const followedUser = await User.findById(userId);
+      console.log("followedUser", followedUser);
+      // We are taking the user object and finding the userId to call it as followingUser
+      const followingUser = await User.findById(user._id);
+      console.log("followingUser", followingUser);
+
+      //If no user is found in the query than we will return an error.
+      if (!followedUser) {
+        throw new UserInputError("User not found.");
+      }
+
+      // Add the user to the follower array of the followedUser
+      followedUser.followers.push(user._id);
+      console.log("_id of user", user._id);
+      console.log("followedUser.followers", followedUser.followers);
+
+      console.log(followedUser._id);
+      // Save the followedUser
+      await followedUser.save();
+      // Add the followedUser to the followings array of the user
+
+      followingUser.followings.push(followedUser._id);
+
+      // Save the user
+      await followingUser.save();
+
+      // Return the user with the updated followings and followers arrays
+      return followingUser;
+    },
+
     /// addWatchedMovie: async (parent, { movieId, title }, context) => {
     //   const input = { movieId, title };
 

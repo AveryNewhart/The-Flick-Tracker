@@ -17,11 +17,15 @@ const typeDefs = gql`
     username: String!
     password: String!
   }
-  input UpdateUserInput {  ##This is how you comment in string interpolation
+  input UpdateUserInput { ##This is how you comment in string interpolation
     email: String!
     username: String!
     password: String!
   }
+  input AddFollower {
+    id: ID!
+  }
+  
   type Movie {
     id: ID!
     title: String!
@@ -181,6 +185,9 @@ const typeDefs = gql`
     createUser(input: CreateUserInput!): Auth
     loginUser(email: String!, password: String!): Auth
     updateUser(id: ID!, input: UpdateUserInput!): User!
+    addFollower(id: ID!, input: AddFollower!): User!
+  
+
     addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
     updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
     deleteReview(reviewId: ID!): Review!
@@ -198,8 +205,6 @@ const typeDefs = gql`
 module.exports = typeDefs;
 //!Type Recommendation is for ChatGPT resolvers
 //!Type Movie is for the IMDB API
-
-
 
 // deleteUser(id: ID!): Boolean!
 
