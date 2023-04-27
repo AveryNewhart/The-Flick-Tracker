@@ -15,6 +15,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SearchedContent from './pages/Searchedcontent';
+import Dashboard from './pages/Dashboard';
 
 
 // Construct our main GraphQL API endpoint
@@ -53,6 +54,10 @@ function App() {
               <Route 
                 path="/"
                 element={<Homepage />}
+              />
+              <Route 
+                path="/dashbaord"
+                element={<Dashboard />}
               />
               <Route 
                 path="/login"

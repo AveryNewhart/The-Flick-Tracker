@@ -7,7 +7,7 @@ import MyReviews from '../components/MyReviews';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
-import Contianer from 'react-bootstrap/Container'
+import Contianer from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 import "../styles/Profile.css";
