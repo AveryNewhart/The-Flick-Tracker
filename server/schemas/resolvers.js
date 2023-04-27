@@ -100,12 +100,12 @@ const resolvers = {
 
     addFollower: async (parent, { input }, { user }) => {
       //authentication check to make sure we have a valid user.
-      console.log(user); // user is going to be just the credentials of the username email and Id
       if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
       //having our destructured userId equal our input args for the addFollower resolver mutation function
       const { userId } = input;
+      console.log(user); // user is going to be just the credentials of the username email and Id
 
       // Find the user who is being followed
       const followedUser = await User.findById(userId);

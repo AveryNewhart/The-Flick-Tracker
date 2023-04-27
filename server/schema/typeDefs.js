@@ -9,8 +9,14 @@ const typeDefs = gql`
     watchedMovies: [Movie]
     watchlist: [Movie]
     reviews: [Review]
-    following: [User]
-    follower: [User]
+    following: [ID!]
+    follower: [ID!]
+  }
+  type Following {
+    id: ID!
+  }
+  type Follower {
+    id: ID!
   }
   input CreateUserInput {
     email: String!
@@ -25,7 +31,7 @@ const typeDefs = gql`
   input AddFollower {
     id: ID!
   }
-  
+
   type Movie {
     id: ID!
     title: String!
@@ -86,6 +92,8 @@ const typeDefs = gql`
   type Query {
     user(username: String!): User ##Changed from ID to username to query user
     users: [User]
+    followers: [Follower!]!
+    followings: [Following!]!
     review(id: ID!): Review
     reviews: [Review!]!
     comment(id: ID!): Comment
@@ -186,7 +194,6 @@ const typeDefs = gql`
     loginUser(email: String!, password: String!): Auth
     updateUser(id: ID!, input: UpdateUserInput!): User!
     addFollower(id: ID!, input: AddFollower!): User!
-  
 
     addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
     updateReview(reviewId: ID!, text: String!, rating: Int!): Review!

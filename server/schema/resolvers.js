@@ -43,12 +43,6 @@ const resolvers = {
     topRatedMovies: (parent, { limit }, { dataSources }, info) => {
       return dataSources.movieAPI.getTopRatedMovies(limit)
     },
-    recommendedMovies: (parent, { watchedMovies }, { dataSources }, info) => {
-      return dataSources.recommendationAPI.getRecommendations(watchedMovies)
-    },
-    recommendation: (parent, { id }, { dataSources }, info) => {
-      return dataSources.recommendationAPI.getRecommendationById(id)
-    },
     protected: (parent, args, context) => {  //!Query defined in typeDef for authentication
       console.log(context)
       if (context.user) {
