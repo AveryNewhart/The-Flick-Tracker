@@ -56,7 +56,7 @@ function App() {
                 element={<Homepage />}
               />
               <Route 
-                path="/dashbaord"
+                path="/dashboard"
                 element={<Dashboard />}
               />
               <Route 
