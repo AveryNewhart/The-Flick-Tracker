@@ -23,7 +23,20 @@ const styles = {
     },
     rowStyles: {
         width: '100%',
+    },
+    btnStyles: {
+      backgroundColor: '#c10206',
+      borderStyle: 'none',
+      marginBottom: '35px',
+      marginTop: '35px',
+      display: 'flex',
+      justifyContent: 'center',
+      color: 'white',
+      transition: 'background-color 0.3s ease',
+      '&:active': {
+        background: '#ff0000',
       },
+    }
 }
 
 const Dashboard = () => {
@@ -44,6 +57,7 @@ const Dashboard = () => {
                 <Col>
                   <Button
                     className='btn'
+                    style={styles.btnStyles}
                     variant={activeButton === 'following' ? 'primary' : 'outline-primary'}
                     onClick={() => handleButtonClick('following')}
                   >
@@ -53,6 +67,7 @@ const Dashboard = () => {
                 <Col>
                   <Button
                     className='btn'
+                    style={styles.btnStyles}
                     variant={activeButton === 'suggestions' ? 'primary' : 'outline-primary'}
                     onClick={() => handleButtonClick('suggestions')}
                   >
