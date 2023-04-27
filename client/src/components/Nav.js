@@ -25,7 +25,7 @@ export default function Navigation() {
                         <Nav className="container-pos link-text">
                             <Nav.Link href='/'>Homepage</Nav.Link>
                             <Nav.Link href='/profile'>Profile</Nav.Link>
-                            {/* <Nav.Link href='/login'>Login</Nav.Link> */}
+                            <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
                             {Auth.loggedIn() ? (
                                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                             ) : 
