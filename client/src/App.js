@@ -69,7 +69,8 @@ function App() {
                 element={<SearchedContent />}
               />
               <Route 
-                path="/profiles/:username" 
+                // path="/profile/:username" 
+                path="/profile"
                 element={<Profile />} 
                />
             </Routes>
