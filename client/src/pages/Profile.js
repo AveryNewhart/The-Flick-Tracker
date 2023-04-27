@@ -7,7 +7,7 @@ import MyReviews from '../components/MyReviews';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
-import Contianer from 'react-bootstrap/Container'
+import Contianer from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 import "../styles/Profile.css";
@@ -46,7 +46,14 @@ const styles = {
   // Individual Button Stytles
   ButtonStyles: {
     background: '#c10206',
-    borderStyle: 'none'
+    borderStyle: 'none',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+      background: '#ff4444',
+    },
+    '&:active': {
+      background: '#990000',
+    },
   },
   ReviewStyles: {
     backgroundColor: 'blue'
