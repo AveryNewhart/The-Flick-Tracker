@@ -17,10 +17,14 @@ const typeDefs = gql`
     username: String!
     password: String!
   }
-  input DeleteUserInput { ##This is how you comment in string interpolation
-    email: String!
-    username: String!
-    password: String!
+  input DeleteUserInput {
+    id: ID!
+  }
+  input AddFollowerInput {
+    userId: ID!
+  }
+  input AddFollowingInput {
+    userId: ID!
   }
   type Movie {
     id: ID!
@@ -92,7 +96,9 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(input: CreateUserInput!): Auth
-    deleteUser(id: ID!, input: DeleteUserInput!): User!
+    deleteUser(id: ID!, input: DeleteUserInput!): User
+    addFollower(id: ID!, input: AddFollowerInput!): User
+    addFollowing(id: ID!, input: AddFollowingInput!): User
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
   }

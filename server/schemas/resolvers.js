@@ -81,24 +81,61 @@ const resolvers = {
     // //   // Update the User object with the provided ID with the provided input
     // //   // Return the updated User object
     // // },
-    deleteUser: async (parent, { input }) => {
+    deleteUser: async (parent, { id }, { user }) => {
       // Check if user is logged in
-      if (!context.user) {
+      if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
       // Find user by ID and delete
-      const deletedUser = await User.findByIdAndDelete(context.user._id);
+      const deletedUser = await User.findByIdAndDelete(id);
 
       // If user is not found, throw an error
       if (!deletedUser) {
+        throw new AuthenticationError("User not found.");
+      }
+      console.log(deletedUser.username);
+      return deletedUser;
+    },
+
+    addFollower: async (parent, { input }, { user }) => {
+      //authentication check to make sure we have a valid user.
+      if (!user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      //having our destructured userId equal our input args for the addFollower resolver mutation function
+      const { userId } = input;
+      console.log(user); // user is going to be just the credentials of the username email and Id
+
+      // Find the user who is being followed
+      const followedUser = await User.findById(userId);
+      console.log("followedUser", followedUser);
+      // We are taking the user object and finding the userId to call it as followingUser
+      const followingUser = await User.findById(user._id);
+      console.log("followingUser", followingUser);
+
+      //If no user is found in the query than we will return an error.
+      if (!followedUser) {
         throw new UserInputError("User not found.");
       }
 
-      return {
-        message: "User deleted successfully.",
-        user: deletedUser,
-      };
+      // Add the user to the follower array of the followedUser
+      followedUser.followers.push(user._id);
+      console.log("_id of user", user._id);
+      console.log("followedUser.followers", followedUser.followers);
+
+      console.log(followedUser._id);
+      // Save the followedUser
+      await followedUser.save();
+      // Add the followedUser to the followings array of the user
+
+      followingUser.followings.push(followedUser._id);
+
+      // Save the user
+      await followingUser.save();
+
+      // Return the user with the updated followings and followers arrays
+      return followingUser;
     },
 
     /// addWatchedMovie: async (parent, { movieId, title }, context) => {
