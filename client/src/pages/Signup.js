@@ -54,6 +54,7 @@ const SignupForm = () =>
       });
 
       Auth.login(data.createUser.token);
+      window.location.href = '/profile';
       // history.push("/profile");
     } catch (err)
     {
