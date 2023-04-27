@@ -1,0 +1,28 @@
+.btnRow {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+   background-color: #c10206;
+   border-style: none;
+   transition: background-color 0.3s ease;
+   color: white;
+}
+
+.btn:hover {
+    background-color: #ff0000;
+    cursor: pointer;
+}
+
+.btn:active {
+    background-color: #ff0000;
+}
+
+/* Profile Column */
+.profCol {
+    display: flex;
+    justify-content: center;
+}

@@ -9,26 +9,64 @@ import DashFeed from '../components/Dashboard/DashFeed.js';
 import FollowFeed from '../components/Dashboard/FollowFeed.js';
 
 import "../styles/App.css"
+import "../styles/Dash.css"
 
-const Dashboard = () => {
-    return (
-        <div>
-           <Navigation />
-        <Contianer>
-            <Row>
-                <Col><ProfileCard /></Col>
-                <Col>
-                 <Row>
-                    <Button>New Reviews</Button>
-                    <Button>Following</Button>
-                 </Row>
-                 <Row><p>2 of 3</p></Row>
-                </Col>
-                <Col><p>3 of 3</p></Col>
-            </Row>
-        </Contianer> 
-        </div>
-    )
+const styles = {
+    // Overall Container Styles
+    containerStyles: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      minWidth: '100vw',
+      maxWidth: '1400px'
+    },
+    rowStyles: {
+        width: '100%',
+      },
 }
 
-export default Dashboard;
+const Dashboard = () => {
+    const [activeButton, setActiveButton] = useState('following');
+  
+    const handleButtonClick = (buttonName) => {
+      setActiveButton(buttonName);
+    }
+  
+    return (
+      <div>
+        <Navigation />
+        <Contianer style={styles.containerStyles} className='container'>
+          <Row style={styles.rowStyles}>
+            <Col className='profCol'><ProfileCard /></Col>
+            <Col xs={6}>
+              <Row className='btnRow'>
+                <Col>
+                  <Button
+                    className='btn'
+                    variant={activeButton === 'following' ? 'primary' : 'outline-primary'}
+                    onClick={() => handleButtonClick('following')}
+                  >
+                    Following
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    className='btn'
+                    variant={activeButton === 'suggestions' ? 'primary' : 'outline-primary'}
+                    onClick={() => handleButtonClick('suggestions')}
+                  >
+                    Suggestions
+                  </Button>
+                </Col>
+              </Row>
+              {activeButton === 'following' ? <FollowFeed /> : <DashFeed />}
+            </Col>
+            <Col><p>Following</p></Col>
+          </Row>
+        </Contianer>
+      </div>
+    )
+  }
+  
+  export default Dashboard;
