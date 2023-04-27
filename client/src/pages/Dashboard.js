@@ -3,7 +3,7 @@ import Contianer from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import Navigation from "../components/Nav.js";
+import Navigation from '../components/Nav.js';
 import ProfileCard from '../components/ProfileCard';
 import DashFeed from '../components/Dashboard/DashFeed.js';
 import FollowFeed from '../components/Dashboard/FollowFeed.js';
