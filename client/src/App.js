@@ -62,20 +62,16 @@ function App() {
                 path="/signup" 
                 element={<Signup />}
               />
-              <Route 
-                path="/profile" 
-                element={<Profile />}
-              />
                   <Route 
                 path="/movie/:id" 
                 // render={(props) => <SearchedContent {...props} match={props.match} />}
                 //  component={SearchedContent}
                 element={<SearchedContent />}
               />
-              {/* <Route 
+              <Route 
                 path="/profiles/:username" 
-                element={<Profile />} */}
-              {/* /> */}
+                element={<Profile />} 
+               />
             </Routes>
           </div>
         </div>

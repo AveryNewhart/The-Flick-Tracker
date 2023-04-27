@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navigation from "../components/Nav.js";
 import "../styles/SearchedContent.css";
+// import { ADD_REVIEW } from '../utils/mutations.js';
 
 const SearchedContent = () => {
     const { id } = useParams(); // get the ID from the URL
