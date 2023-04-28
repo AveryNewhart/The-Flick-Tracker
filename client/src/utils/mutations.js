@@ -42,17 +42,24 @@ export const ADD_REVIEW = gql`
   mutation addReview($reviewText: String!) {
     addReview(reviewText: $reviewText) {
       _id
-      reviewText
-      reviewAuthor
+      user
+      text
+      movie
+      rating
       createdAt
       comments {
+        _id
+        user
+        text
+      }
+      reactions {
         _id
         commentText
       }
     }
   }
 `;
-
+ 
 export const ADD_COMMENT = gql`
   mutation addComment($reviewId: ID!, $commentText: String!) {
     addComment(reviewId: $thoughtId, commentText: $commentText) {
