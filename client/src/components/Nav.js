@@ -6,8 +6,14 @@ import Auth from '../utils/auth';
 // import Font from 'react-font'
 // // functions being called in, location will be navigated to
 
+
  
 export default function Navigation() {
+    const handleLogout = () => {
+        Auth.logout();
+        window.location.href = '/';
+    }
+    
     return(
         <>
             <Navbar collapseOnSelect fixed='top' expand='sm' className="back-nav">
@@ -19,9 +25,9 @@ export default function Navigation() {
                         <Nav className="container-pos link-text">
                             <Nav.Link href='/'>Homepage</Nav.Link>
                             <Nav.Link href='/profile'>Profile</Nav.Link>
-                            {/* <Nav.Link href='/login'>Login</Nav.Link> */}
+                            <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
                             {Auth.loggedIn() ? (
-                                <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                             ) : 
                             (
                                 // <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>

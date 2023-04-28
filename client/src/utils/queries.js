@@ -1,18 +1,78 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
-      _id
-      username
-      email
-      reviews {
-        _id
-        reviewText
-        createdAt
+query User($username: String!) {
+  user(username: $username) {
+    id
+    username
+    email
+    watchlist {
+      id
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
+    watchedMovies {
+      id
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
+    reviews {
+      id
+      text
+      rating
+      user {
+        id
+        username
+      }
+      reactions {
+        id
+        type
+        user {
+          id
+          username
+        }
+      }
+      comments {
+        id
+        text
+        user {
+          id
+          username
+        }
+        reactions {
+          id
+          type
+          user {
+            id
+            username
+          }
+        }
+        replies {
+          id
+          text
+          user {
+            id
+            username
+          }
+        }
       }
     }
   }
+}
 `;
 
 export const QUERY_REVIEWS = gql`
