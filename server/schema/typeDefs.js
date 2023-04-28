@@ -28,9 +28,6 @@ const typeDefs = gql`
     username: String!
     password: String!
   }
-  input AddFollower {
-    id: ID!
-  }
 
   type Movie {
     id: ID!

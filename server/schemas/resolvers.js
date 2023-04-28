@@ -60,7 +60,7 @@ const resolvers = {
       return { token, user };
     },
 
-    loginUser: async (parent, { email, password } ) => {
+    loginUser: async (parent, { email, password }) => {
       // console.log(context);
       const user = await User.findOne({ email });
       if (!user) {
@@ -81,7 +81,7 @@ const resolvers = {
     // //   // Update the User object with the provided ID with the provided input
     // //   // Return the updated User object
     // // },
-    deleteUser: async (parent, { id }, { user }) => {
+    deleteUser: async (parent, { id, password }, { user }) => {
       // Check if user is logged in
       if (!user) {
         throw new AuthenticationError("You need to be logged in!");
@@ -98,41 +98,42 @@ const resolvers = {
       return deletedUser;
     },
 
-    addFollower: async (parent, { input }, { user }) => {
+    addFollower: async (parent, { id }, { user }) => {
       //authentication check to make sure we have a valid user.
       if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      //having our destructured userId equal our input args for the addFollower resolver mutation function
-      const { userId } = input;
-      console.log(user); // user is going to be just the credentials of the username email and Id
-
+      console.log("Logged in User:", user.username, user.id);
+      console.log("id of the person being followed: ", user._id);
       // Find the user who is being followed
-      const followedUser = await User.findById(userId);
-      console.log("followedUser", followedUser);
-      // We are taking the user object and finding the userId to call it as followingUser
-      const followingUser = await User.findById(user._id);
-      console.log("followingUser", followingUser);
+      followedUser = await User.findByIdAndUpdate(
+        { _id: id },
+        { $push: { followers: user._id } },
+        { new: true }
+      );
 
       //If no user is found in the query than we will return an error.
       if (!followedUser) {
         throw new UserInputError("User not found.");
       }
+      console.log("id of the User:", user._id);
+      const followingUser = await User.findByIdAndUpdate(
+        { _id: user._id },
+        { $push: { followings: id } },
+        { new: true }
+      );
 
-      // Add the user to the follower array of the followedUser
-      followedUser.followers.push(user._id);
-      console.log("_id of user", user._id);
-      console.log("followedUser.followers", followedUser.followers);
+      console.log("Logged in User:", user.username, user);
+      console.log("id of the person being followed: ", id);
+      console.log("followedUser", followedUser);
+      console.log("followingUser", followingUser);
 
-      console.log(followedUser._id);
-      // Save the followedUser
-      await followedUser.save();
-      // Add the followedUser to the followings array of the user
-
-      followingUser.followings.push(followedUser._id);
-
-      // Save the user
-      await followingUser.save();
+      // // Save the followedUser
+      // await followedUser.save();
+      // // Add the followedUser to the followings array of the user
+      // followingUser.followings.push(followedUser._id);
+      // // Save the user
+      // await followingUser.save();
 
       // Return the user with the updated followings and followers arrays
       return followingUser;
