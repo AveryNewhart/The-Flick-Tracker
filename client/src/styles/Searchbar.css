@@ -106,8 +106,9 @@
     color: #c10206;
     text-decoration: none;
   }
-  .option:hover {
-    background-color: #0093cc;
+
+  a.option:hover {
+    background-color: #c10206;
     color: white;
   }
   /* .header__title {
