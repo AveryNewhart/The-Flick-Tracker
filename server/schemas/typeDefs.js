@@ -19,12 +19,7 @@ const typeDefs = gql`
   }
   input DeleteUserInput {
     id: ID!
-  }
-  input AddFollowerInput {
-    userId: ID!
-  }
-  input AddFollowingInput {
-    userId: ID!
+    password: String!
   }
   type Movie {
     id: ID!
@@ -97,8 +92,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     deleteUser(id: ID!, input: DeleteUserInput!): User
-    addFollower(id: ID!, input: AddFollowerInput!): User
-    addFollowing(id: ID!, input: AddFollowingInput!): User
+    addFollower(id: ID!, input: ID!): User
+    addFollowing(id: ID!, input: ID!): User
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
   }

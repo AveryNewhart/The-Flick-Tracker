@@ -1,5 +1,5 @@
-const { model, Schema } = require("mongoose")
-const bcrypt = require("bcrypt")
+const { model, Schema } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
   username: {
@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     match: [
       /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
       "Must match an email address",
-    ]
+    ],
   },
   password: {
     type: String,
@@ -25,24 +25,28 @@ const UserSchema = new Schema({
   watchedMovies: [
     {
       type: Schema.Types.ObjectId,
+      // unique: true,
       ref: "Movie",
     },
   ],
   watchlist: [
     {
       type: Schema.Types.ObjectId,
+      // unique: true,
       ref: "Movie",
     },
   ],
   followers: [
     {
       type: Schema.Types.ObjectId,
+      // unique: true,
       ref: "User",
     },
   ],
   followings: [
     {
       type: Schema.Types.ObjectId,
+     //  unique: true,
       ref: "User",
     },
   ],
@@ -52,23 +56,23 @@ const UserSchema = new Schema({
       ref: "Review",
     },
   ],
-})
+});
 
-UserSchema.pre("save", async function (next) {          
+UserSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
-    const saltRounds = 10
-    this.password = await bcrypt.hash(this.password, saltRounds)
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
-  next()
-})
+  next();
+});
 
 UserSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password)
-}
+  return bcrypt.compare(password, this.password);
+};
 
 //TODO We can add userSchema virtuals for anything we can count like watched, watchlist, follower, following, or how many reviews a user has made
 
-const User = model("User", UserSchema)
+const User = model("User", UserSchema);
 
-module.exports = User
+module.exports = User;
