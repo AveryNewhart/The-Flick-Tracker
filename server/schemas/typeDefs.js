@@ -17,15 +17,15 @@ const typeDefs = gql`
     username: String!
     password: String!
   }
-  input DeleteUserInput { ##This is how you comment in string interpolation
-    email: String!
-    username: String!
+  input DeleteUserInput {
+    id: ID!
     password: String!
   }
   type Movie {
     id: ID!
+    movieId: String!
     title: String!
-    releaseYear: Int
+    releaseYear: String
     director: String
     actors: [String]
     runtime: Int
@@ -33,6 +33,14 @@ const typeDefs = gql`
     trailer: String
     imageURL: String
     synopsis: String
+  }
+  input MovieInput {
+    movieId: Int!
+    title: String!
+    releaseYear: String!
+    runtime: Int
+    imageURL: String!
+    synopsis: String!
   }
   type Review {
     id: ID!
@@ -87,20 +95,21 @@ const typeDefs = gql`
     ## reply(id: ID!): Reply
     ## replies: [Reply!]!
     protected: User
-    ## movie(id: ID!): Movie
+    movie(id: ID!): Movie
   }
 
   type Mutation {
     createUser(input: CreateUserInput!): Auth
-    deleteUser(id: ID!, input: DeleteUserInput!): User!
+    deleteUser(id: ID!, input: DeleteUserInput!): User
+    addFollower(id: ID!, input: ID!): User
+    addFollowing(id: ID!, input: ID!): User
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
+    addWatchedMovie(input: MovieInput!): User!
   }
 `;
 
 module.exports = typeDefs;
-
-// deleteUser(id: ID!): Boolean!
 
 // recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 
@@ -109,7 +118,7 @@ module.exports = typeDefs;
 // addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
-// addWatchedMovie(username: String!, movieId: ID!): User!
+
 // ##  addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 // ##  updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
 // ##  deleteReview(reviewId: ID!): Review!

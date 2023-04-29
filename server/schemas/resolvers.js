@@ -36,6 +36,9 @@ const resolvers = {
     //   replies: (parent, args, context) => {
     //     return replyAPI.getReplies();
     //   },
+    //   movie: (parent, { id }, context) => {
+    //     return movieAPI.getMovieById(id);
+    //   },
     protected: async (parent, args, context) => {
       //!Query defined in typeDef for authentication
       if (context.user) {
@@ -46,9 +49,7 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    // movie: (parent, { id }, context) => {
-    //   return movieAPI.getMovieById(id);
-    // },
+
   },
 
   Mutation: {
@@ -60,7 +61,7 @@ const resolvers = {
       return { token, user };
     },
 
-    loginUser: async (parent, { email, password } ) => {
+    loginUser: async (parent, { email, password }) => {
       // console.log(context);
       const user = await User.findOne({ email });
       if (!user) {
@@ -81,42 +82,85 @@ const resolvers = {
     // //   // Update the User object with the provided ID with the provided input
     // //   // Return the updated User object
     // // },
-    deleteUser: async (parent, { input }) => {
+    deleteUser: async (parent, { password }, { user }) => {
       // Check if user is logged in
-      if (!context.user) {
+      if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
       // Find user by ID and delete
-      const deletedUser = await User.findByIdAndDelete(context.user._id);
+      const deletedUser = await User.findByIdAndDelete(user._id); //!pass id from user
 
       // If user is not found, throw an error
       if (!deletedUser) {
-        throw new UserInputError("User not found.");
+        throw new AuthenticationError("User not found.");
       }
-
-      return {
-        message: "User deleted successfully.",
-        user: deletedUser,
-      };
+      console.log(deletedUser.username);
+      return deletedUser;
     },
 
-    /// addWatchedMovie: async (parent, { movieId, title }, context) => {
-    //   const input = { movieId, title };
+    addFollower: async (parent, { id }, { user }) => {
+      //authentication check to make sure we have a valid user.
+      if (!user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      console.log("Logged in User:", user.username, user.id);
+      console.log("id of the person being followed: ", user._id);
+      // Find the user who is being followed
+      followedUser = await User.findByIdAndUpdate(
+        { _id: id },
+        { $push: { followers: user._id } },
+        { new: true }
+      );
 
-    //   if (!context.user) {
-    //     throw new AuthenticationError(
-    //       "must be logged in to perform this action"
-    //     );
-    //   }
+      //If no user is found in the query than we will return an error.
+      if (!followedUser) {
+        throw new UserInputError("User not found.");
+      }
+      console.log("id of the User:", user._id);
+      const followingUser = await User.findByIdAndUpdate(
+        { _id: user._id },
+        { $push: { followings: id } },
+        { new: true }
+      );
 
-    //   const user = await User.findOneAndUpdate(
-    //     { _id: context.user._id },
-    //     { $addToSet: { watchedMovies: movieId } }
-    //   );
+      console.log("Logged in User:", user.username, user);
+      console.log("id of the person being followed: ", id);
+      console.log("followedUser", followedUser);
+      console.log("followingUser", followingUser);
 
-    //   return user;
-    // },
+      // // Save the followedUser
+      // await followedUser.save();
+      // // Add the followedUser to the followings array of the user
+      // followingUser.followings.push(followedUser._id);
+      // // Save the user
+      // await followingUser.save();
+
+      // Return the user with the updated followings and followers arrays
+      return followingUser;
+    },
+
+     addWatchedMovie: async (parent, { input }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError(
+          "must be logged in to perform this action"
+        );
+      }
+      let movie = await Movie.findOne({movieId: input.movieId}) //* If movie doesn't exist. 
+      if(!movie) { 
+        movie = await Movie.create(input) //*
+      }
+      //! Query movie database from movieId
+      //! If it exists push it to the users watched movies
+      //! If it doesn't exist. Add it to the database, then push to users watched movies
+      const user = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { watchedMovies: movie._id } },
+        { new: true }
+      )
+        .populate("watchedMovies")
+      return user;
+    },
     // removeWatchedMovie: (parent, args, context) => {
     //   // Remove the Watched object with the provided movieId from the User's watchedMovies array
     //   // Return the removed Watched object
