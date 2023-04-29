@@ -75,3 +75,43 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const SAVE_WATCHED_MOVIE = gql`
+  mutation addWatchedMovie($input: MovieInput!) {
+   addWatchedMovie(input: $input) {
+    id
+    watchedMovies {
+      id
+      movieId
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
+  }
+}`
+
+export const SAVE_WATCH_LATER_MOVIE = gql`
+  mutation addWatchLaterMovie($input: MovieInput!) {
+   addWatchLaterMovie(input: $input) {
+    id
+    watchLaterMovies {
+      id
+      movieId
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
+  }
+}`
