@@ -106,6 +106,7 @@ const typeDefs = gql`
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(input: MovieInput!): User!
+    addMovieToWatchlist(input: MovieInput): User!
   }
 `;
 
@@ -115,7 +116,7 @@ module.exports = typeDefs;
 
 // removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
 
-// addMovieToWatchlist(userId: ID!, movieId: ID!): Watchlist!
+
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
 
