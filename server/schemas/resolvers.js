@@ -36,9 +36,9 @@ const resolvers = {
     //   replies: (parent, args, context) => {
     //     return replyAPI.getReplies();
     //   },
-      movie: async (_, { id }, context) => {
-        return await Movie.getMovieById(id);
-      },
+    movie: async (_, { id }, context) => {
+      return await Movie.getMovieById(id);
+    },
     protected: async (parent, args, context) => {
       //!Query defined in typeDef for authentication
       if (context.user) {
@@ -49,7 +49,6 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-
   },
 
   Mutation: {
@@ -99,45 +98,72 @@ const resolvers = {
       return deletedUser;
     },
 
-    addFollower: async (parent, { id }, { user }) => {
-      //authentication check to make sure we have a valid user.
+    addFollower: async (parent, { userId, followedUserId }, { user }) => {
+      // Authentication check to make sure we have a valid user.
       if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      console.log("Logged in User:", user.username, user.id);
-      console.log("id of the person being followed: ", user._id);
-      // Find the user who is being followed
-      followedUser = await User.findByIdAndUpdate(
-        { _id: id },
-        { $push: { followers: user._id } },
+
+      console.log("Logged in User:", userId);
+      console.log("ID of the person being followed: ", followedUserId);
+
+      const followedUser = await User.findByIdAndUpdate(
+        { _id: followedUserId },
+        { $addToSet: { followers: user._id } },
         { new: true }
       );
 
-      //If no user is found in the query than we will return an error.
+      // If no user is found in the query then we will return an error.
       if (!followedUser) {
         throw new UserInputError("User not found.");
       }
-      console.log("id of the User:", user._id);
+
       const followingUser = await User.findByIdAndUpdate(
-        { _id: user._id },
-        { $push: { followings: id } },
+        { _id: userId },
+        { $addToSet: { followings: followedUserId } },
         { new: true }
       );
 
       console.log("Logged in User:", user.username, user);
-      console.log("id of the person being followed: ", id);
-      console.log("followedUser", followedUser);
-      console.log("followingUser", followingUser);
+      console.log("Followed user:", followedUser);
+      console.log("Following user:", followingUser);
 
-      // // Save the followedUser
-      // await followedUser.save();
-      // // Add the followedUser to the followings array of the user
-      // followingUser.followings.push(followedUser._id);
-      // // Save the user
-      // await followingUser.save();
-
-      // Return the user with the updated followings and followers arrays
+      // Return the user with the updated followings and followers arrays.
       return followingUser;
+    },
+
+    unfollow: async (parent, { userId, followedUserId }, { user }) => {
+      // Authentication check to make sure we have a valid user.
+      if (!user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+    
+      console.log("Logged in User:", userId);
+      console.log("ID of the person being unfollowed: ", followedUserId);
+    
+      const unfollowedUser = await User.findByIdAndUpdate(
+        { _id: followedUserId },
+        { $pull: { followers: user._id } },
+        { new: true }
+      );
+    
+      // If no user is found in the query then we will return an error.
+      if (!unfollowedUser) {
+        throw new UserInputError("User not found.");
+      }
+    
+      const unfollowingUser = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $pull: { followings: followedUserId } },
+        { new: true }
+      );
+    
+      console.log("Logged in User:", user.username, user);
+      console.log("Unfollowed user:", unfollowedUser);
+      console.log("Unfollowing user:", unfollowingUser);
+    
+      // Return the user with the updated followings and followers arrays.
+      return unfollowingUser;
     },
 
     addWatchedMovie: async (parent, { input }, context) => {
@@ -146,9 +172,9 @@ const resolvers = {
           "must be logged in to perform this action"
         );
       }
-      let movie = await Movie.findOne({ movieId: input.movieId }) //* If movie doesn't exist. 
+      let movie = await Movie.findOne({ movieId: input.movieId }); //* If movie doesn't exist.
       if (!movie) {
-        movie = await Movie.create(input)
+        movie = await Movie.create(input);
       }
       //! Query movie database from movieId
       //! If it exists push it to the users watched movies
@@ -157,8 +183,7 @@ const resolvers = {
         { _id: context.user._id },
         { $addToSet: { watchedMovies: movie._id } },
         { new: true }
-      )
-        .populate("watchedMovies")
+      ).populate("watchedMovies");
       return user;
     },
     // removeWatchedMovie: (parent, args, context) => {
@@ -171,16 +196,15 @@ const resolvers = {
           "must be logged in to perform this action"
         );
       }
-      let movie = await Movie.findOne({ movieId: input.movieId }) //* If movie doesn't exist. 
+      let movie = await Movie.findOne({ movieId: input.movieId }); //* If movie doesn't exist.
       if (!movie) {
-        movie = await Movie.create(input)
+        movie = await Movie.create(input);
       }
       const user = await User.findOneAndUpdate(
         { _id: context.user._id },
         { $addToSet: { watchlist: movie._id } },
         { new: true }
-      )
-        .populate("watchlist")
+      ).populate("watchlist");
       return user;
     },
     // removeMovieFromWatchlist: (parent, args, context) => {
