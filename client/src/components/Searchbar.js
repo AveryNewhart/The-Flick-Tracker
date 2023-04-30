@@ -53,10 +53,10 @@ const fetchMovies = (text) => {
               <div className="movie-title">{movie.title}</div>
               <div className="header__year">
                 {" "}
-                ({movie.release_date && movie.release_date.split("-")[0]})
+                ({movie.releaseYear && movie.imageURL.split("-")[0]})
               </div>
             </div>
-            <div className="original-title">{movie.original_title}</div>
+            <div className="original-title">{movie.title}</div>
             <div className="rating-container">
               <div className={"rating" + ratingColor}>
                 {`${movie.vote_average * 10}%`}
@@ -66,7 +66,7 @@ const fetchMovies = (text) => {
           </div>
           <div className="overview">
             <h4 className="overview__header">Overview</h4>
-            <p className="details__synopsis">{movie.overview}</p>
+            <p className="details__synopsis">{movie.synopsis}</p>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@ const fetchMovies = (text) => {
     };
 
     findMovie = (id) => {
-      const movie = this.state.movies.find((movie) => movie.id === id);
+      const movie = this.state.movies.find((movie) => movie.movieId === id);
       this.setState({ movie, showDropdown: false });
       this.props.history.push(`/movie/${id}`);
     };
@@ -135,7 +135,7 @@ const fetchMovies = (text) => {
                       // href={SearchedContent}
                       // href="/searchedcontent"
                     >{`${movie.title} ${
-                      movieSelected ? getReleaseYear(movie.release_date) : ""
+                      movieSelected ? getReleaseYear(movie.releaseYear) : ""
                     }`}</Link>
                   );
                 })
@@ -148,7 +148,7 @@ const fetchMovies = (text) => {
     }
   }
 
-  
+   
   
 //   ReactDOM.render(<Main />, document.getElementById("root"));
 export default Main
