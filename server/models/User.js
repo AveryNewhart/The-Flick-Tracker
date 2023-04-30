@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 const bcrypt = require("bcrypt");
+const movieSchema = require('./Movie')
 
 const UserSchema = new Schema({
   username: {
@@ -22,13 +23,14 @@ const UserSchema = new Schema({
     required: true,
     minlength: 6,
   },
-  watchedMovies: [
-    {
-      type: Schema.Types.ObjectId,
-      // unique: true,
-      ref: "Movie",
-    },
-  ],
+  // watchedMovies: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     // unique: true,
+  //     ref: "Movie",
+  //   },
+  // ]
+  watchedMovies: [movieSchema],
   watchlist: [
     {
       type: Schema.Types.ObjectId,
