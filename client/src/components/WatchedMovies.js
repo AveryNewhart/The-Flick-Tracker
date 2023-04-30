@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 
-const WatchedMovies = ({ watchedMovies }) => {
+const WatchedMovies = ({ moviesWatched }) => {
 //   You can remove this query since you're passing the `watchedMovies` prop
   const { loading, data } = useQuery(QUERY_USER);
   const watchedMovies = data?.me?.watchedMovies || [];
