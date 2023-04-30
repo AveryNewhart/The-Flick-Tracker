@@ -101,8 +101,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     deleteUser(id: ID!, input: DeleteUserInput!): User
-    addFollower(id: ID!, input: ID!): User
-    addFollowing(id: ID!, input: ID!): User
+    addFollower(userId: ID!, followedUserId: ID!): User!
+    unfollow(userId: ID!, followedUserId: ID!): User!
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(input: MovieInput!): User!
@@ -116,9 +116,7 @@ module.exports = typeDefs;
 
 // removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
 
-
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
-
 
 // ##  addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 // ##  updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
