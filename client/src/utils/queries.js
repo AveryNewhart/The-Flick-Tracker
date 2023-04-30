@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-query User($username: String!) {
+query user($username: String!) {
   user(username: $username) {
     id
     username
@@ -103,18 +103,55 @@ export const QUERY_SINGLE_REVIEW = gql`
   }
 `;
 
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
+export const QUERY_PROTECTED = gql`
+query protected {
+  protected {
+    id
+    username
+    email
+    followers {
+      id
       username
-      email
-      reviews {
-        _id
-        reviewText
-        reviewAuthor
-        createdAt
+    }
+    followings {
+      id
+      username
+    }
+    reviews {
+      id
+      user {
+        id
+        username
       }
     }
+    watchedMovies {
+      id
+      movieId
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
+    watchlist {
+      id
+      movieId
+      title
+      releaseYear
+      director
+      actors
+      runtime
+      category
+      trailer
+      imageURL
+      synopsis
+    }
   }
+}
 `;
+
+

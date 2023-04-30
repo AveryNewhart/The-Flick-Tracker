@@ -5,7 +5,8 @@ import "../styles/SearchedContent.css";
 import { useMutation } from "@apollo/client";
 import { Button } from "react-bootstrap";
 import Auth from "../utils/auth";
-import { saveWatchedMovieIds, getSavedWatchedMovieIds,
+import { saveWatchedMovieIds, 
+  getSavedWatchedMovieIds,
   //  saveWatchLaterMovieIds, getSavedWatchLaterMovieIds
     } from "../utils/localStorage";
 import { SAVE_WATCHED_MOVIE, 
@@ -68,7 +69,9 @@ const SearchedContent = () => {
     // const watchedMovieToSave = searchedMovies.find((movie) => movie.movieId === movieId);
 
     // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    const token = Auth.getToken();
 
     if (!token) {
       return false;
@@ -82,8 +85,16 @@ const SearchedContent = () => {
       //   // variables: { input: { movieId } },  // <-- pass the movieId directly
       //   variables: { input: { movieId: watchedMovieToSave.movieId } },
       // });
+      // await addWatchedMovie({
+      //   variables: { input: { movieId } },
+      // });
       await addWatchedMovie({
         variables: { input: { movieId } },
+        context: {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        }
       });
 
       // if movie successfully saves to user's account, save movie id to state
