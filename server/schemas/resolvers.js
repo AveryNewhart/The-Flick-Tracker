@@ -183,7 +183,6 @@ const resolvers = {
         { _id: context.user._id },
         { $addToSet: { watchedMovies: movie._id } },
         { new: true }
-      ).populate("watchedMovies");
       return user;
     },
     // removeWatchedMovie: (parent, args, context) => {

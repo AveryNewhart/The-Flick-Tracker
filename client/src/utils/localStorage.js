@@ -5,7 +5,7 @@
   
 //     return savedWatchedMovieIds;
 //   };
-  
+ 
 //   export const saveWatchedMovieIds = (watchedIdArr) => {
 //     if (watchedIdArr.length) {
 //       localStorage.setItem('watched_movies', JSON.stringify(watchedIdArr));
@@ -23,11 +23,34 @@
 //       return false;
 //     }
   
-//     const updatedSavedWatchedMoviesIds = savedWatchedMovieIds?.filter((savedWatchedMovieId) => watchedMovieId !== watchedMovieId);
-//     localStorage.setItem('watched_movies', JSON.stringify(updatedSavedWatchedMovieIds));
+//     // const updatedSavedWatchedMoviesIds = savedWatchedMovieIds?.filter((savedWatchedMovieId) => watchedMovieId !== watchedMovieId);
+//     // localStorage.setItem('watched_movies', JSON.stringify(updatedSavedWatchedMovieIds));
   
 //     return true;
 //   };
+
+export const saveWatchedMovieIds = (watchedMoviesArr) => {
+    localStorage.setItem('watched_movies', JSON.stringify(watchedMoviesArr));
+  };
+  
+  export const getSavedWatchedMovieIds = () => {
+    const savedWatchedMovies = localStorage.getItem('watched_movies')
+      ? JSON.parse(localStorage.getItem('watched_movies'))
+      : [];
+  
+    return savedWatchedMovies;
+  };
+
+// export const getSavedWatchedMovieIds = () => {
+//     const savedWatchedMovies = localStorage.getItem('watched_movies');
+//     if (savedWatchedMovies) {
+//       return JSON.parse(savedWatchedMovies);
+//     } else {
+//       return [];
+//     }
+//   };
+  
+  
 
 // export const getSavedWatchLaterMovieIds = () => {
 //     const savedWatchLaterMovieIds = localStorage.getItem('watchlater_movies')

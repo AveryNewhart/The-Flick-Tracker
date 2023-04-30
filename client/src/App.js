@@ -6,9 +6,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 // import { Switch } from 'react-router-dom';
 import './styles/App.css';
+import AuthService from './utils/auth';
 
 import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
@@ -16,7 +17,9 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SearchedContent from './pages/Searchedcontent';
 import Dashboard from './pages/Dashboard';
+// import { ProtectedRoute } from './components/Nav';
 
+// export const UserContext = React.createContext();
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -43,6 +46,16 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // const PrivateRoute = ({ component: Component, ...rest }) => (
+  //   <Route {...rest} render={(props) => (
+  //     loggedIn ? <Component {...props} /> : <Navigate to='/login' />
+  //   )} />
+  // )
+  // const auth = AuthService.loggedIn();
+  // const navigate = useNavigate();
+
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -59,10 +72,15 @@ function App() {
                 path="/dashboard"
                 element={<Dashboard />}
               />
+                {/* <Route
+          path="/dashboard"
+          render={() => (isLoggedIn ? <Dashboard /> : <Navigate to="/login" />)}
+        /> */}
               <Route 
                 path="/login"
                 element={<Login />}
               />
+                      {/* <Route path="/login" render={() => <Login setIsLoggedIn={setIsLoggedIn} />} /> */}
               <Route 
                 path="/signup" 
                 element={<Signup />}
@@ -74,10 +92,22 @@ function App() {
                 element={<SearchedContent />}
               />
               <Route 
-                // path="/profile/:username" 
                 path="/profile"
                 element={<Profile />} 
                />
+                   {/* {auth && auth.user ? (
+      <>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </>
+    ) : (
+      
+      <Route path="/" element={<Login />} />
+    )} */}
+                  {/* <Route
+          path="/profile"
+          render={() => (isLoggedIn ? <Profile /> : <Navigate to="/login" />)}
+        /> */}
             </Routes>
           </div>
         </div>
