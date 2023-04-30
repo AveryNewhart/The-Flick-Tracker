@@ -22,25 +22,18 @@ const typeDefs = gql`
     password: String!
   }
   type Movie {
-    id: ID!
-    movieId: String!
+    movieId: ID!
     title: String!
     releaseYear: String
-    director: String
-    actors: [String]
-    runtime: Int
-    category: String
-    trailer: String
     imageURL: String
-    synopsis: String
+    overview: String
   }
   input MovieInput {
-    movieId: Int!
+    movieId: ID!
     title: String!
-    releaseYear: String!
-    runtime: Int
-    imageURL: String!
-    synopsis: String!
+    releaseYear: String
+    imageURL: String
+    overview: String
   }
   type Review {
     id: ID!
@@ -105,7 +98,7 @@ const typeDefs = gql`
     addFollowing(id: ID!, input: ID!): User
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
-    addWatchedMovie(input: MovieInput!): User!
+    addWatchedMovie(movie: MovieInput!): User
     addMovieToWatchlist(input: MovieInput): User!
   }
 `;

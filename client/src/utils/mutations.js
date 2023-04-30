@@ -77,21 +77,15 @@ export const ADD_COMMENT = gql`
 `;
 
 export const SAVE_WATCHED_MOVIE = gql`
-  mutation addWatchedMovie($input: MovieInput!) {
-   addWatchedMovie(input: $input) {
+  mutation addWatchedMovie($movie: MovieInput!) {
+   addWatchedMovie(movie: $movie) {
     id
     watchedMovies {
-      id
       movieId
       title
       releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
       imageURL
-      synopsis
+      overview
     }
   }
 }`

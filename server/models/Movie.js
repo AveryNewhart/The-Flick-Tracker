@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose")
 
-const MovieSchema = new Schema({
+const movieSchema = new Schema({
     movieId: {
         type: String,
         required: true
@@ -18,7 +18,7 @@ const MovieSchema = new Schema({
     actors: [ //!AXE
         {
             type: String,
-            required: true
+            // required: true
         }
     ],
     runtime: {
@@ -33,7 +33,7 @@ const MovieSchema = new Schema({
     imageURL: {
         type: String,
     },
-    synopsis: {
+    overview: {
         type: String,
     },
     review: [
@@ -44,6 +44,6 @@ const MovieSchema = new Schema({
     ]
 })
 
-const Movie = model("Movie", MovieSchema)
+// const Movie = model("Movie", MovieSchema)
 
-module.exports = Movie
+module.exports = movieSchema
