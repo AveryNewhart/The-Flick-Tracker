@@ -1,18 +1,10 @@
-// export const getSavedWatchedMovieIds = () => {
-//     const savedWatchedMovieIds = localStorage.getItem('watched_movies')
-//       ? JSON.parse(localStorage.getItem('watched_movies'))
-//       : [];
-  
-//     return savedWatchedMovieIds;
-//   };
- 
-//   export const saveWatchedMovieIds = (watchedIdArr) => {
-//     if (watchedIdArr.length) {
-//       localStorage.setItem('watched_movies', JSON.stringify(watchedIdArr));
-//     } else {
-//       localStorage.removeItem('watched_movies');
-//     }
-//   };
+   export const saveWatchedMovieIds = (watchedIdArr) => {
+    if (watchedIdArr.length) {
+      localStorage.setItem('watched_movies', JSON.stringify(watchedIdArr));
+    } else {
+      localStorage.removeItem('watched_movies');
+    }
+  };
   
 //   export const removeWatchedMovieId = (watchedMovieId) => {
 //     const savedWatchedMovieIds = localStorage.getItem('watched_movies')
@@ -28,10 +20,6 @@
   
 //     return true;
 //   };
-
-export const saveWatchedMovieIds = (watchedMoviesArr) => {
-    localStorage.setItem('watched_movies', JSON.stringify(watchedMoviesArr));
-  };
   
   export const getSavedWatchedMovieIds = () => {
     const savedWatchedMovies = localStorage.getItem('watched_movies')
