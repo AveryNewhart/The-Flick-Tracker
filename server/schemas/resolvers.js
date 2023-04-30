@@ -132,21 +132,10 @@ const resolvers = {
       return followingUser;
     },
 
-
-    addWatchedMovie: async (parent, { movie }, context) => {
-      if (context.user) {
-        return (updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { watchedMovies: movie } },
-          { new: true, runValidators: true }
-        ));
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    unfollow: async (parent, { userId, followedUserId }, { user }) => {
-      // Authentication check to make sure we have a valid user.
-      if (!user) {
-        throw new AuthenticationError("You need to be logged in!");
+    // unfollow: async (parent, { userId, followedUserId }, { user }) => {
+    //   // Authentication check to make sure we have a valid user.
+    //   if (!user) {
+    //     throw new AuthenticationError("You need to be logged in!");
         
     unfollow: async (parent, { userId, followedUserId }, { user }) => {
       // Authentication check to make sure we have a valid user.
@@ -181,44 +170,21 @@ const resolvers = {
       // Return the user with the updated followings and followers arrays.
       return unfollowingUser;
     },
-      }
-    
-      console.log("Logged in User:", userId);
-      console.log("ID of the person being unfollowed: ", followedUserId);
-    
-      const unfollowedUser = await User.findByIdAndUpdate(
-        { _id: followedUserId },
-        { $pull: { followers: user._id } },
-        { new: true }
-
-      );
-    
-      // If no user is found in the query then we will return an error.
-      if (!unfollowedUser) {
-        throw new UserInputError("User not found.");
-      }
-    
-      const unfollowingUser = await User.findByIdAndUpdate(
-        { _id: userId },
-        { $pull: { followings: followedUserId } },
-        { new: true }
-      );
-    
-      console.log("Logged in User:", user.username, user);
-      console.log("Unfollowed user:", unfollowedUser);
-      console.log("Unfollowing user:", unfollowingUser);
-    
-      // Return the user with the updated followings and followers arrays.
-      return unfollowingUser;
-
-      return user;
-
-    },
-
     // removeWatchedMovie: (parent, args, context) => {
     //   // Remove the Watched object with the provided movieId from the User's watchedMovies array
     //   // Return the removed Watched object
     // },
+    addWatchedMovie: async (parent, { movie }, context) => {
+      if (context.user) {
+        return (updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { watchedMovies: movie } },
+          { new: true, runValidators: true }
+        ));
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
     addMovieToWatchlist: async (parent, { input }, context) => {
       if (!context.user) {
         throw new AuthenticationError(
