@@ -37,9 +37,9 @@ const ProfileCard = () => {
         <Card.Title>{user.username || 'User Name'}</Card.Title>
         <Card.Subtitle>Followers: {user.followers || 0}</Card.Subtitle>
         <Card.Subtitle>Following: {user.following || 0}</Card.Subtitle>
-        <Card.Text>
+        {/* <Card.Text>
           {user.bio || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-        </Card.Text>
+        </Card.Text> */}
       </Card.Body>
     </Card>
   );
