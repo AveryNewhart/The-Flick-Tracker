@@ -132,16 +132,11 @@ const resolvers = {
       return followingUser;
     },
 
-    addWatchedMovie: async (parent, { movie }, context) => {
-      if (context.user) {
-        return (updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { watchedMovies: movie } },
-          { new: true, runValidators: true }
-        ));
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
+    // unfollow: async (parent, { userId, followedUserId }, { user }) => {
+    //   // Authentication check to make sure we have a valid user.
+    //   if (!user) {
+    //     throw new AuthenticationError("You need to be logged in!");
+        
     unfollow: async (parent, { userId, followedUserId }, { user }) => {
       // Authentication check to make sure we have a valid user.
       if (!user) {
@@ -175,11 +170,21 @@ const resolvers = {
       // Return the user with the updated followings and followers arrays.
       return unfollowingUser;
     },
-
     // removeWatchedMovie: (parent, args, context) => {
     //   // Remove the Watched object with the provided movieId from the User's watchedMovies array
     //   // Return the removed Watched object
     // },
+    addWatchedMovie: async (parent, { movie }, context) => {
+      if (context.user) {
+        return (updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { watchedMovies: movie } },
+          { new: true, runValidators: true }
+        ));
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
     addMovieToWatchlist: async (parent, { input }, context) => {
       if (!context.user) {
         throw new AuthenticationError(
