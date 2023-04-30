@@ -1,21 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { useQuery, gql } from '@apollo/client';
-
-const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
-      _id
-      username
-      email
-      reviews {
-        _id
-        reviewText
-        createdAt
-      }
-    }
-  }
-`;
+import { useQuery, useMutation, gql } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries'
 
 const ProfileCard = ({ username }) => {
   const { loading, error, data } = useQuery(QUERY_USER, {
@@ -26,6 +12,7 @@ const ProfileCard = ({ username }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   const user = data.user;
+  console.log(user);
 
   return (
     <Card style={{ width: '18rem' }}>
@@ -34,7 +21,7 @@ const ProfileCard = ({ username }) => {
         src={user.avatarUrl || 'https://via.placeholder.com/150'}
         style={{ borderRadius: '50%', width: '150px', height: '150px', margin: 'auto' }} />
       <Card.Body>
-        <Card.Title>{user.name || 'User Name'}</Card.Title>
+        <Card.Title>{user.username || 'User Name'}</Card.Title>
         <Card.Subtitle>Followers: {user.followers || 0}</Card.Subtitle>
         <Card.Subtitle>Following: {user.following || 0}</Card.Subtitle>
         <Card.Text>
