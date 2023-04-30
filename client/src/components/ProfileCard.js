@@ -1,25 +1,38 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { useQuery, useMutation, gql } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries'
+import { useQuery } from '@apollo/client';
+import { QUERY_PROTECTED } from "../utils/queries";
 
-const ProfileCard = ({ username }) => {
-  const { loading, error, data } = useQuery(QUERY_USER, {
-    variables: { username },
-  });
+const styles = {
+  cardStyles: {
+    width: '18rem',
+    padding: '0.5rem',
+  }
+}
+
+const ProfileCard = () => {
+   // Query current user data
+   const { loading, data } = useQuery(QUERY_PROTECTED);
+  // const { loading, data } = useQuery(QUERY_PROTECTED, 
+  //   {
+  //   variables: { username },
+  // });
+  
+   // Check if user data is present else provide empty obj
+   const user = data?.protected;
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  // if (error) return <p>Error: {error.message}</p>;
 
-  const user = data.user;
-  console.log(user);
+  // const user = data.user;
+  if (!user) return <p>User not found</p>;
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img 
+    <Card style={styles.cardStyles}>
+      {/* <Card.Img 
         variant="top" 
         src={user.avatarUrl || 'https://via.placeholder.com/150'}
-        style={{ borderRadius: '50%', width: '150px', height: '150px', margin: 'auto' }} />
+        style={{ borderRadius: '50%', width: '150px', height: '150px', margin: 'auto' }} /> */}
       <Card.Body>
         <Card.Title>{user.username || 'User Name'}</Card.Title>
         <Card.Subtitle>Followers: {user.followers || 0}</Card.Subtitle>

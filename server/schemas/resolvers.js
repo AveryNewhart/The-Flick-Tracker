@@ -159,6 +159,9 @@ const resolvers = {
         { new: true }
       )
         .populate("watchedMovies")
+        // Save the updated watchedMovies array to local storage
+        // saveWatchedMovieIds(user.watchedMovies);
+
       return user;
     },
     // removeWatchedMovie: (parent, args, context) => {
