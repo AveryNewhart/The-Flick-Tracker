@@ -3,6 +3,13 @@ import { Card } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { QUERY_PROTECTED } from "../utils/queries";
 
+const styles = {
+  cardStyles: {
+    width: '18rem',
+    padding: '0.5rem',
+  }
+}
+
 const ProfileCard = () => {
    // Query current user data
    const { loading, data } = useQuery(QUERY_PROTECTED);
@@ -21,7 +28,7 @@ const ProfileCard = () => {
   if (!user) return <p>User not found</p>;
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={styles.cardStyles}>
       {/* <Card.Img 
         variant="top" 
         src={user.avatarUrl || 'https://via.placeholder.com/150'}
@@ -30,9 +37,9 @@ const ProfileCard = () => {
         <Card.Title>{user.username || 'User Name'}</Card.Title>
         <Card.Subtitle>Followers: {user.followers || 0}</Card.Subtitle>
         <Card.Subtitle>Following: {user.following || 0}</Card.Subtitle>
-        <Card.Text>
+        {/* <Card.Text>
           {user.bio || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-        </Card.Text>
+        </Card.Text> */}
       </Card.Body>
     </Card>
   );

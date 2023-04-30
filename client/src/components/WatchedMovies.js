@@ -3,7 +3,9 @@ import { useQuery } from '@apollo/client';
 import { QUERY_PROTECTED } from '../utils/queries';
 // import Auth from "../utils/auth";
 
+
 const WatchedMovies = () => {
+
 //   You can remove this query since you're passing the `watchedMovies` prop
   const { loading, data } = useQuery(QUERY_PROTECTED);
   const userData = data?.protected || {};
