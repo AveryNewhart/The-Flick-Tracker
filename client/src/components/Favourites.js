@@ -24,6 +24,8 @@ const FavList = () => {
     );
   }
 
+  export default FavList;
+  
 {/* below is an example of how we can iterate over the users list to populate the top */}
         {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12 sm:px0">
           {projects.map((item, index) => (
@@ -40,5 +42,3 @@ const FavList = () => {
           </div>
           ))}
       </div> */}
-
-export default FavList;

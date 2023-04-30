@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import "../styles/App.css"
 import ProfileCard from '../components/ProfileCard';
-import FavList from '../components/Favourites';
+// import FavList from '../components/Favourites';
+import WatchedMovies from '../components/WatchedMovies';
 import WatchList from '../components/WatchList';
 import MyReviews from '../components/MyReviews';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navigation from "../components/Nav.js";
-import Contianer from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 import "../styles/Profile.css";
@@ -46,6 +47,8 @@ const styles = {
   // Individual Button Stytles
   ButtonStyles: {
     background: '#c10206',
+    width: '100%',
+    height: '100%',
     borderStyle: 'none',
     transition: 'background-color 0.3s ease',
     '&:hover': {
@@ -62,53 +65,51 @@ const styles = {
 };
 
 const Profile = () => {
-
   const [displayWatchList, setDisplayWatchList] = useState(true);
 
-  const handleButtonClick = () => {
-    setDisplayWatchList(!displayWatchList);
+  const handleButtonClick = (display) => {
+    setDisplayWatchList(display);
   };
 
   return (
     <div>
       <Navigation />
       <div className='profile'>
-      <Contianer fluid style={styles.containerStyles}>
+        <Container fluid style={styles.containerStyles}>
           <Row xs={1} md={2} className="g-4" style={styles.ProStyles}>
-          <Col md='auto'>
-          <ProfileCard />
-          </Col>
-          {/* Grid for user top 5 */}
-          <Col>
-            <h2>My Top Five</h2>
-            <FavList />
-          </Col>      
+            <Col md='auto'>
+              <ProfileCard />
+            </Col>
           </Row>
           <Row style={styles.ButtonRowStyles}>
             <Col>
-              <Button 
-               style={styles.ButtonStyles} 
-               onClick={handleButtonClick}
-               active={displayWatchList}>
-               Watch List
-              </Button>{' '}
+              <Button
+                style={styles.ButtonStyles}
+                onClick={() => handleButtonClick(true)}
+                active={displayWatchList}>
+                Watch List
+              </Button>
             </Col>
             <Col>
               <Button
-               style={styles.ButtonStyles}
-               onClick={handleButtonClick}
-               active={!displayWatchList}>
-               Reviews
-               </Button>{' '}
+                style={styles.ButtonStyles}
+                onClick={() => handleButtonClick(false)}
+                active={!displayWatchList}>
+                Reviews
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                style={styles.ButtonStyles}
+                onClick={() => handleButtonClick(false)}
+                active={!displayWatchList}>
+                Watched Movies
+              </Button>
             </Col>
           </Row>
-        {/* <Row style={styles.WatchListStyles}>
-          <WatchList style={styles.WatchStyles}/>
-          <MyReviews style={styles.ReviewStyles}/>
-        </Row> */}
-        {/* WatchList or MyReviews component */}
-      {displayWatchList ? <WatchList /> : <MyReviews />}
-      </Contianer>
+          {displayWatchList ? <WatchList /> : <MyReviews />}
+          {/* Render WatchList or MyReviews component based on displayWatchList state */}
+        </Container>
       </div>
     </div>
   );
