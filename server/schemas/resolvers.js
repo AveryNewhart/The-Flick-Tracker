@@ -13,9 +13,9 @@ const resolvers = {
     users: async (_, __, context) => {
       return await User.find();
     },
-    //   review: async (parent, { id }, context) => {
-    //     return await Review.create(id);
-    //   },
+    review: async (parent, { id }, context) => {
+      return await Review.create(id).populate("reviewPost");
+    },
     //   reviews: (parent, args, context) => {
     //     return reviewAPI.getReviews();
     //   },
@@ -170,13 +170,13 @@ const resolvers = {
       if (context.user) {
         console.log(input)
 
-         const dataMovie = await User.findOneAndUpdate(
+        const dataMovie = await User.findOneAndUpdate(
           { movie },
           { $pull: { watchedMovies: { _id: context.user._id, input } } },
           { new: true, runValidators: true }
         ).populate(watchedMovies)
-        
-          return dataMovie
+
+        return dataMovie
       }
       throw new AuthenticationError("must be logged in to perform this action");
     },
@@ -192,23 +192,10 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    // removeWatchedMovie: async (parent, { movie }, context) => {
-    //   if (context.user) {
-
-    //     const delMovie = await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { watchedMovies: { _id: movie } } },
-    //       { new: true, runValidators: true }
-    //     )
-
-    //       return delMovie
-    //   }
-    //   throw new AuthenticationError("must be logged in to perform this action");
-    // },
-      removeWatchedMovie: async (parent, { input }, context) => {
+    removeWatchedMovie: async (parent, { input }, context) => {
       if (context.user) {
         const { movieId } = input;
-        return  (updatedUser = await User.findOneAndUpdate(
+        return (updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { watchedMovies: { movieId: movieId } } },
           { new: true }
@@ -217,44 +204,59 @@ const resolvers = {
       throw new AuthenticationError("must be logged in to perform this action");
     },
 
-    addMovieToWatchlist: async (parent, { input }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError(
-          "must be logged in to perform this action"
-        );
+    addMovieToWatchlist: async (parent, { movie }, context) => {
+      if (context.user) {
+        return (updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { watchlist: movie } },
+          { new: true, runValidators: true }
+        ));
       }
-      let movie = await Movie.findOne({ movieId: input.movieId }); //* If movie doesn't exist.
-      if (!movie) {
-        movie = await Movie.create(input);
-      }
-      const user = await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { watchlist: movie._id } },
-        { new: true }
-      ).populate("watchlist")
-      return user;
+      throw new AuthenticationError("You need to be logged in!");
     },
-    // removeMovieFromWatchlist: (parent, args, context) => {
-    //   // Remove the Watchlist object with the provided movieId from the User's watchlist array
-    //   // Return the removed Watchlist object
-    // },
 
-
-    addReview: async (_, { text, rating }, { user }) => {
-      console.log(user);
-      // Authentication check to make sure we have a valid user.
-      if (!user) {
-        throw new AuthenticationError("You need to be logged in!");
+    removeMovieFromWatchlist: async (parent, { input }, context) => {
+      if (context.user) {
+        const { movieId } = input;
+        return (updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { watchlist: { movieId: movieId } } },
+          { new: true }
+        ));
       }
+      throw new AuthenticationError("must be logged in to perform this action");
+    },
+             
+    // addReview: async (_, { movieId, text, rating }, { dataSources, auth }) => {
+    //   console.log(auth);
+    //   const input = {
+    //     movie: movieId,
+    //     auth, //!Structuring data we're passing to Review.create
+    //     text,
+    //     rating,
+    //   };
+    //   const newReview = await Review.create(input);
+    //   return newReview;
 
-      // Create the new review object
+
+    addReview: async (_, { movieId, reviewText, reviewAuthor }, context) => {
+      if (context.user) {
       const newReview = await Review.create({
-        text,
-        rating,
-        user: user._id,
-      });
+        reviewText,
+        reviewAuthor: context.user.username
+      })
+      
 
-      console.log(newReview);
+
+      throw new AuthenticationError("You need to be logged in!");
+    }
+      
+      
+      // await User.findOneAndUpdate(
+      //   { _id: context.user._id },
+      //   { $addToSet: { reviews } }
+      // )
+
 
       // Add the review to the movie's reviews array
       // const updatedMovie = await Movie.findByIdAndUpdate(
@@ -263,15 +265,6 @@ const resolvers = {
       //   { new: true }
       // );
 
-      // Add the review to the user's reviews array
-      const updatedUser = await User.findByIdAndUpdate(
-        { _id: user._id },
-        { $push: { reviews: newReview._id } },
-        { new: true }
-      );
-
-      // Return the new review object
-      return newReview;
     },
     //   // Create a new Review object for the provided User and Movie objects with the provided input
     //   // Return the new Review object

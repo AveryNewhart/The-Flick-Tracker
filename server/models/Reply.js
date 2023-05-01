@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 
+
 const replySchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -14,6 +15,7 @@ const replySchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  // reactions: [reactionSchema],
   reactions: [
     {
       type: Schema.Types.ObjectId,
