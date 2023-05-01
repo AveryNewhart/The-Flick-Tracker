@@ -22,6 +22,7 @@ const MyReviews = () => {
 
   return (
     <Container fluid>
+      <h1>My Reviews</h1>
       <Row xs={2} md={5} className="g-4">
         {user.reviews?.map((movie) => (
           <Col key={movie.id} style={{ justifyContent: 'center', display: 'flex' }}>
