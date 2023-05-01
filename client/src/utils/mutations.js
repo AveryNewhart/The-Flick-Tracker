@@ -90,6 +90,14 @@ export const SAVE_WATCHED_MOVIE = gql`
   }
 }`
 
+export const REMOVE_WATCHED_MOVIE = gql`
+mutation removeWatchedMovie($input: MovieInput) {
+  removeWatchedMovie(input: $input) {
+    id
+  }
+}
+`;
+
 export const SAVE_WATCH_LATER_MOVIE = gql`
   mutation addWatchLaterMovie($input: MovieInput!) {
    addWatchLaterMovie(input: $input) {
