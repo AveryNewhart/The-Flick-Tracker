@@ -99,8 +99,9 @@ const typeDefs = gql`
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(movie: MovieInput!): User
-    addMovieToWatchlist(input: MovieInput): User!
+    addMovieToWatchlist(movie: MovieInput): User!
     removeWatchedMovie(input: MovieInput): User
+    removeMovieFromWatchlist(input: MovieInput): User
   }
 `;
 
