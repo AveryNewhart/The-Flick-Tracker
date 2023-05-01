@@ -107,12 +107,12 @@ const typeDefs = gql`
     addMovieToWatchlist(movie: MovieInput): User!
     removeWatchedMovie(input: MovieInput): User
     removeMovieFromWatchlist(input: MovieInput): User
-    addMovieToWatchlist(input: MovieInput): User!
-    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
   }
 `;
 
 module.exports = typeDefs;
+
+// addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 
 // recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 

@@ -172,8 +172,8 @@ const SearchedContent = () => {
           <div className='watchButtons'>
                  {Auth.loggedIn() && (
                   <>
-          <Button variant="primary" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
-          <Button variant="primary" onClick={() => handleSaveToWatchlist(movie.id)}>Save to Watchlist</Button>
+          <Button variant="primary" className="reviewBtn" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
+          <Button variant="primary" className="reviewBtn" onClick={() => handleSaveToWatchlist(movie.id)}>Save to Watchlist</Button>
           </>
           )}
           </div>
