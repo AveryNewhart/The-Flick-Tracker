@@ -47,15 +47,6 @@ export const ADD_REVIEW = gql`
       movie
       rating
       createdAt
-      comments {
-        _id
-        user
-        text
-      }
-      reactions {
-        _id
-        commentText
-      }
     }
   }
 `;
