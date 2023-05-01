@@ -96,6 +96,7 @@ const typeDefs = gql`
     deleteUser(id: ID!, input: DeleteUserInput!): User
     addFollower(userId: ID!, followedUserId: ID!): User!
     unfollow(userId: ID!, followedUserId: ID!): User!
+    addReview(userId: ID!, text: String!, rating: Int!): User!
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(movie: MovieInput!): User
@@ -111,7 +112,6 @@ module.exports = typeDefs;
 
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
-// ##  addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 // ##  updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
 // ##  deleteReview(reviewId: ID!): Review!
 // ##  addReaction(reviewId: ID!, type: ReactionType!): Reaction!
