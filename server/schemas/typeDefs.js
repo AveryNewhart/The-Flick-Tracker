@@ -22,15 +22,19 @@ const typeDefs = gql`
     password: String!
   }
   type Movie {
+
     movieId: ID!
     title: String
+
     releaseYear: String
     imageURL: String
     overview: String
   }
   input MovieInput {
+
     movieId: ID!
     title: String
+
     releaseYear: String
     imageURL: String
     overview: String
@@ -96,11 +100,15 @@ const typeDefs = gql`
     deleteUser(id: ID!, input: DeleteUserInput!): User
     addFollower(userId: ID!, followedUserId: ID!): User!
     unfollow(userId: ID!, followedUserId: ID!): User!
+    addReview(userId: ID!, text: String!, rating: Int!): User!
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(movie: MovieInput!): User
-    addMovieToWatchlist(input: MovieInput): User!
+    addMovieToWatchlist(movie: MovieInput): User!
     removeWatchedMovie(input: MovieInput): User
+    removeMovieFromWatchlist(input: MovieInput): User
+    addMovieToWatchlist(input: MovieInput): User!
+    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
   }
 `;
 
@@ -108,11 +116,10 @@ module.exports = typeDefs;
 
 // recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 
-// removeWatchedMovie(userId: ID!, movieId: ID!): Watched!
+// removeWatchedMovie(movie: MovieInput): User
 
 // removeMovieFromWatchlist(userId: ID!, movieId: ID!): Watchlist!
 
-// ##  addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 // ##  updateReview(reviewId: ID!, text: String!, rating: Int!): Review!
 // ##  deleteReview(reviewId: ID!): Review!
 // ##  addReaction(reviewId: ID!, type: ReactionType!): Reaction!

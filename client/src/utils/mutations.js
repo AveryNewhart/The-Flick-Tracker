@@ -98,22 +98,24 @@ mutation removeWatchedMovie($input: MovieInput) {
 }
 `;
 
-export const SAVE_WATCH_LATER_MOVIE = gql`
-  mutation addWatchLaterMovie($input: MovieInput!) {
-   addWatchLaterMovie(input: $input) {
-    id
-    watchLaterMovies {
-      id
-      movieId
-      title
-      releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
-      imageURL
-      synopsis
-    }
-  }
+export const SAVE_WATCHLIST_MOVIE = gql`
+mutation addMovieToWatchlist($movie: MovieInput!) {
+  addMovieToWatchlist(movie: $movie) {
+   id
+   watchlist {
+     movieId
+     title
+     releaseYear
+     imageURL
+     overview
+   }
+ }
 }`
+
+export const REMOVE_WATCHLIST_MOVIE = gql`
+mutation removeMovieFromWatchlist($input: MovieInput) {
+  removeMovieFromWatchlist(input: $input) {
+    id
+  }
+}
+`;
