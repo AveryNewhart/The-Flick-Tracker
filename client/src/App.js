@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SearchedContent from './pages/Searchedcontent';
 import Dashboard from './pages/Dashboard';
+import User from './pages/User';
 // import { ProtectedRoute } from './components/Nav';
 
 // export const UserContext = React.createContext();
@@ -96,8 +97,8 @@ function App() {
                 element={<Profile />} 
                />
                <Route 
-                path="/profile/:username"
-                element={<Profile />} 
+                path="/user/:username"
+                element={<User />} 
                />
                    {/* {auth && auth.user ? (
       <>

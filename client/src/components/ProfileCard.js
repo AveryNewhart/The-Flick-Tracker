@@ -22,6 +22,7 @@ const ProfileCard = () => {
   
    // Check if user data is present else provide empty obj
    const user = data?.protected;
+   console.log(user)
 
   if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error.message}</p>;
