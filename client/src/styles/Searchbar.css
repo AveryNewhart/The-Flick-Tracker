@@ -43,6 +43,7 @@
     font-style: italic;
     padding: .5rem;
     box-shadow:2px 1px 1px 0px darkgrey;
+    margin-bottom: 5px;
   }
   .search-field:focus {
     outline: none;

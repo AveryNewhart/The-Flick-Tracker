@@ -112,10 +112,13 @@ const typeDefs = gql`
     removeWatchedMovie(input: MovieInput): User
     removeMovieFromWatchlist(input: MovieInput): User
     addReview(movieId: String!, reviewText: String!, reviewAuthor: String! ): Review
+
   }
 `;
 
 module.exports = typeDefs;
+
+// addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
 
 // recommendedMovies(watchedMovies: [ID!]!): [Recommendation!]!
 

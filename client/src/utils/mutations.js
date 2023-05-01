@@ -47,15 +47,6 @@ export const ADD_REVIEW = gql`
       movie
       rating
       createdAt
-      comments {
-        _id
-        user
-        text
-      }
-      reactions {
-        _id
-        commentText
-      }
     }
   }
 `;
@@ -115,6 +106,22 @@ mutation addMovieToWatchlist($movie: MovieInput!) {
 export const REMOVE_WATCHLIST_MOVIE = gql`
 mutation removeMovieFromWatchlist($input: MovieInput) {
   removeMovieFromWatchlist(input: $input) {
+    id
+  }
+}
+`;
+
+export const ADD_FOLLOWER = gql`
+mutation addFollower($userId: String!, $followedUserId: String) {
+  addFollower(userId: $userId, followedUserId: $followedUserId) {
+    id
+  }
+}
+`;
+
+export const REMOVE_FOLLOWER = gql`
+mutation unfollow($userId: String!, $followedUserId: String) {
+  unfollow(userId: $userId, followedUserId: $followedUserId) {
     id
   }
 }

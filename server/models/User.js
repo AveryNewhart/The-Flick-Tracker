@@ -42,14 +42,14 @@ const UserSchema = new Schema({
   // ],
   followers: [
     {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       // unique: true,
       ref: "User",
     },
   ],
   followings: [
     {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
      //  unique: true,
       ref: "User",
     },
