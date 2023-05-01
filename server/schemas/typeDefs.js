@@ -29,6 +29,7 @@ const typeDefs = gql`
     releaseYear: String
     imageURL: String
     overview: String
+    reviews: [Review]
   }
   input MovieInput {
 
@@ -42,8 +43,12 @@ const typeDefs = gql`
   type Review {
     id: ID!
     text: String!
+    createdAt: String
     rating: Int!
     user: User!
+    movie: Movie
+    reviewText: String!
+    reviewAuthor: String!
     reactions: [Reaction]
     comments: [Comment]
   }
@@ -83,7 +88,7 @@ const typeDefs = gql`
     user(username: String!): User ##Changed from ID to username to query user
     users: [User]
 
-    ## review(id: ID!): Review
+    review(id: ID!): [Review]
     ## reviews: [Review!]!
     ## comment(id: ID!): Comment
     ## comments: [Comment!]!
@@ -98,17 +103,15 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     deleteUser(id: ID!, input: DeleteUserInput!): User
-    addFollower(userId: ID!, followedUserId: ID!): User!
-    unfollow(userId: ID!, followedUserId: ID!): User!
-    addReview(userId: ID!, text: String!, rating: Int!): User!
+    addFollower(userId: String!, followedUserId: String): User!
+    unfollow(userId: String!, followedUserId: String): User!
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth
     addWatchedMovie(movie: MovieInput!): User
     addMovieToWatchlist(movie: MovieInput): User!
     removeWatchedMovie(input: MovieInput): User
     removeMovieFromWatchlist(input: MovieInput): User
-    addMovieToWatchlist(input: MovieInput): User!
-    addReview(userId: ID!, movieId: ID!, text: String!, rating: Int!): Review!
+    addReview(movieId: String!, reviewText: String!, reviewAuthor: String! ): Review
   }
 `;
 
@@ -130,3 +133,6 @@ module.exports = typeDefs;
 // ##  addReply(commentId: ID!, text: String!): Reply!
 // ## updateReply(replyId: ID!, text: String!): Reply!
 // ## deleteReply(replyId: ID!): Reply!
+
+//    User  createReview  CreateDatabase  Movie
+//    User  
