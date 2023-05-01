@@ -7,6 +7,7 @@ import Navigation from '../components/Nav.js';
 import ProfileCard from '../components/ProfileCard';
 import DashFeed from '../components/Dashboard/DashFeed.js';
 import FollowFeed from '../components/Dashboard/FollowFeed.js';
+import UserSearch from '../components/UserSearch.js';
 
 import "../styles/App.css"
 import "../styles/Dash.css"
@@ -77,7 +78,7 @@ const Dashboard = () => {
               </Row>
               {activeButton === 'following' ? <FollowFeed /> : <DashFeed />}
             </Col>
-            <Col><p>Following</p></Col>
+            <Col><UserSearch /></Col>
           </Row>
         </Contianer>
       </div>

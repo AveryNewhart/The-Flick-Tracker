@@ -110,3 +110,19 @@ mutation removeMovieFromWatchlist($input: MovieInput) {
   }
 }
 `;
+
+export const ADD_FOLLOWER = gql`
+mutation addFollower($userId: String!, $followedUserId: String) {
+  addFollower(userId: $userId, followedUserId: $followedUserId) {
+    id
+  }
+}
+`;
+
+export const REMOVE_FOLLOWER = gql`
+mutation unfollow($userId: String!, $followedUserId: String) {
+  unfollow(userId: $userId, followedUserId: $followedUserId) {
+    id
+  }
+}
+`;
