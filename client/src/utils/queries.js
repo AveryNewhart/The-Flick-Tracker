@@ -7,28 +7,17 @@ query user($username: String!) {
     username
     email
     watchlist {
-      id
+      movieId
       title
       releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
-      imageURL
-      synopsis
+      overview
     }
     watchedMovies {
-      id
+      movieId
       title
       releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
       imageURL
-      synopsis
+      overview
     }
     reviews {
       id
