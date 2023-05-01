@@ -182,7 +182,7 @@ const SearchedContent = () => {
                 <div className="inputWrapper">
                     <textarea type="text" id="review" className="reviewInput" value={review} onChange={handleReviewChange} />
                 </div>
-                <button className="reviewBtn" onClick={handleAddReview}>Add Review</button>
+                <button className="reviewBtns" onClick={handleAddReview}>Add Review</button>
             </div>
           </section>
         </div>
