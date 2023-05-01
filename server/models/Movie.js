@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose")
+const reviewSchema = require("./Review")
 
 const movieSchema = new Schema({
     movieId: {
@@ -36,14 +37,38 @@ const movieSchema = new Schema({
     overview: {
         type: String,
     },
-    review: [
+    reviews: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "Review"
-        }
-    ]
+          reviewText: {
+            type: String,
+            required: true,
+            minlength: 1,
+            maxlength: 280,
+          },
+          reviewAuthor: {
+            type: String,
+            required: true,
+          },
+          createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (timestamp) => dateFormat(timestamp),
+          },
+        },
+      ],
+    review: [reviewSchema],
+      // review: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Review"
+    //     }
+    // ]
 })
 
-// const Movie = model("Movie", MovieSchema)
+movieSchema.virtual('posts', { //! Referencing review in Query in resolvers
+    ref: 'reviewPost',
+    localField: '_id',
+    foreignField: 'movie'
+  });
 
 module.exports = movieSchema
