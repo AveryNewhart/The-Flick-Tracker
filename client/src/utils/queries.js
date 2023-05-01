@@ -125,30 +125,18 @@ query protected {
       }
     }
     watchedMovies {
-      id
       movieId
       title
       releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
       imageURL
-      synopsis
+      overview
     }
     watchlist {
-      id
       movieId
       title
       releaseYear
-      director
-      actors
-      runtime
-      category
-      trailer
       imageURL
-      synopsis
+      overview
     }
   }
 }
