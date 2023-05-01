@@ -98,8 +98,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     deleteUser(id: ID!, input: DeleteUserInput!): User
-    addFollower(userId: ID!, followedUserId: ID!): User!
-    unfollow(userId: ID!, followedUserId: ID!): User!
+    addFollower(userId: String!, followedUserId: String): User!
+    unfollow(userId: String!, followedUserId: String): User!
     addReview(userId: ID!, text: String!, rating: Int!): User!
     ## updateUser(id: ID!, input: UpdateUserInput!): User!
     loginUser(email: String!, password: String!): Auth

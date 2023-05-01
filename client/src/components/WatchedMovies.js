@@ -44,7 +44,7 @@ const WatchedMovies = () => {
     <Container fluid>
       <Row xs={2} md={5} className="g-4">
         {userData.watchedMovies?.map((movie) => (
-          <Col key={movie.movieId} style={{ justifyContent: 'center', display: 'flex', marginBottom: '2rem' }}>
+          <Col key={movie.movieId} style={{ justifyContent: 'center', display: 'flex', marginBottom: '7rem' }}>
             <Card style={{ width: '12rem', height: '18rem', borderStyle: 'none' }}>
               <Card.Img 
                 variant="top" 

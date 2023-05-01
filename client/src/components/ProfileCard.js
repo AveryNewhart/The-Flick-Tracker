@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
 import { useQuery } from '@apollo/client';
 import { QUERY_PROTECTED } from "../utils/queries";
 
@@ -11,15 +12,17 @@ const styles = {
 }
 
 const ProfileCard = () => {
+  const { username } = useParams();
    // Query current user data
-   const { loading, data } = useQuery(QUERY_PROTECTED);
-  // const { loading, data } = useQuery(QUERY_PROTECTED, 
-  //   {
-  //   variables: { username },
-  // });
+  //  const { loading, data } = useQuery(QUERY_PROTECTED);
+  const { loading, data } = useQuery(QUERY_PROTECTED, 
+    {
+    variables: { username },
+  });
   
    // Check if user data is present else provide empty obj
    const user = data?.protected;
+   console.log(user)
 
   if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error.message}</p>;
