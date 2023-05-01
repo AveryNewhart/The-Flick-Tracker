@@ -66,9 +66,11 @@ const styles = {
 
 const Profile = () => {
   const [displayWatchList, setDisplayWatchList] = useState(true);
+  const [displayMyReviews, setDisplayMyReviews] = useState(true);
 
   const handleButtonClick = (display) => {
     setDisplayWatchList(display);
+    setDisplayMyReviews(display);
   };
 
   return (
@@ -107,7 +109,8 @@ const Profile = () => {
               </Button>
             </Col>
           </Row>
-          {displayWatchList ? <WatchList /> : <MyReviews />}
+          {/* {displayWatchList ? <WatchList /> : <MyReviews /> : <WatchedMovies /> } */}
+          {displayWatchList ? <WatchList /> : (displayMyReviews ? <MyReviews /> : <WatchedMovies />)}
           {/* Render WatchList or MyReviews component based on displayWatchList state */}
         </Container>
       </div>
