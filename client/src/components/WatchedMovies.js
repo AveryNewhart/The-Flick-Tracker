@@ -18,8 +18,14 @@ const WatchedMovies = () => {
           {userData.watchedMovies.map((movie) => (
             <li key={movie.movieId}>
               <h3>{movie.title}</h3>
-              {/* <p>Released: {movie.releaseYear}</p> */}
-              <p>{movie.imageURL}</p>
+              <p>Released: {movie.releaseYear}</p>
+              {/* <img>{movie.imageURL}</img> */}
+              <img className='movie__poster' src={`https://image.tmdb.org/t/p/w500${movie.imageURL}`} alt={movie.title} 
+            style={{
+                width: "10%",
+                height: "10%"
+                // float: "left"
+              }}/>
         <p>overview: {movie.overview}</p>
         {/* <p>Release Data {movie.releaseYear}</p> */}
               {/* <p>Director: {movie.director}</p> */}
