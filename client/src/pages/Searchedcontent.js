@@ -172,8 +172,8 @@ const SearchedContent = () => {
           <div className='watchButtons'>
                  {Auth.loggedIn() && (
                   <>
-          <Button variant="primary" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
-          <Button variant="primary" onClick={() => handleSaveToWatchlist(movie.id)}>Save to Watchlist</Button>
+          <Button variant="primary" className="reviewBtn" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
+          <Button variant="primary" className="reviewBtn" onClick={() => handleSaveToWatchlist(movie.id)}>Save to Watchlist</Button>
           </>
           )}
           </div>
@@ -182,7 +182,7 @@ const SearchedContent = () => {
                 <div className="inputWrapper">
                     <textarea type="text" id="review" className="reviewInput" value={review} onChange={handleReviewChange} />
                 </div>
-                <button className="reviewBtn" onClick={handleAddReview}>Add Review</button>
+                <button className="reviewBtns" onClick={handleAddReview}>Add Review</button>
             </div>
           </section>
         </div>

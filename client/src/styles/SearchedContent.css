@@ -189,13 +189,26 @@
  margin-top: 10px;
 }  */
 
-.reviewBtn {
+button.reviewBtn.btn.btn-primary {
   background-color: transparent;
   border: none;
   color: #c10206;
 }
 
-.reviewBtn:hover {
+button.reviewBtn.btn.btn-primary:hover {
+  background-color: #c10206;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #c10206, 0 0 15px #c10206;
+}
+
+button.reviewBtns {
+  background-color: transparent;
+  border: none;
+  color: #c10206;
+}
+
+button.reviewBtns:hover {
   background-color: #c10206;
   color: white;
   border-radius: 5px;
