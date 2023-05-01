@@ -10,6 +10,7 @@ query user($username: String!) {
       movieId
       title
       releaseYear
+      imageURL
       overview
     }
     watchedMovies {
