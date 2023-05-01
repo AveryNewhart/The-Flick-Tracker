@@ -95,8 +95,8 @@ const Profile = () => {
             <Col>
               <Button
                 style={styles.ButtonStyles}
-                onClick={() => handleButtonClick(false)}
-                active={!displayWatchList}>
+                onClick={() => handleButtonClick(true)}
+                active={displayMyReviews}>
                 Reviews
               </Button>
             </Col>
