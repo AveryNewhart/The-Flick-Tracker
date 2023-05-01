@@ -40,7 +40,7 @@ const styles = {
   // Button Row Styles
   ButtonRowStyles: {
     marginTop: '35px',
-    marginBottom: '35px',
+    marginBottom: '3rem',
     display: 'flex',
     justifyContent: 'space-between',
   },
