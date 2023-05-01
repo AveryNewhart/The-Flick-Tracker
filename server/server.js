@@ -7,11 +7,6 @@ const { authMiddleware } = require("./utils/auth");
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
-const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
@@ -28,9 +23,13 @@ if (process.env.NODE_ENV === "production") {
  
 // app.use(routes); //! We do not need this
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// });
+
+// app.get("/login", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
@@ -38,6 +37,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
 
   db.once("open", () => {
+    const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(
