@@ -26,6 +26,72 @@
     return savedWatchedMovies;
   };
 
+  export const saveReviewIds = (reviewIdArr) => {
+    if (reviewIdArr.length) {
+      localStorage.setItem('reviews', JSON.stringify(reviewIdArr));
+    } else {
+      localStorage.removeItem('reviews');
+    }
+  };
+  
+  export const removeReviewId = (reviewId) => {
+    const savedReviewIds = localStorage.getItem('reviews')
+      ? JSON.parse(localStorage.getItem('reviews'))
+      : null;
+  
+    if (!savedReviewIds) {
+      return false;
+    }
+  
+    return true;
+  };
+  
+  export const getSavedReviewIds = () => {
+    const savedReviews = localStorage.getItem('reviews')
+      ? JSON.parse(localStorage.getItem('reviews'))
+      : [];
+  
+    return savedReviews;
+  };
+
+  // export const saveReviews = (reviews) => {
+  //   if (reviews.length) {
+  //     localStorage.setItem('reviews', JSON.stringify(reviews));
+  //   } else {
+  //     localStorage.removeItem('reviews');
+  //   }
+  // };
+  
+  // export const addReview = (movieId, review) => {
+  //   const reviews = getReviews();
+  //   const movieIndex = reviews.findIndex(movie => movie.id === movieId);
+  //   if (movieIndex >= 0) {
+  //     reviews[movieIndex].reviews.push(review);
+  //   } else {
+  //     reviews.push({ id: movieId, reviews: [review] });
+  //   }
+  //   saveReviews(reviews);
+  // };
+  
+  // export const getReviews = () => {
+  //   const savedReviews = localStorage.getItem('reviews')
+  //     ? JSON.parse(localStorage.getItem('reviews'))
+  //     : [];
+  
+  //   return savedReviews;
+  // };
+  
+  // export const deleteReview = (movieId, reviewIndex) => {
+  //   const reviews = getReviews();
+  //   const movieIndex = reviews.findIndex(movie => movie.id === movieId);
+  //   if (movieIndex >= 0) {
+  //     reviews[movieIndex].reviews.splice(reviewIndex, 1);
+  //     saveReviews(reviews);
+  //     return true;
+  //   }
+  //   return false;
+  // };
+
   export const saveWatchlistMovieIds = (watchlistIdArr) => {
     if (watchlistIdArr.length) {
       localStorage.setItem('watchlist_movies', JSON.stringify(watchlistIdArr));
