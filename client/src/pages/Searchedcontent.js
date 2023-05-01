@@ -217,7 +217,7 @@ const SearchedContent = () => {
           //     ? "Watched"
           //     : "Save to Watched"}
           // </Button>
-          <Button variant="primary" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
+          <Button className='reviewBtn' variant="primary" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
 
           )}
           {/* <button className='reviewBtn'>Add to Watchlist</button>
