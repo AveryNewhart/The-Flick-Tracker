@@ -1,14 +1,41 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_PROTECTED } from '../utils/queries';
-// import Auth from "../utils/auth";
+import Auth from "../utils/auth";
+import { Button } from "react-bootstrap";
+
+import { removeWatchedMovieId } from "../utils/localStorage";
+import { REMOVE_WATCHED_MOVIE } from '../utils/mutations';
 
 
 const WatchedMovies = () => {
 
+  const [removeWatchedMovie, { error }] = useMutation(REMOVE_WATCHED_MOVIE)
+
 //   You can remove this query since you're passing the `watchedMovies` prop
   const { loading, data } = useQuery(QUERY_PROTECTED);
   const userData = data?.protected || {};
+
+  const handleDeleteWatchedMovie = async (movieId) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const { data } = await removeWatchedMovie({ variables: { input: { movieId  } } });
+
+      // upon success, remove book's id from localStorage
+      removeWatchedMovieId(movieId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -27,6 +54,12 @@ const WatchedMovies = () => {
                 // float: "left"
               }}/>
         <p>overview: {movie.overview}</p>
+        <Button
+                        className="btn-block btn-danger"
+                        onClick={() => handleDeleteWatchedMovie(movie.movieId)}
+                      >
+                        Delete this Movie!
+                      </Button>
         {/* <p>Release Data {movie.releaseYear}</p> */}
               {/* <p>Director: {movie.director}</p> */}
               {/* Add more properties as needed */}
