@@ -1,0 +1,12 @@
+/* body {
+  background-color: rgba(33, 32, 32, 0.992); 
+  max-height: 100%;
+  max-width: 100%;
+  background-color: orange;
+} */
+
+.profile {
+  margin-top: 117px;
+  min-width: 100vw;
+  min-height: 100vh;
+}

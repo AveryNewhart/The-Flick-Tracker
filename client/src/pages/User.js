@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import "../styles/App.css"
-import ProfileCard from '../components/ProfileCard';
+import UserCard from '../components/UserCard';
 // import FavList from '../components/Favourites';
-import WatchedMovies from '../components/WatchedMovies';
-import WatchList from '../components/WatchList';
+import UserWatched from '../components/UserWatched';
+import UserWatchList from '../components/UserWatchList';
 import MyReviews from '../components/MyReviews';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -64,7 +64,7 @@ const styles = {
 
 };
 
-const Profile = () => {
+const User = () => {
   const [displayWatchList, setDisplayWatchList] = useState(true);
   const [displayMyReviews, setDisplayMyReviews] = useState(true);
 
@@ -80,7 +80,7 @@ const Profile = () => {
         <Container fluid style={styles.containerStyles}>
           <Row xs={1} md={2} className="g-4" style={styles.ProStyles}>
             <Col md='auto'>
-              <ProfileCard />
+              <UserCard />
             </Col>
           </Row>
           <Row style={styles.ButtonRowStyles}>
@@ -110,7 +110,7 @@ const Profile = () => {
             </Col>
           </Row>
           {/* {displayWatchList ? <WatchList /> : <MyReviews /> : <WatchedMovies /> } */}
-          {displayWatchList ? <WatchList /> : (displayMyReviews ? <MyReviews /> : <WatchedMovies />)}
+          {displayWatchList ? <UserWatchList /> : (displayMyReviews ? <MyReviews /> : <UserWatched />)}
           {/* Render WatchList or MyReviews component based on displayWatchList state */}
         </Container>
       </div>
@@ -118,4 +118,4 @@ const Profile = () => {
   );
 }
 
-export default Profile;
+export default User;

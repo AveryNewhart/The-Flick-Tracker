@@ -1,0 +1,193 @@
+.make-big {
+    position: relative;
+    text-align: center;
+    width: 100vw;
+    height: 100vh; 
+  }
+  
+  .thePic {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    /* object-fit: cover; */
+    /* object-position: cover; */
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+.theTitle {
+    position: relative;
+    top: 5%;
+    color: #c10206;
+    font-family: 'Zen Dots';
+}
+  
+  .theText {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    /* margin-top: 100px; */
+    transform: translate(-50%, -50%);
+ 
+  }
+
+.h2Text {
+  font-size: 25px;
+}
+
+  .theMessage {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+  
+  .welcome-head {
+    position: absolute;
+    top: 52%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+  
+  .loginL {
+    /* color: white; */
+    font-size: 24px;
+    text-decoration: none;
+    
+  }
+  
+  .loginA {
+    color: #c10206;
+  font-family: 'Zen Dots';
+    text-decoration: none;
+    background-color: rgba(33, 32, 32, 0.992);
+    padding: 10px;
+    border-radius: 25px;
+    /* border-bottom: 2px solid white; */
+    transition: all 0.2s ease-in-out;
+    /* margin-top: 40px; */
+  }
+  
+  .loginA:hover {
+    color: #c10206;
+    box-shadow: 0 0 5px #c10206, 0 0 25px;
+    padding: 10px;
+  }
+
+  .homepageText {
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 1010px) {
+    .thePic {
+      display: none;
+    }
+
+    .h2Text {
+      margin-bottom: 10px;
+      color: white;
+      background-color: black;
+      border: 2px solid #c10206;
+      font-size: 15px;
+    }
+
+    .homepageText {
+      margin-top: 10vh;
+      background-color: black;
+      border: 2px solid #c10206
+    }
+
+    .welcome-head {
+      margin-top: 15vh;
+    }
+
+    .make-big {
+      background-color: rgba(33, 32, 32, 0.992);
+    }
+
+    .loginA {
+      background-color: black;
+    }
+  }
+
+  @media (max-width: 750px) {
+    .thePic {
+      display: none;
+    }
+
+    .h2Text {
+      /* margin-bottom: 10px; */
+      color: white;
+      background-color: black;
+      border: 2px solid #c10206;
+      font-size: 10px;
+      margin-top: 0;
+    }
+
+    .homepageText {
+      background-color: black;
+      border: 2px solid #c10206;
+      font-size: 10px;
+    }
+
+    .welcome-head {
+      margin-top: 15vh;
+    }
+
+    .make-big {
+      background-color: rgba(33, 32, 32, 0.992);
+    }
+
+    .loginA {
+      background-color: black;
+    }
+
+    .theMessage {
+      position: absolute;
+      top: 40%;
+      /* padding: 10px; */
+    }
+  }
+
+  @media (max-width: 435px) {
+    .thePic {
+      display: none;
+    }
+
+    .h2Text {
+      /* margin-bottom: 10px; */
+      color: white;
+      background-color: black;
+      border: 2px solid #c10206;
+      font-size: 10px;
+      margin-top: 0;
+    }
+
+    .homepageText {
+      background-color: black;
+      border: 2px solid #c10206;
+      font-size: 10px;
+    }
+
+    .welcome-head {
+      margin-top: 30vh;
+    }
+
+    .make-big {
+      background-color: rgba(33, 32, 32, 0.992);
+    }
+
+    .loginA {
+      background-color: black;
+    }
+
+    .theMessage {
+      position: absolute;
+      top: 50%;
+      /* padding: 10px; */
+    }
+  }

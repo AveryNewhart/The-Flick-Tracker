@@ -6,16 +6,21 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 // import { Switch } from 'react-router-dom';
 import './styles/App.css';
+import AuthService from './utils/auth';
 
 import Homepage from './pages/Homepage';
-// import Signup from './pages/Signup';
-// import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 import Profile from './pages/Profile';
-import Navigation from './components/Nav';
-import Footer from './components/Footer';
+import SearchedContent from './pages/Searchedcontent';
+import Dashboard from './pages/Dashboard';
+import User from './pages/User';
+// import { ProtectedRoute } from './components/Nav';
+
+// export const UserContext = React.createContext();
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -42,36 +47,74 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // const PrivateRoute = ({ component: Component, ...rest }) => (
+  //   <Route {...rest} render={(props) => (
+  //     loggedIn ? <Component {...props} /> : <Navigate to='/login' />
+  //   )} />
+  // )
+  // const auth = AuthService.loggedIn();
+  // const navigate = useNavigate();
+
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
-          <Navigation />
-          <div className="container">
+        <div className='flex-column justify-flex-start min-vh-100 main-div'
+        // style={{ backgroundColor: "rgba(0, 0, 255, 0.1)"}}
+        >
+          <div>
             <Routes>
               <Route 
                 path="/"
                 element={<Homepage />}
               />
-              {/* <Route 
-                path="/login" 
+              <Route 
+                path="/dashboard"
+                element={<Dashboard />}
+              />
+                {/* <Route
+          path="/dashboard"
+          render={() => (isLoggedIn ? <Dashboard /> : <Navigate to="/login" />)}
+        /> */}
+              <Route 
+                path="/login"
                 element={<Login />}
               />
+                      {/* <Route path="/login" render={() => <Login setIsLoggedIn={setIsLoggedIn} />} /> */}
               <Route 
                 path="/signup" 
                 element={<Signup />}
-              /> */}
-              <Route 
-                path="/profile" 
-                element={<Profile />}
               />
-              {/* <Route 
-                path="/profiles/:username" 
-                element={<Profile />} */}
-              {/* /> */}
+                  <Route 
+                path="/movie/:id" 
+                // render={(props) => <SearchedContent {...props} match={props.match} />}
+                //  component={SearchedContent}
+                element={<SearchedContent />}
+              />
+              <Route 
+                path="/profile"
+                element={<Profile />} 
+               />
+               <Route 
+                path="/user/:username"
+                element={<User />} 
+               />
+                   {/* {auth && auth.user ? (
+      <>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </>
+    ) : (
+      
+      <Route path="/" element={<Login />} />
+    )} */}
+                  {/* <Route
+          path="/profile"
+          render={() => (isLoggedIn ? <Profile /> : <Navigate to="/login" />)}
+        /> */}
             </Routes>
           </div>
-          <Footer />
         </div>
       </Router>
     </ApolloProvider>

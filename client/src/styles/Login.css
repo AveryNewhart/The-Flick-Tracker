@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Metal+Mania&family=Zen+Dots&display=swap');
+
+.loginI {
+  display: block;
+}
+
+#alert {
+  color: red;
+}
+
+
+/* divvy  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    height: 100%;
+    margin-top: 50%;
+    padding-top: 18%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    flex-direction: column;
+    background-color: rgba(33, 32, 32, 0.992);
+} */
+
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 3px solid #c10206;
+  padding: 50px;
+  border-radius: 10%;
+  background: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  width: 400px;
+  margin-bottom:0;
+}
+
+ .loginLabel,
+ .loginI {
+    margin-bottom: 20px;
+    color: white;
+    width: 350px;
+} 
+
+.footer-text {
+  color: #c10206;
+  font-family: 'Zen Dots';
+  margin-top: 10px;
+}
+
+.loginBtns {
+  color: #c10206;
+  font-weight: bolder;
+  font-family: 'Zen Dots';
+  background: none;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.loginBtns:hover {
+  background: #c10206;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #c10206, 0 0 25px #c10206, 0 0 50px #c10206,
+    0 0 100px #c10206;
+}
+
+.createA {
+  color: #c10206;
+  font-family: 'Zen Dots';
+  background: none;
+  border: none;
+  text-decoration: none;
+  /* text-align: center; */
+}
+
+.createA:hover {
+  background: #c10206;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #c10206, 0 0 25px #c10206, 0 0 50px #c10206,
+    0 0 100px #c10206;
+}
+
+.labelC {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.margin-p {
+  margin-top: 12px;
+}

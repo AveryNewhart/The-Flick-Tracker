@@ -17,6 +17,13 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "react-font": "^1.2.1"
+    "@userfront/core": "^0.5.6",
+    "@userfront/react": "^0.3.3",
+    "bcrypt": "^5.1.0",
+    "jwt-decode": "^3.1.2",
+    "react-file-base64": "^1.0.3",
+    "react-font": "^1.2.1",
+    "react-modal-login": "^1.4.5",
+    "use-history": "^1.4.1"
   }
 }
