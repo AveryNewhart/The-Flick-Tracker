@@ -4,9 +4,10 @@
   "description": "Appollo Server & GraphQL application for a Social Media Movie App, with AI recommendations",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "seed": "node seeds/seed.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Lebron James",
   "license": "MIT",
