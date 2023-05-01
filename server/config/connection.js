@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 // let uri = "mongodb+srv://avery:password12345@the-flick-tracker.dnbkejv.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/flicktracker',
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/the-flick-tracker',
   {
   useNewUrlParser: true,
   useUnifiedTopology: true,
