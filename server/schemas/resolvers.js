@@ -133,11 +133,6 @@ const resolvers = {
       return followingUser;
     },
 
-    // unfollow: async (parent, { userId, followedUserId }, { user }) => {
-    //   // Authentication check to make sure we have a valid user.
-    //   if (!user) {
-    //     throw new AuthenticationError("You need to be logged in!");
-
     unfollow: async (parent, { userId, followedUserId }, { user }) => {
       // Authentication check to make sure we have a valid user.
       if (!user) {
@@ -171,17 +166,28 @@ const resolvers = {
       // Return the user with the updated followings and followers arrays.
       return unfollowingUser;
     },
-    // removeWatchedMovie: (parent, args, context) => {
-    //   // Remove the Watched object with the provided movieId from the User's watchedMovies array
-    //   // Return the removed Watched object
-    // },
+    removeWatchedMovie: async (parent, { movie, input }, context) => {
+      if (context.user) {
+        console.log(input)
+
+         const dataMovie = await User.findOneAndUpdate(
+          { movie },
+          { $pull: { watchedMovies: { _id: context.user._id, input } } },
+          { new: true, runValidators: true }
+        ).populate(watchedMovies)
+        
+          return dataMovie
+      }
+      throw new AuthenticationError("must be logged in to perform this action");
+    },
     addWatchedMovie: async (parent, { movie }, context) => {
       if (context.user) {
         return (updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { watchedMovies: movie } },
-          { new: true, runValidators: true }
-        ));
+          { new: true, runValidators: true },
+        ).populate("watchedMovies")
+        );
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -200,13 +206,14 @@ const resolvers = {
         { _id: context.user._id },
         { $addToSet: { watchlist: movie._id } },
         { new: true }
-      ).populate("watchlist");
+      ).populate("watchlist")
       return user;
     },
     // removeMovieFromWatchlist: (parent, args, context) => {
     //   // Remove the Watchlist object with the provided movieId from the User's watchlist array
     //   // Return the removed Watchlist object
     // },
+
 
     addReview: async (_, { text, rating }, { user }) => {
       console.log(user);
@@ -241,7 +248,6 @@ const resolvers = {
       // Return the new review object
       return newReview;
     },
-
     //   // Create a new Review object for the provided User and Movie objects with the provided input
     //   // Return the new Review object
     // },
@@ -313,5 +319,5 @@ const resolvers = {
     //   },
     // }
   },
-};
+}
 module.exports = resolvers;
