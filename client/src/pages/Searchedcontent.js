@@ -248,6 +248,6 @@ const SearchedContent = () => {
       )}
     </div>
   );
-};
+}; 
 
 export default SearchedContent;

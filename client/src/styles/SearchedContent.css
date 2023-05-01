@@ -221,3 +221,37 @@ button.reviewBtns:hover {
   display: inline-block;
   vertical-align: top;
   }
+
+  @media (max-width: 580px) {
+    .details__synopsis {
+      /* background-color: #47cf73; */
+      border-bottom: 1px solid white;
+      border-top: 1px solid white;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 10px;
+    }
+
+    .searchedPs {
+      font-size: 10px;
+    }
+
+    .reviewDiv {
+      margin-top: 0;
+    }
+
+    .movie__poster {
+      height: 125px;
+      width: 25px;
+    }
+
+    .watchButtons {
+      display: flex;
+      justify-content: center;
+    }
+
+    .reviewDiv {
+      display: flex;
+      align-items: center;
+    }
+}
