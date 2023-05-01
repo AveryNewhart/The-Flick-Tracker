@@ -21,7 +21,7 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
-
+ 
 // app.use(routes); //! We do not need this
 
 app.get("/", (req, res) => {
