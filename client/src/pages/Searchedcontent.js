@@ -6,15 +6,22 @@ import { useMutation } from "@apollo/client";
 import { Button } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { saveWatchedMovieIds, 
-  getSavedWatchedMovieIds, saveWatchlistMovieIds, getSavedWatchlistMovieIds } from "../utils/localStorage";
-import { SAVE_WATCHED_MOVIE, SAVE_WATCHLIST_MOVIE } from '../utils/mutations.js';
+  getSavedWatchedMovieIds, saveWatchlistMovieIds, getSavedWatchlistMovieIds, getSavedReviewIds, saveReviewIds 
+} from "../utils/localStorage";
+import { SAVE_WATCHED_MOVIE, SAVE_WATCHLIST_MOVIE, ADD_REVIEW } from '../utils/mutations.js';
 
 
 const SearchedContent = () => {
     const { id } = useParams(); // get the ID from the URL
     const [movie, setMovie] = useState(null); // set initial state to null
-    const [review, setReview] = useState("");
+
+    // const [review, setReview] = useState("");
+    
     // const movieId = req.body.movieId;
+
+    const [addReview, { error: addReviewError }] = useMutation(ADD_REVIEW);
+
+    const [savedReviewIds, setSavedReviewIds] = useState(getSavedReviewIds());
 
       // saveWatchedMovie mutation hook
     const [addWatchedMovie, { error: errorWatched }] = useMutation(SAVE_WATCHED_MOVIE);
@@ -28,12 +35,17 @@ const SearchedContent = () => {
      // create state to hold saved wacthLaterMovieId values
     const [savedWatchlistMovieIds, setSavedWatchlistMovieIds] = useState(getSavedWatchlistMovieIds());
 
+
     useEffect(() => {
       return () => saveWatchedMovieIds(savedWatchedMovieIds);
     });
 
     useEffect(() => {
       return () => saveWatchlistMovieIds(savedWatchlistMovieIds);
+    });
+
+    useEffect(() => {
+      return () => saveReviewIds(savedReviewIds);
     });
 
   useEffect(() => {
@@ -132,16 +144,47 @@ const SearchedContent = () => {
       }
     };
 
-  const handleReviewChange = (event) => {
-    setReview(event.target.value);
-  }
+     // create function to handle saving a movie that you've watched to our database
+     const handleSaveReview = async (movieId, review) => {
+      // find the movie in `searchedMovies` state by the matching id
+      // const watchedMovieToSave = movie.find((movie) => movie.movieId === movieId);
+  
+        // check if the movie is already in the saved watched movies
+        if (savedReviewIds.includes(movieId, review)) {
+          console.log("Movie already saved as watched!");
+            return;
+        }
+  
+      // get token
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
+  
+      if (!token) {
+        return false;
+      }
+  
+      try {
+        const reviewedMovie = {
+          movieId: movie.id,
+          title: movie.title,
+          reviewAuthor: movie.review.reviewAuthor,
+          reviewText: movie.review.reviewText
+          // vote_average: movie.vote_average,
+          // vote_count: movie.vote_count
+        };
+  
+        const { data } = await addReview({
+          variables: { review: reviewedMovie  },
+        });
+   
+        // if movie successfully saves to user's account, save movie id to state
+        setSavedReviewIds([...savedReviewIds, reviewedMovie.movieId.reviewId]);
+        // setWatchedMovies(user.watchedMovies);  // <-- set the watched movies data
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-  const handleAddReview = () => {
-    // add review logic here
-    console.log(`Review for ${movie.title}: ${review}`);
-    setReview("");
-  }
-
+  
 //   const ratingColor = getRatingColor(movie.vote_average);
   return (
     <div>
@@ -177,13 +220,27 @@ const SearchedContent = () => {
           </>
           )}
           </div>
-          <div className="reviewDiv">
+          {/* <div className="reviewDiv">
             <label htmlFor="review" className="reviewText">Add Review:</label>
                 <div className="inputWrapper">
                     <textarea type="text" id="review" className="reviewInput" value={review} onChange={handleReviewChange} />
                 </div>
                 <button className="reviewBtns" onClick={handleAddReview}>Add Review</button>
+            </div> */}
+            <div className='reviewDiv'>
+              <label htmlFor="review" className="reviewText">Add Review:</label>
+                <div>
+                  <textarea
+                  className='reviewInput'
+                    type="text"
+                    placeholder="Add a review"
+                    // value={movie.review.reviewText}
+                    // onChange={(e) => setReview(e.target.value)}
+                  />
+                </div>
+                <Button className="reviewBtns" onClick={() => handleSaveReview(movie.review.id)}>Add Review</Button>
             </div>
+
           </section>
         </div>
       ) : (
