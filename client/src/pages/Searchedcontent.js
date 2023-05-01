@@ -6,12 +6,8 @@ import { useMutation } from "@apollo/client";
 import { Button } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { saveWatchedMovieIds, 
-  getSavedWatchedMovieIds,
-  //  saveWatchLaterMovieIds, getSavedWatchLaterMovieIds
-    } from "../utils/localStorage";
-import { SAVE_WATCHED_MOVIE, 
-  // SAVE_WATCH_LATER_MOVIE 
-} from '../utils/mutations.js';
+  getSavedWatchedMovieIds, saveWatchlistMovieIds, getSavedWatchlistMovieIds } from "../utils/localStorage";
+import { SAVE_WATCHED_MOVIE, SAVE_WATCHLIST_MOVIE } from '../utils/mutations.js';
 
 
 const SearchedContent = () => {
@@ -26,19 +22,19 @@ const SearchedContent = () => {
      // create state to hold saved wacthedMovieId values
     const [savedWatchedMovieIds, setSavedWatchedMovieIds] = useState(getSavedWatchedMovieIds());
 
-    // // saveWatchLaterMovie mutation hook
-    // const [addMovieToWatchlist, { error: errorWatchLater }] = useMutation(SAVE_WATCH_LATER_MOVIE);
+    // saveWatchLaterMovie mutation hook
+    const [addMovieToWatchlist, { error: errorWatchLater }] = useMutation(SAVE_WATCHLIST_MOVIE);
 
-    //  // create state to hold saved wacthLaterMovieId values
-    // const [savedWatchLaterMovieIds, setSavedWatchLaterMovieIds] = useState(getSavedWatchLaterMovieIds());
+     // create state to hold saved wacthLaterMovieId values
+    const [savedWatchlistMovieIds, setSavedWatchlistMovieIds] = useState(getSavedWatchlistMovieIds());
 
     useEffect(() => {
       return () => saveWatchedMovieIds(savedWatchedMovieIds);
     });
 
-    // useEffect(() => {
-    //   return () => saveWatchLaterMovieIds(savedWatchLaterMovieIds);
-    // });
+    useEffect(() => {
+      return () => saveWatchlistMovieIds(savedWatchlistMovieIds);
+    });
 
   useEffect(() => {
     // fetch the movie data when the component mounts
@@ -48,16 +44,6 @@ const SearchedContent = () => {
        .then((response) => response.json())
         .then((data) => setMovie(data));
   }, [id]);
-
-  // useEffect(() => {
-  //   // save watched movie IDs to local storage when the savedWatchedMovieIds state changes
-  //   saveWatchedMovieIds(savedWatchedMovieIds);
-  // }, [savedWatchedMovieIds]);
-
-  // useEffect(() => {
-  //   // save watch later movie IDs to local storage when the savedWatchLaterMovieIds state changes
-  //   saveWatchLaterMovieIds(savedWatchLaterMovieIds);
-  // }, [savedWatchLaterMovieIds]);
 
   if (!movie) {
     // show a loading message if the movie data is still being fetched
@@ -78,8 +64,6 @@ const SearchedContent = () => {
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    // const token = Auth.getToken();
-
     if (!token) {
       return false;
     }
@@ -98,22 +82,7 @@ const SearchedContent = () => {
       const { data } = await addWatchedMovie({
         variables: { movie: watchedMovieToSave  },
       });
-      // const { data: { addWatchedMovie: user } } = await addWatchedMovie({
-      //   // variables: { input: { movieId } },  // <-- pass the movieId directly
-      //   variables: { input: { movieId: watchedMovieToSave.movieId } },
-      // });
-      // await addWatchedMovie({
-      //   variables: { input: { movieId } },
-      // });
-      // await addWatchedMovie({
-      //   variables: { input: { movieId } },
-      //   context: {
-      //     headers: {
-      //       authorization: `Bearer ${token}`
-      //     }
-      //   }
-      // });
-
+ 
       // if movie successfully saves to user's account, save movie id to state
       setSavedWatchedMovieIds([...savedWatchedMovieIds, watchedMovieToSave.movieId]);
       // setWatchedMovies(user.watchedMovies);  // <-- set the watched movies data
@@ -122,36 +91,46 @@ const SearchedContent = () => {
     }
   };
 
-
-    // // create function to handle saving a movie that you've watched to our database
-    //  const handleSaveToWatchLater = async (movieId) => {
-    //   // find the movie in `searchedMovies` state by the matching id
-    //   // const watchLaterMovieToSave = searchedMovies.find((movie) => movie.movieId === movieId);
+    // create function to handle saving a movie that you've watched to our database
+    const handleSaveToWatchlist = async (movieId) => {
+      // find the movie in `searchedMovies` state by the matching id
+      // const watchedMovieToSave = movie.find((movie) => movie.movieId === movieId);
   
-    //   // get token
-    //   const token = Auth.loggedIn() ? Auth.getToken() : null;
+        // check if the movie is already in the saved watched movies
+        if (savedWatchlistMovieIds.includes(movieId)) {
+          console.log("Movie already saved as watched!");
+            return;
+        }
   
-    //   if (!token) {
-    //     return false;
-    //   }
+      // get token
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
   
-    //   try {
-    //     // const { data } = await saveWatchLater({
-    //     //   variables: { movie: watchLaterMovieToSave  },
-    //     // });
-    //     const { data: { addMovieToWatchlist: user } } = await addMovieToWatchlist({
-    //       variables: { input: { movieId } },  // <-- pass the movieId directly
-    //     });
+      if (!token) {
+        return false;
+      }
   
-    //     // if movie successfully saves to user's account, save movie id to state
-    //     setSavedWatchLaterMovieIds([...savedWatchLaterMovieIds, movieId]);
-    //     setWatchlist(user.watchlist);  // <-- set the watchlist movies data
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
-
-
+      try {
+        const watchlistMovieToSave = {
+          movieId: movie.id,
+          title: movie.title,
+          imageURL: movie.poster_path,
+          overview: movie.overview,
+          releaseYear: movie.release_date
+          // vote_average: movie.vote_average,
+          // vote_count: movie.vote_count
+        };
+  
+        const { data } = await addMovieToWatchlist({
+          variables: { movie: watchlistMovieToSave  },
+        });
+   
+        // if movie successfully saves to user's account, save movie id to state
+        setSavedWatchlistMovieIds([...savedWatchlistMovieIds, watchlistMovieToSave.movieId]);
+        // setWatchedMovies(user.watchedMovies);  // <-- set the watched movies data
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
@@ -191,52 +170,12 @@ const SearchedContent = () => {
             <p className="details__synopsis">{movie.overview}</p>
           </div>
           <div className='watchButtons'>
-          {/* <button className='reviewBtn'>Add to Watchlist</button>
-          <button className='reviewBtn'>Add to Watched</button> */}
-            {/* {Auth.loggedIn() && (
-              <Button
-                disabled={savedWatchedMovieIds?.some(
-                  (savedWatchedMovieId) => savedWatchedMovieId === movie.movieId
-                    )}
-                    className="reviewBtn"
-                    onClick={() => handleSaveToWatched(movie.movieId)}
-                >
-                  {savedWatchedMovieIds?.some(
-                    (savedWatchedMovieId) => savedWatchedMovieId === movie.movieId
-                  )
-                    ? "This movie has already been saved!"
-                    : "Save this Movie!"}
-                </Button>
-              )} */}
                  {Auth.loggedIn() && (
-            // <Button onClick={() => handleSaveToWatched(movie.id)}>
-            //   Save to Watched
-            // </Button>
-          //   <Button className="watched-btn" onClick={() => handleSaveToWatched(movie.id)} disabled={savedWatchedMovieIds?.some((savedMovieId) => savedMovieId === movie.id)}>
-          //   {savedWatchedMovieIds?.some((savedMovieId) => savedMovieId === movie.id)
-          //     ? "Watched"
-          //     : "Save to Watched"}
-          // </Button>
+                  <>
           <Button variant="primary" onClick={() => handleSaveToWatched(movie.id)}>Save to Watched</Button>
-
+          <Button variant="primary" onClick={() => handleSaveToWatchlist(movie.id)}>Save to Watchlist</Button>
+          </>
           )}
-          {/* <button className='reviewBtn'>Add to Watchlist</button>
-          <button className='reviewBtn'>Add to Watched</button> */}
-            {/* {Auth.loggedIn() && (
-              <Button
-                disabled={savedWatchLaterMovieIds?.some(
-                  (savedWatchLaterMovieId) => savedWatchLaterMovieId === movie.movieId
-                  )}
-                  className="reviewBtn"
-                  onClick={() => handleSaveToWatchLater(movie.movieId)}
-              >
-              {savedWatchLaterMovieIds?.some(
-                (savedWatchLaterMovieId) => savedWatchLaterMovieId === movie.movieId
-              )
-                ? "This movie has already been saved to Watch Later!"
-                : "Save this Movie to Watch Later!"}
-              </Button>
-              )} */}
           </div>
           <div className="reviewDiv">
             <label htmlFor="review" className="reviewText">Add Review:</label>

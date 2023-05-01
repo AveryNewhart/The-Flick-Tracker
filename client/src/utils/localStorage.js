@@ -15,9 +15,6 @@
       return false;
     }
   
-    // const updatedSavedWatchedMoviesIds = savedWatchedMovieIds?.filter((savedWatchedMovieId) => watchedMovieId !== watchedMovieId);
-    // localStorage.setItem('watched_movies', JSON.stringify(updatedSavedWatchedMovieIds));
-  
     return true;
   };
   
@@ -29,44 +26,47 @@
     return savedWatchedMovies;
   };
 
-// export const getSavedWatchedMovieIds = () => {
-//     const savedWatchedMovies = localStorage.getItem('watched_movies');
-//     if (savedWatchedMovies) {
-//       return JSON.parse(savedWatchedMovies);
-//     } else {
-//       return [];
-//     }
-//   };
-  
-  
+  export const saveWatchlistMovieIds = (watchlistIdArr) => {
+    if (watchlistIdArr.length) {
+      localStorage.setItem('watchlist_movies', JSON.stringify(watchlistIdArr));
+    } else {
+      localStorage.removeItem('watchlist_movies');
+    }
+  };
 
-// export const getSavedWatchLaterMovieIds = () => {
-//     const savedWatchLaterMovieIds = localStorage.getItem('watchlater_movies')
-//       ? JSON.parse(localStorage.getItem('watchlater_movies'))
-//       : [];
+export const getSavedWatchlistMovieIds = () => {
+    const savedWatchlistMovieIds = localStorage.getItem('watchlist_movies')
+      ? JSON.parse(localStorage.getItem('watchlist_movies'))
+      : [];
   
-//     return savedWatchLaterMovieIds;
-//   };
+    return savedWatchlistMovieIds;
+  };
   
-//   export const saveWatchLaterMovieIds = (watchLaterIdArr) => {
-//     if (watchLaterIdArr.length) {
-//       localStorage.setItem('watchlater_movies', JSON.stringify(watchLaterIdArr));
-//     } else {
-//       localStorage.removeItem('watchlater_movies');
-//     }
-//   };
+  export const removeWatchListMovieId = (watchlistMovieId) => {
+    const savedWatchlistMovieIds = localStorage.getItem('watchlist_movies')
+      ? JSON.parse(localStorage.getItem('watchlist_movies'))
+      : null;
   
-//   export const removeWatchLaterMovieId = (watchLaterMovieId) => {
-//     const savedWatchLaterMovieIds = localStorage.getItem('watchlater_movies')
-//       ? JSON.parse(localStorage.getItem('watchlater_movies'))
-//       : null;
+    if (!savedWatchlistMovieIds) {
+      return false;
+    }
+
+    // const updatedWatchlistMovieIds = savedWatchlistMovieIds.filter(
+    //   (movieId) => movieId !== watchlistMovieId
+    // );
+
+      // Remove the movie ID from the saved array
+  const updatedWatchlistMovieIds = savedWatchlistMovieIds.filter(id => id !== watchlistMovieId);
+
+    // localStorage.setItem(
+    //   'watchlist_movies',
+    //   JSON.stringify(updatedWatchlistMovieIds)
+    // );
   
-//     if (!savedWatchLaterMovieIds) {
-//       return false;
-//     }
+    // Update the saved watchlist in localStorage
+  localStorage.setItem('watchlist_movies', JSON.stringify(updatedWatchlistMovieIds));
   
-//     const updatedSavedWatchLaterMoviesIds = savedWatchLaterMovieIds?.filter((savedWatchLaterMovieId) => watchLaterMovieId !== watchLaterMovieId);
-//     localStorage.setItem('watchlater_movies', JSON.stringify(updatedSavedWatchLaterMovieIds));
-  
-//     return true;
-//   };
+    // return updatedWatchlistMovieIds;
+    return true;
+
+  };
