@@ -185,6 +185,20 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
+    removeWatchedMovie: async (parent, { movie }, context) => {
+      if (context.user) {
+
+        const delMovie = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { watchedMovies: { _id: movie } } },
+          { new: true, runValidators: true }
+        )
+
+          return delMovie
+      }
+      throw new AuthenticationError("must be logged in to perform this action");
+    },
+
     addMovieToWatchlist: async (parent, { input }, context) => {
       if (!context.user) {
         throw new AuthenticationError(
