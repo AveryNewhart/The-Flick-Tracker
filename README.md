@@ -55,7 +55,7 @@ You can use npm run seed, or npm start
 
 # Usage
 
-https://the-flick-tracker.herokuapp.com/
+(Heroku site no longer active, to use locally, refer to installation)
 
 ## License
 
